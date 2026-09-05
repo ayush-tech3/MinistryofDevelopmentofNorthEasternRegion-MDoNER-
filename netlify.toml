@@ -1,0 +1,40 @@
+# ============================================================
+# AlertNex - Netlify Deployment Configuration
+# Smart India Hackathon 2026 | PS ID: SIH26001
+# Team: AlertNex | Leader: Ayush Kumar
+# ============================================================
+# This project is a plain HTML/CSS/JavaScript frontend.
+# No build step is required. Netlify serves static files
+# directly from the publish directory.
+# ============================================================
+
+[build]
+  # No build command needed — plain HTML/CSS/JS project
+  command = "echo 'AlertNex: Static frontend — no build step required.'"
+  # The complete frontend lives inside alertnex-app/
+  publish = "alertnex-app"
+
+# ============================================================
+# Custom Headers for Security & Performance
+# ============================================================
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

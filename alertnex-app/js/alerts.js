@@ -141,6 +141,15 @@ const AlertNexAlerts = {
           <span style="font-size:0.75rem; color:#cbd5e1;">Enter your email to receive an official AlertNex emergency warning bulletin directly to your inbox.</span>
         </div>
 
+        <!-- SMS Phone Number Input -->
+        <div style="display:flex; flex-direction:column; gap:6px; background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.3); border-radius:8px; padding:12px;">
+          <label style="font-size:0.84rem; font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;">
+            <span>📱 Recipient Phone (SMS Alert):</span>
+          </label>
+          <input type="tel" id="alertRecipientPhone" class="form-control" placeholder="Enter phone: e.g. +919876543210" style="width:100%; font-size:0.9rem;">
+          <span style="font-size:0.75rem; color:#cbd5e1;">Enter phone number with country code to receive emergency SMS alert. Uses Twilio when configured, otherwise simulated for demo.</span>
+        </div>
+
         <div style="display:flex; flex-direction:column; gap:8px;">
           <label style="font-size:0.84rem; font-weight:600; color:#cbd5e1;">Additional Dispatch Channels:</label>
           <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#cbd5e1;">
@@ -150,12 +159,12 @@ const AlertNexAlerts = {
             <input type="checkbox" checked id="chanMobile"> Mobile App Push (FCM Gateway Simulation)
           </label>
           <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#cbd5e1;">
-            <input type="checkbox" checked id="chanSMS"> Citizen SMS Broadcast (CAP / C-DOT Gateway Simulation)
+            <input type="checkbox" checked id="chanSMS"> Citizen SMS Broadcast (CAP / C-DOT / Twilio Gateway)
           </label>
         </div>
 
         <div style="background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.3); border-radius:6px; padding:10px; font-size:0.75rem; color:#fef08a;">
-          <strong>Gateway Status:</strong> Real SMTP email is connected via FastAPI backend. Telecom SMS is presented as CAP protocol simulation for SIH demonstration.
+          <strong>Gateway Status:</strong> Real SMTP email is connected via FastAPI backend. SMS uses Twilio API when configured, otherwise presented as CAP protocol simulation for SIH demonstration.
         </div>
       `;
     }
@@ -171,17 +180,22 @@ const AlertNexAlerts = {
   async dispatchSimulatedNotification() {
     const alert = this.activeAlertForModal;
     const emailInput = document.getElementById("alertRecipientEmail");
+    const phoneInput = document.getElementById("alertRecipientPhone");
     const recipientEmail = emailInput ? emailInput.value.trim() : "";
+    const recipientPhone = phoneInput ? phoneInput.value.trim() : "";
 
     this.closeModal();
 
+    const promises = [];
+
+    // ── Email dispatch ──
     if (recipientEmail && window.AlertNexAPI) {
       if (window.AlertNexApp) {
         AlertNexApp.showToast(`Dispatching official emergency email to ${recipientEmail}...`);
       }
 
-      try {
-        const emailRes = await AlertNexAPI.sendRealEmail({
+      promises.push(
+        AlertNexAPI.sendRealEmail({
           recipient_email: recipientEmail,
           alert_title: alert ? alert.title : "Landslide Hazard Early Warning",
           risk_level: alert ? alert.level : "CRITICAL",
@@ -190,17 +204,50 @@ const AlertNexAlerts = {
           potential_impact: alert ? alert.impact : "Road disruption and community isolation risk",
           recommended_action: alert ? alert.action : "Deploy response units and initiate evacuation advisories",
           emergency_corridor: "Shillong-Mawsynram Bypass via Mawphlang"
-        });
+        }).then(() => {
+          if (window.AlertNexApp) {
+            AlertNexApp.showToast(`✅ Real emergency email delivered to ${recipientEmail}!`);
+          }
+        }).catch(err => {
+          console.warn("Real email delivery:", err.message);
+          if (window.AlertNexApp) {
+            AlertNexApp.showToast(`⚠️ Email: ${err.message}`);
+          }
+        })
+      );
+    }
 
-        if (window.AlertNexApp) {
-          AlertNexApp.showToast(`✅ Real emergency email delivered to ${recipientEmail}!`);
-        }
-      } catch (err) {
-        console.warn("Real email delivery:", err.message);
-        if (window.AlertNexApp) {
-          AlertNexApp.showToast(`Notice: ${err.message}`);
-        }
+    // ── SMS dispatch ──
+    if (recipientPhone && window.AlertNexAPI) {
+      if (window.AlertNexApp) {
+        AlertNexApp.showToast(`Dispatching emergency SMS to ${recipientPhone}...`);
       }
+
+      promises.push(
+        AlertNexAPI.sendSMS({
+          recipient_phone: recipientPhone,
+          alert_title: alert ? alert.title : "Landslide Hazard Early Warning",
+          risk_level: alert ? alert.level : "CRITICAL",
+          risk_score: alert ? alert.riskScore : 87.0,
+          location: alert ? alert.location : "North Eastern Region Sector",
+          recommended_action: alert ? alert.action : "Deploy response units and initiate evacuation advisories",
+          emergency_corridor: "Shillong-Mawsynram Bypass via Mawphlang"
+        }).then(res => {
+          const simNote = res.simulated ? ' (simulated for demo)' : '';
+          if (window.AlertNexApp) {
+            AlertNexApp.showToast(`✅ Emergency SMS sent to ${recipientPhone}${simNote}!`);
+          }
+        }).catch(err => {
+          console.warn("SMS delivery:", err.message);
+          if (window.AlertNexApp) {
+            AlertNexApp.showToast(`⚠️ SMS: ${err.message}`);
+          }
+        })
+      );
+    }
+
+    if (promises.length > 0) {
+      await Promise.allSettled(promises);
     } else {
       if (window.AlertNexApp && alert) {
         AlertNexApp.showToast(`Alert [${alert.code}] broadcasted to all command channels!`);

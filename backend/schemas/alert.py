@@ -36,3 +36,12 @@ class EmailAlertRequest(BaseModel):
     recommended_action: str = Field(default="Deploy SDRF rescue units and enforce single-lane vehicular regulation")
     emergency_corridor: Optional[str] = Field(default="Shillong-Mawsynram Bypass via Mawphlang")
 
+class SMSAlertRequest(BaseModel):
+    recipient_phone: str = Field(..., example="+919876543210")
+    alert_title: str = Field(default="Critical Landslide Hazard Warning")
+    risk_level: str = Field(default="CRITICAL")
+    risk_score: float = Field(default=87.0)
+    location: str = Field(default="Demo Monitoring Zone A, Meghalaya")
+    recommended_action: str = Field(default="Deploy SDRF rescue units and enforce single-lane vehicular regulation")
+    emergency_corridor: Optional[str] = Field(default="Shillong-Mawsynram Bypass via Mawphlang")
+

@@ -1,3 +1,8 @@
+# ============================================================
+# AlertNex .gitignore
+# Smart India Hackathon 2026 | PS ID: SIH26001
+# ============================================================
+
 # Python
 __pycache__/
 *.py[cod]
@@ -7,32 +12,45 @@ __pycache__/
 env/
 venv/
 ENV/
-.venv
+.venv/
 
-# Database
+# Database files
 alertnex.db
 *.sqlite
 *.sqlite3
 
-# Environment
+# Environment / Secrets
 .env
+*.env.local
 
-# Node / Frontend
+# Node / Frontend build artifacts
 node_modules/
 dist/
 .npm
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnp
+.pnp.js
 
 # OS / Editor
 .DS_Store
 Thumbs.db
+Desktop.ini
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
 
-# Backend uploads (keep directory, ignore uploaded demo files)
+# Backend uploads (keep directory structure, ignore uploaded files)
 backend/uploads/*
 !backend/uploads/.gitkeep
+
+# Test / temporary files
+test_page.html
+test_fpdf.pdf
+
+# Generated presentation/document build scripts output
+# (keep the scripts, ignore generated output artifacts)
+*.pyc

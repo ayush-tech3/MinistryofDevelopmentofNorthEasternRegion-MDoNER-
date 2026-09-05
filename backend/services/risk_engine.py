@@ -110,7 +110,8 @@ class RiskEngineService:
     @classmethod
     def evaluate_and_alert(cls, zone: MonitoringZone, db: Session) -> None:
         """
-        When risk becomes HIGH or CRITICAL, automatically generate and persist an alert.
+        When risk becomes HIGH or CRITICAL, automatically generate and persist an alert,
+        AND dispatch real email + SMS notifications to configured recipients.
         """
         if zone.risk_level in ["HIGH", "CRITICAL"]:
             # Check if active alert already exists for this zone
@@ -137,3 +138,81 @@ class RiskEngineService:
                 )
                 db.add(new_alert)
                 db.commit()
+
+                # ── Auto-trigger email notification ──
+                cls._auto_notify_email(zone, msg, action)
+
+                # ── Auto-trigger SMS notification ──
+                cls._auto_notify_sms(zone, msg, action)
+
+    @staticmethod
+    def _auto_notify_email(zone: MonitoringZone, message: str, action: str) -> None:
+        """
+        Automatically send email alert to configured recipients when risk escalates.
+        Reads AUTO_ALERT_EMAILS from .env (comma-separated list).
+        """
+        import os
+        auto_emails = os.getenv("AUTO_ALERT_EMAILS", "").strip()
+        if not auto_emails:
+            return
+
+        from backend.services.email_service import EmailService
+        import logging
+        logger = logging.getLogger("alertnex.auto_notify")
+
+        recipients = [e.strip() for e in auto_emails.split(",") if e.strip()]
+
+        for email in recipients:
+            try:
+                result = EmailService.send_emergency_email(
+                    recipient_email=email,
+                    alert_title=f"Auto-Alert: {zone.risk_level} Risk in {zone.name}",
+                    risk_level=zone.risk_level,
+                    risk_score=zone.risk_score,
+                    location=f"{zone.name}, {zone.district}",
+                    potential_impact=message,
+                    recommended_action=action,
+                    emergency_corridor=None
+                )
+                if result.get("success"):
+                    logger.info(f"Auto email alert sent to {email} for zone {zone.name}")
+                else:
+                    logger.warning(f"Auto email failed for {email}: {result.get('error')}")
+            except Exception as e:
+                logger.error(f"Auto email notification error for {email}: {e}")
+
+    @staticmethod
+    def _auto_notify_sms(zone: MonitoringZone, message: str, action: str) -> None:
+        """
+        Automatically send SMS alert to configured phone numbers when risk escalates.
+        Reads AUTO_ALERT_PHONES from .env (comma-separated list).
+        """
+        import os
+        auto_phones = os.getenv("AUTO_ALERT_PHONES", "").strip()
+        if not auto_phones:
+            return
+
+        from backend.services.sms_service import SMSService
+        import logging
+        logger = logging.getLogger("alertnex.auto_notify")
+
+        recipients = [p.strip() for p in auto_phones.split(",") if p.strip()]
+
+        for phone in recipients:
+            try:
+                result = SMSService.send_emergency_sms(
+                    recipient_phone=phone,
+                    alert_title=f"Auto-Alert: {zone.risk_level} Risk in {zone.name}",
+                    risk_level=zone.risk_level,
+                    risk_score=zone.risk_score,
+                    location=f"{zone.name}, {zone.district}",
+                    recommended_action=action,
+                    emergency_corridor=None
+                )
+                if result.get("success"):
+                    logger.info(f"Auto SMS alert sent to {phone} for zone {zone.name}")
+                else:
+                    logger.warning(f"Auto SMS failed for {phone}: {result.get('error')}")
+            except Exception as e:
+                logger.error(f"Auto SMS notification error for {phone}: {e}")
+

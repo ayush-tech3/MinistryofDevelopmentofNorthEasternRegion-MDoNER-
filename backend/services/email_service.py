@@ -145,8 +145,13 @@ class EmailService:
             msg.attach(MIMEText(html_body, "html"))
 
             logger.info(f"Connecting to SMTP server {cfg['host']}:{cfg['port']}...")
-            server = smtplib.SMTP(cfg["host"], cfg["port"], timeout=15)
-            server.starttls()
+            port = int(cfg.get("port", 465))
+            if port == 465:
+                server = smtplib.SMTP_SSL(cfg["host"], port, timeout=15)
+            else:
+                server = smtplib.SMTP(cfg["host"], port, timeout=15)
+                server.starttls()
+
             server.login(cfg["username"], cfg["password"])
             server.sendmail(cfg["from_email"], [recipient_email], msg.as_string())
             server.quit()

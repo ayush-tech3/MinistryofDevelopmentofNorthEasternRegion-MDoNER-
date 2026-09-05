@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from backend.database import get_db
 from backend.models.alert import Alert
-from backend.schemas.alert import AlertCreate, AlertResponse, AlertAcknowledge, EmailAlertRequest
+from backend.schemas.alert import AlertCreate, AlertResponse, AlertAcknowledge, EmailAlertRequest, SMSAlertRequest
 from backend.services.alert_service import AlertService
 
 router = APIRouter(prefix="/api/alerts", tags=["Early Warnings & Alerts"])
@@ -54,3 +54,23 @@ def send_real_alert_email(payload: EmailAlertRequest):
         raise HTTPException(status_code=400, detail=result.get("error", "Email dispatch failed"))
     return result
 
+@router.post("/send-sms")
+def send_alert_sms(payload: SMSAlertRequest):
+    """
+    Send an emergency SMS alert to a phone number.
+    Uses Twilio when configured, otherwise runs in simulation mode for SIH demo.
+    In production, integrates with C-DOT / NDMA CAP gateway for mass citizen alerts.
+    """
+    from backend.services.sms_service import SMSService
+    result = SMSService.send_emergency_sms(
+        recipient_phone=payload.recipient_phone,
+        alert_title=payload.alert_title,
+        risk_level=payload.risk_level,
+        risk_score=payload.risk_score,
+        location=payload.location,
+        recommended_action=payload.recommended_action,
+        emergency_corridor=payload.emergency_corridor
+    )
+    if not result.get("success"):
+        raise HTTPException(status_code=400, detail=result.get("error", "SMS dispatch failed"))
+    return result
