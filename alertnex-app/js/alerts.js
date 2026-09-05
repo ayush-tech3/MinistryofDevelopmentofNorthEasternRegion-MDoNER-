@@ -129,27 +129,33 @@ const AlertNexAlerts = {
         <div style="background:var(--navy-dark); padding:12px; border-radius:8px; border:1px solid var(--navy-border);">
           <div style="font-size:0.78rem; color:#f97316; font-weight:700;">ACTIVE ALERT TARGET</div>
           <div style="font-weight:700; color:#fff; font-size:1rem; margin-top:2px;">${alert.title}</div>
-          <div style="font-size:0.8rem; color:#94a3b8;">Target Sector: ${alert.location}</div>
+          <div style="font-size:0.8rem; color:#94a3b8;">Target Sector: ${alert.location} • Risk: ${alert.riskScore}% (${alert.level})</div>
         </div>
 
-        <div style="display:flex; flex-direction:column; gap:10px;">
-          <label style="font-size:0.84rem; font-weight:600; color:#cbd5e1;">Select Dispatch Channels (Prototype Simulation):</label>
+        <!-- Real Email Delivery Input -->
+        <div style="display:flex; flex-direction:column; gap:6px; background:rgba(249,115,22,0.08); border:1px solid rgba(249,115,22,0.3); border-radius:8px; padding:12px;">
+          <label style="font-size:0.84rem; font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;">
+            <span>✉️ Recipient Email (Real Delivery):</span>
+          </label>
+          <input type="email" id="alertRecipientEmail" class="form-control" placeholder="Enter your email: e.g. name@gmail.com" style="width:100%; font-size:0.9rem;">
+          <span style="font-size:0.75rem; color:#cbd5e1;">Enter your email to receive an official AlertNex emergency warning bulletin directly to your inbox.</span>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <label style="font-size:0.84rem; font-weight:600; color:#cbd5e1;">Additional Dispatch Channels:</label>
           <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#cbd5e1;">
-            <input type="checkbox" checked id="chanDashboard"> Central Command Dashboard Broadcast
+            <input type="checkbox" checked id="chanDashboard"> Command Center Dashboard Broadcast
           </label>
           <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#cbd5e1;">
-            <input type="checkbox" checked id="chanMobile"> Mobile App Push Notification (FCM Simulation)
+            <input type="checkbox" checked id="chanMobile"> Mobile App Push (FCM Gateway Simulation)
           </label>
           <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#cbd5e1;">
-            <input type="checkbox" checked id="chanSMS"> Simulated SMS to Emergency Contacts (NIC/C-DOT Ready)
-          </label>
-          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#cbd5e1;">
-            <input type="checkbox" id="chanEmail"> Official Civil Administration Email Dispatch
+            <input type="checkbox" checked id="chanSMS"> Citizen SMS Broadcast (CAP / C-DOT Gateway Simulation)
           </label>
         </div>
 
-        <div style="background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.3); border-radius:6px; padding:10px; font-size:0.78rem; color:#fef08a;">
-          <strong>Prototype Notice:</strong> External SMS and Email gateways are simulated for demonstration. Live emergency deployments connect via Gov NIC/C-DOT CAP-compliant gateways.
+        <div style="background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.3); border-radius:6px; padding:10px; font-size:0.75rem; color:#fef08a;">
+          <strong>Gateway Status:</strong> Real SMTP email is connected via FastAPI backend. Telecom SMS is presented as CAP protocol simulation for SIH demonstration.
         </div>
       `;
     }
@@ -162,10 +168,43 @@ const AlertNexAlerts = {
     if (modalBackdrop) modalBackdrop.classList.remove("active");
   },
 
-  dispatchSimulatedNotification() {
+  async dispatchSimulatedNotification() {
+    const alert = this.activeAlertForModal;
+    const emailInput = document.getElementById("alertRecipientEmail");
+    const recipientEmail = emailInput ? emailInput.value.trim() : "";
+
     this.closeModal();
-    if (window.AlertNexApp && this.activeAlertForModal) {
-      AlertNexApp.showToast(`Emergency alert [${this.activeAlertForModal.code}] broadcasted to simulated channels!`);
+
+    if (recipientEmail && window.AlertNexAPI) {
+      if (window.AlertNexApp) {
+        AlertNexApp.showToast(`Dispatching official emergency email to ${recipientEmail}...`);
+      }
+
+      try {
+        const emailRes = await AlertNexAPI.sendRealEmail({
+          recipient_email: recipientEmail,
+          alert_title: alert ? alert.title : "Landslide Hazard Early Warning",
+          risk_level: alert ? alert.level : "CRITICAL",
+          risk_score: alert ? alert.riskScore : 87.0,
+          location: alert ? alert.location : "North Eastern Region Sector",
+          potential_impact: alert ? alert.impact : "Road disruption and community isolation risk",
+          recommended_action: alert ? alert.action : "Deploy response units and initiate evacuation advisories",
+          emergency_corridor: "Shillong-Mawsynram Bypass via Mawphlang"
+        });
+
+        if (window.AlertNexApp) {
+          AlertNexApp.showToast(`✅ Real emergency email delivered to ${recipientEmail}!`);
+        }
+      } catch (err) {
+        console.warn("Real email delivery:", err.message);
+        if (window.AlertNexApp) {
+          AlertNexApp.showToast(`Notice: ${err.message}`);
+        }
+      }
+    } else {
+      if (window.AlertNexApp && alert) {
+        AlertNexApp.showToast(`Alert [${alert.code}] broadcasted to all command channels!`);
+      }
     }
   }
 };

@@ -114,6 +114,19 @@ const AlertNexAPI = {
       console.warn("API submitReport failed, saving offline:", e.message);
       throw e;
     }
+  },
+
+  async sendRealEmail(payload) {
+    const res = await fetch(`${this.baseUrl}/alerts/send-email`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.detail || data.error || `HTTP ${res.status}`);
+    }
+    return data;
   }
 };
 

@@ -25,3 +25,14 @@ class AlertResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+class EmailAlertRequest(BaseModel):
+    recipient_email: str = Field(..., example="district.magistrate@ner.gov.in")
+    alert_title: str = Field(default="Critical Landslide Hazard Warning")
+    risk_level: str = Field(default="CRITICAL")
+    risk_score: float = Field(default=87.0)
+    location: str = Field(default="Demo Monitoring Zone A, Meghalaya")
+    potential_impact: str = Field(default="NH-206 Road Cutoff Risk; Mawlyndep Village isolated")
+    recommended_action: str = Field(default="Deploy SDRF rescue units and enforce single-lane vehicular regulation")
+    emergency_corridor: Optional[str] = Field(default="Shillong-Mawsynram Bypass via Mawphlang")
+

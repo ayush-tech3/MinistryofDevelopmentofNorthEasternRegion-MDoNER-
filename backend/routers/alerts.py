@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from backend.database import get_db
 from backend.models.alert import Alert
-from backend.schemas.alert import AlertCreate, AlertResponse, AlertAcknowledge
+from backend.schemas.alert import AlertCreate, AlertResponse, AlertAcknowledge, EmailAlertRequest
 from backend.services.alert_service import AlertService
 
 router = APIRouter(prefix="/api/alerts", tags=["Early Warnings & Alerts"])
@@ -32,3 +32,25 @@ def acknowledge_alert(alert_id: int, db: Session = Depends(get_db)):
     if not alert:
         raise HTTPException(status_code=404, detail="Alert not found")
     return alert
+
+@router.post("/send-email")
+def send_real_alert_email(payload: EmailAlertRequest):
+    """
+    Deliver a real emergency warning email to an authority, DM, or citizen inbox.
+    Uses SMTP configured in backend/.env (e.g. Gmail SMTP or custom host).
+    """
+    from backend.services.email_service import EmailService
+    result = EmailService.send_emergency_email(
+        recipient_email=payload.recipient_email,
+        alert_title=payload.alert_title,
+        risk_level=payload.risk_level,
+        risk_score=payload.risk_score,
+        location=payload.location,
+        potential_impact=payload.potential_impact,
+        recommended_action=payload.recommended_action,
+        emergency_corridor=payload.emergency_corridor
+    )
+    if not result.get("success"):
+        raise HTTPException(status_code=400, detail=result.get("error", "Email dispatch failed"))
+    return result
+
