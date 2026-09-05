@@ -1,0 +1,107 @@
+/* ==========================================================================
+   AlertNex - Responsive Layout Stylesheet
+   Breakpoints: Mobile (< 768px), Tablet (768px - 1024px), Desktop (> 1024px)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 220px;
+  }
+
+  .landing-hero {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .map-view-container {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  #gisMap {
+    height: 480px;
+  }
+
+  .ai-analysis-layout,
+  .reporting-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    padding: 0 14px;
+  }
+
+  .topbar-center,
+  .gov-crest-pill {
+    display: none;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+    width: 260px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+    padding: 16px 14px 60px;
+  }
+
+  .hero-heading {
+    font-size: 2.1rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pipeline-flow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pipeline-arrow {
+    transform: rotate(90deg);
+    text-align: center;
+    margin: -4px 0;
+  }
+
+  .view-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .view-header-title-group h1 {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-action-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .quick-action-bar .btn {
+    width: 100%;
+  }
+
+  .emergency-route-callout {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # 1. PostgreSQL with PostGIS Spatial Extensions
+  db:
+    image: postgis/postgis:16-3.4
+    container_name: alertnex-postgis-db
+    restart: always
+    environment:
+      POSTGRES_USER: alertnex_user
+      POSTGRES_PASSWORD: alertnex_secret_pass
+      POSTGRES_DB: alertnex_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - alertnex_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U alertnex_user -d alertnex_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # 2. FastAPI Backend & AI Risk Engine
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: alertnex-fastapi-backend
+    restart: always
+    environment:
+      - DATABASE_URL=postgresql://alertnex_user:alertnex_secret_pass@db:5432/alertnex_db
+      - UPLOAD_DIR=/app/backend/uploads
+      - PROTOTYPE_MODE=true
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - alertnex_uploads:/app/backend/uploads
+
+  # 3. React Frontend with Tailwind CSS & Leaflet
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: alertnex-react-frontend
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  alertnex_pgdata:
+  alertnex_uploads:
