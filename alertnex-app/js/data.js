@@ -443,37 +443,37 @@ const AlertNexData = {
     {
       name: "SONDEEP KUMAR",
       role: "Team Member",
-      responsibilities: ["Backend Development", "Database Architecture (PostGIS)", "API Integration", "Data Pipelines"],
+      responsibilities: ["Backend Development", "FastAPI REST APIs", "Pydantic Schemas", "SQLite Relational Storage"],
       avatarInitials: "SK",
       education: "B.Tech Computer Science & Engineering",
-      focus: "FastAPI, GeoJSON Streaming, Asynchronous Ingestion",
+      focus: "FastAPI REST Services, Data Models, Asynchronous Endpoints",
       icon: "server"
     },
     {
       name: "SHINJINI LOHAR",
       role: "Team Member",
-      responsibilities: ["AI/ML Engineering", "Computer Vision Hazard Detection", "Remote Sensing", "Data Processing"],
+      responsibilities: ["Risk Factor Attribution", "Data Calibration", "Rule-Based Explanation", "Terrain Analysis"],
       avatarInitials: "SL",
       education: "B.Tech Data Science & AI",
-      focus: "Satellite InSAR Processing, DEM Terrain Features, Scikit-Learn",
+      focus: "Weighted Multi-Factor Scoring, Environmental Feature Normalization",
       icon: "cpu"
     },
     {
       name: "SUBHAM KUMAR MODI",
       role: "Team Member",
-      responsibilities: ["GIS Spatial Analysis", "Mobile Application Workflow", "Offline Storage Sync", "QA Testing"],
+      responsibilities: ["GIS Spatial Mapping", "IndexedDB Offline Sync", "Road Graph Visualization", "QA Testing"],
       avatarInitials: "SM",
       education: "B.Tech Computer Science & Engineering",
-      focus: "IndexedDB Local Sync, Spatial Buffers, Road Graph Algorithms",
+      focus: "IndexedDB Local Queue, Leaflet Spatial Overlays, Field Testing",
       icon: "map-pin"
     },
     {
       name: "RAHUL DEO",
       role: "Team Member",
-      responsibilities: ["Cloud Infrastructure", "DevOps & Deployment", "Security & Data Integrity", "System Testing"],
+      responsibilities: ["DevOps & Deployment", "Netlify CI/CD", "API Testing Suite", "System Security"],
       avatarInitials: "RD",
       education: "B.Tech Information Technology",
-      focus: "Containerization, Multi-Channel Notification APIs, Failover",
+      focus: "Deployment Pipelines, Automated Testing, Environment Configuration",
       icon: "shield"
     }
   ],
