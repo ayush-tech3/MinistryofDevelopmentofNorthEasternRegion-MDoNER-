@@ -425,55 +425,55 @@ const AlertNexData = {
     {
       name: "AYUSH KUMAR",
       role: "Team Leader",
-      responsibilities: ["AI/ML Architecture", "Landslide Risk Prediction Engine", "System Architecture", "Overall Coordination"],
+      responsibilities: ["Project Coordination", "System Architecture", "Prototype Risk Model", "SIH Submission Alignment"],
       avatarInitials: "AK",
       education: "B.Tech Computer Science & Engineering",
-      focus: "Explainable AI, Decision-Support Systems, Geospatial Modeling",
+      focus: "Overall project coordination, prototype system architecture, decision-support logic, and SIH submission alignment.",
       icon: "crown"
     },
     {
       name: "PRERANA MONDAL",
       role: "Team Member",
-      responsibilities: ["Frontend Development", "UI/UX Design", "GIS Data Visualization", "User Accessibility"],
+      responsibilities: ["Frontend Development", "UI/UX Design", "Interactive Visualizations", "Dashboard Components"],
       avatarInitials: "PM",
       education: "B.Tech Information Technology",
-      focus: "Interactive Dashboards, Leaflet GIS, Responsive Web UX",
+      focus: "Developed the user interface, dashboard components, responsive layouts, and interactive project visualizations.",
       icon: "layout"
     },
     {
       name: "SONDEEP KUMAR",
       role: "Team Member",
-      responsibilities: ["Backend Development", "FastAPI REST APIs", "Pydantic Schemas", "SQLite Relational Storage"],
+      responsibilities: ["Backend Development", "FastAPI REST APIs", "Database Integration", "Application Data Flow"],
       avatarInitials: "SK",
       education: "B.Tech Computer Science & Engineering",
-      focus: "FastAPI REST Services, Data Models, Asynchronous Endpoints",
+      focus: "Developed FastAPI APIs, backend services, database integration, and application data flow.",
       icon: "server"
     },
     {
       name: "SHINJINI LOHAR",
       role: "Team Member",
-      responsibilities: ["Risk Factor Attribution", "Data Calibration", "Rule-Based Explanation", "Terrain Analysis"],
+      responsibilities: ["Risk Assessment Engine", "Factor Processing", "Risk Classification Logic", "Prototype Calibration"],
       avatarInitials: "SL",
       education: "B.Tech Data Science & AI",
-      focus: "Weighted Multi-Factor Scoring, Environmental Feature Normalization",
+      focus: "Developed the prototype weighted risk assessment engine, environmental factor processing, and risk classification logic.",
       icon: "cpu"
     },
     {
       name: "SUBHAM KUMAR MODI",
       role: "Team Member",
-      responsibilities: ["GIS Spatial Mapping", "IndexedDB Offline Sync", "Road Graph Visualization", "QA Testing"],
+      responsibilities: ["GIS Visualization", "Connectivity Impact Analysis", "Route Decision Support", "Offline Sync"],
       avatarInitials: "SM",
       education: "B.Tech Computer Science & Engineering",
-      focus: "IndexedDB Local Queue, Leaflet Spatial Overlays, Field Testing",
+      focus: "Developed GIS visualization, connectivity impact analysis, and prototype route decision-support features.",
       icon: "map-pin"
     },
     {
       name: "RAHUL DEO",
       role: "Team Member",
-      responsibilities: ["DevOps & Deployment", "Netlify CI/CD", "API Testing Suite", "System Security"],
+      responsibilities: ["System Integration", "Deployment Configuration", "Testing & QA", "GitHub & Netlify Setup"],
       avatarInitials: "RD",
       education: "B.Tech Information Technology",
-      focus: "Deployment Pipelines, Automated Testing, Environment Configuration",
+      focus: "Managed system integration, deployment configuration, testing, GitHub repository setup, and Netlify deployment.",
       icon: "shield"
     }
   ],
