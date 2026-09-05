@@ -86,7 +86,7 @@ While traditional systems stop at predicting *where* a landslide might occur, Al
                                      │
                                      ▼
 ┌──────────────────────────────────────────────────────────────────────────┐
-│                      PROTOTYPE RISK ENGINE & XAI                         │
+│         PROTOTYPE RISK ENGINE & EXPLAINABLE RISK ANALYSIS                │
 │  Formula: (Rain×0.30) + (Moist×0.25) + (Slope×0.20) + (Hist×0.15) + (Rep×0.10)│
 │  Classification: 0-25 LOW │ 26-50 MODERATE │ 51-75 HIGH │ 76-100 CRITICAL│
 │  Rule-Based Factor Attribution: Heavy Rain, Soil Saturation, Slope Angle │
@@ -140,7 +140,7 @@ MinistryofDevelopmentofNorthEasternRegion(MDoNER)/
 │       ├── app.js                # Hash router, sidebar, clock, toast notifications
 │       ├── data.js               # Seed datasets, monitoring zones, NER roads, villages
 │       ├── map.js                # Leaflet GIS engine, risk buffer polygons, layer toggles
-│       ├── ai-engine.js          # Interactive risk calculator and rule-based XAI
+│       ├── ai-engine.js          # Interactive risk calculator and rule-based risk factor explanation
 │       ├── connectivity.js       # Road disruption, village isolation, alt route engine
 │       ├── alerts.js             # Alert management, status update, email/SMS dispatch
 │       ├── reporting.js          # Incident submission, IndexedDB offline sync, verification
@@ -159,6 +159,10 @@ MinistryofDevelopmentofNorthEasternRegion(MDoNER)/
 │   ├── services/                 # Risk engine, connectivity analyzer, email service
 │   └── utils/
 │       └── seed_data.py          # Automatic seeding of realistic NER demo data
+├── docs/                         # Official SIH Submission Documents & PDF Generators
+├── presentation/                 # Presentation Decks (.pptx) & Slide Builders
+├── archive/                      # Historical prototypes & exploratory drafts
+├── docker-compose.yml            # Multi-container orchestration (PostGIS, FastAPI, Nginx)
 ├── netlify.toml                  # Netlify deployment configuration
 ├── .gitignore                    # Git ignore rules (protects credentials and artifacts)
 └── README.md                     # Project documentation

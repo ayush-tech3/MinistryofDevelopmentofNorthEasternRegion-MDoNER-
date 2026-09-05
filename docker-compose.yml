@@ -39,15 +39,15 @@ services:
     volumes:
       - alertnex_uploads:/app/backend/uploads
 
-  # 3. React Frontend with Tailwind CSS & Leaflet
+  # 3. AlertNex Command Center Frontend (SPA)
   frontend:
-    build:
-      context: .
-      dockerfile: frontend/Dockerfile
-    container_name: alertnex-react-frontend
+    image: nginx:alpine
+    container_name: alertnex-frontend
     restart: always
     ports:
       - "3000:80"
+    volumes:
+      - ./alertnex-app:/usr/share/nginx/html:ro
     depends_on:
       - backend
 
