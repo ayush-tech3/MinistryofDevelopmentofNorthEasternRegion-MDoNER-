@@ -51,7 +51,7 @@ const AlertNexConnectivity = {
     }
     if (affectedVillagesEl) affectedVillagesEl.textContent = `${zone.affectedVillages.length} Communities`;
     if (hospAccessEl) hospAccessEl.textContent = zone.riskLevel === "CRITICAL" ? "Corridor Vulnerable" : "Accessible via Detour";
-    if (altRouteEl) altRouteEl.textContent = "Prototype Alternative Route Suggestion";
+    if (altRouteEl) altRouteEl.textContent = "Prototype Alternative Route Suggested";
 
     // Road Impact Table
     const roadTableBody = document.getElementById("impactRoadsTableBody");
