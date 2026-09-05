@@ -112,7 +112,7 @@ class ConnectivityEngineService:
             ]
             suggested_route = {
                 "corridor_name": f"Secondary Ridge Detour Route ({zone.district})",
-                "status": "VERIFIED ALTERNATIVE",
+                "status": "PROTOTYPE ALTERNATIVE ROUTE SUGGESTED",
                 "distance_differential": "+12 km (+20 minutes transit)",
                 "priority": "HIGH" if is_critical else "MEDIUM",
                 "recommendation_note": "Designated emergency relief corridor for emergency services."

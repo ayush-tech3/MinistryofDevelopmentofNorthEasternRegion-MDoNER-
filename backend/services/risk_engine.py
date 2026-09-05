@@ -63,7 +63,7 @@ class RiskEngineService:
         recent_reports: int
     ) -> List[Dict[str, Any]]:
         """
-        Explainable AI (XAI) feature attribution.
+        Prototype Explainable Risk Analysis feature attribution.
         Categorizes factors into HIGH, MODERATE, or LOW impact based on their contribution.
         """
         r_val = min(max(float(rainfall), 0.0), 100.0)
