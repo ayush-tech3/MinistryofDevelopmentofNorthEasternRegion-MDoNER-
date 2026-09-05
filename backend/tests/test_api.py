@@ -1,5 +1,11 @@
 from fastapi.testclient import TestClient
 from backend.main import app
+from backend.database import Base, engine
+from backend.utils.seed_data import seed_database
+
+# Explicitly ensure SQLite tables are created and seeded during CI test runner execution
+Base.metadata.create_all(bind=engine)
+seed_database()
 
 client = TestClient(app)
 
