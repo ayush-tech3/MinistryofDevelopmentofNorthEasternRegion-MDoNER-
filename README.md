@@ -81,7 +81,7 @@ While traditional systems stop at predicting *where* a landslide might occur, Al
 ┌──────────────────────────────────────────────────────────────────────────┐
 │                   FASTAPI REST BACKEND & DATA LAYER                     │
 │  /api/zones  │  /api/risk  │  /api/reports  │  /api/alerts  │  /health    │
-│  SQLAlchemy ORM │ SQLite Embedded Database (PostgreSQL/PostGIS supported)│
+│  SQLAlchemy ORM │ SQLite Embedded Database (Production migration to PostgreSQL/PostGIS planned)│
 └────────────────────────────────────┬─────────────────────────────────────┘
                                      │
                                      ▼
