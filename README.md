@@ -4,335 +4,307 @@
 
 **Smart India Hackathon 2026**
 
-| Field | Details |
+| Parameter | Details |
 | :--- | :--- |
 | **Problem Statement ID** | SIH26001 |
-| **Team Name** | AlertNex |
-| **Team Leader** | Ayush Kumar |
-| **Ministry** | Ministry of Development of North Eastern Region (MDoNER) |
+| **Organization** | Ministry of Development of North Eastern Region (MDoNER) |
 | **Theme** | Disaster Management |
 | **Category** | Software |
+| **Team Name** | AlertNex |
+| **Team Leader** | Ayush Kumar |
 
 > *AI-Powered Early Warning for Safer Communities*
 
 ---
 
-## 📌 Project Overview
+## 1. Project Overview
 
-Landslides are the single most devastating geological hazard across the **North Eastern Region (NER)** of India, disrupting vital national highways (such as NH-27, NH-10, NH-29), isolating remote tribal hamlets, and severing emergency medical accessibility during heavy monsoons.
+Landslides are among the most frequent and destructive natural hazards in the **North Eastern Region (NER)** of India, exacerbated by steep Himalayan and Patkai terrain, intense seasonal monsoon rainfall, fragile sedimentary strata, and seismic sensitivity. Critical transport arteries such as NH-27 (Haflong Pass), NH-10 (Sikkim corridor), and NH-206 (Cherrapunji axis) regularly suffer severe disruptions that isolate remote tribal communities and obstruct emergency medical logistics.
 
-**AlertNex** is an AI-assisted Decision-Support and Early Warning Platform built for the **Ministry of Development of North Eastern Region (MDoNER)**. It bridges raw environmental telemetry with actionable emergency intelligence:
-
-1. **Identifies Where Risk is Rising:** Multimodal predictive fusion of rainfall, soil saturation, slope gradient, historical slide frequency, and crowdsourced field reports.
-2. **Explainable AI (XAI):** Transparent feature attribution breaking down *why* a given slope has crossed warning thresholds.
-3. **Connectivity Impact Intelligence (Core Innovation):** Automatically evaluates downstream road blockages, assesses village isolation vulnerability, and computes verified emergency bypass corridors.
-4. **Resilient Field Reporting:** Offline-first hazard registration ensuring frontline officers and citizens can file reports even when cellular towers fail.
+**AlertNex** is an AI-assisted Decision-Support and Early Warning Prototype developed for the **Ministry of Development of North Eastern Region (MDoNER)** under Smart India Hackathon 2026. The platform continuously monitors environmental triggers, computes multi-parameter risk scores, explains contributing factors, tracks topological road connectivity disruptions, and suggests prototype emergency detour corridors to maintain lifeline connectivity.
 
 ---
 
-## ✨ Features
+## 2. Problem Statement
 
-| Feature | Description |
-| :--- | :--- |
-| **Landing Portal** | Overview of the AlertNex system with feature highlights and pipeline visualization |
-| **Authority Dashboard** | Real-time KPI cards, live alert ticker, and monitoring summary charts |
-| **Live Risk Map (GIS)** | Leaflet-powered interactive map showing monitoring zones, roads, villages, and hospitals across NER |
-| **AI Risk Analysis** | Dynamic risk scoring (0–100) with weighted multi-parameter formula and explainable factor attributions |
-| **Connectivity Impact Analysis** | Road disruption analysis, village isolation risk assessment, and emergency bypass route computation |
-| **Alerts & Warnings** | Multi-tier alert management (Low/Moderate/High/Critical) with notification dispatch (Email/SMS via backend) |
-| **Incident Reporting** | Field hazard reporting with photo upload, GPS capture, and offline queue support |
-| **Reports & Analytics** | Charts and trend visualizations for risk patterns across NER states |
-| **System Information** | Technical architecture overview, tech stack details, and system configuration |
-| **Team AlertNex** | Team member profiles and SIH submission details |
+* **PS ID:** SIH26001
+* **Context:** The hilly topography and excessive monsoon precipitation in NER create recurring slope instability. Existing warning systems are often centralized, lack slope-scale granularity, and fail to translate hazard forecasts into actionable road connectivity and village isolation intelligence for district disaster management authorities (DDMA) and frontline responders.
+* **Core Challenge:** Build an intelligent early-warning decision-support tool that bridges environmental data, terrain factors, citizen field reports, and road network topology to provide early alerts and actionable mitigation advice.
 
 ---
 
-## 🛠️ Technology Stack
+## 3. Proposed Solution
 
-### Frontend (Deployed on Netlify)
-
-| Technology | Purpose |
-| :--- | :--- |
-| HTML5 | Semantic page structure |
-| Vanilla CSS | Custom design system with CSS custom properties |
-| ES6+ JavaScript | Modular application logic (app.js, map.js, api.js, etc.) |
-| Leaflet.js | Interactive GIS mapping engine |
-| Chart.js | Data visualization and analytics charts |
-| CartoDB Tiles | Dark topographic map tiles |
-
-### Backend (Requires Separate Hosting)
-
-| Technology | Purpose |
-| :--- | :--- |
-| Python 3.12+ | Server-side runtime |
-| FastAPI | REST API framework |
-| SQLAlchemy | ORM with PostgreSQL/PostGIS support (SQLite fallback) |
-| Pydantic v2 | Request/response validation schemas |
-| SMTP (Gmail) | Real email alert delivery |
-| Twilio API | SMS alert delivery (when configured) |
-
-### Database
-
-| Technology | Purpose |
-| :--- | :--- |
-| PostgreSQL + PostGIS | Primary spatial database (via Docker) |
-| SQLite | Automatic zero-config fallback for development |
+AlertNex solves this challenge through a multi-tier prototype architecture:
+1. **Multimodal Environmental Telemetry Ingestion:** Combines rainfall intensity, soil moisture saturation, slope gradient, historical slide frequency, and crowdsourced ground observations.
+2. **Transparent Prototype Risk Assessment Engine:** Calculates a standardized risk score (0–100) using a transparent weighted formula calibrated against NER geotechnical parameters.
+3. **Prototype Explainable Risk Analysis (Rule-Based Attribution):** Breaks down model outputs into human-understandable factor contributions (Heavy Rainfall, Saturated Soil, Steep Terrain, etc.) so emergency commanders know *why* a slope is vulnerable.
+4. **Connectivity Impact Intelligence (Core Innovation):** Evaluates road graph blockages, detects vulnerable isolated villages, assesses hospital transit accessibility, and suggests prototype emergency corridors.
+5. **Resilient Field Incident Reporting:** Features an offline-first reporting workflow with client-side IndexedDB caching and authority review lifecycle (`PENDING` -> `VERIFIED`/`REJECTED`).
 
 ---
 
-## 🚀 How to Run Locally
+## 4. Key Features
+
+* **Authority Command Dashboard:** Real-time KPI summaries, active risk distribution, live alert ticker, and an interactive **Professor Demo Simulation** bar.
+* **Interactive GIS Risk Map:** Leaflet-powered spatial viewer featuring CartoDB topographic basemaps, monitoring zones with pulsing risk epicenters, road networks, village nodes, and hospital locations.
+* **Prototype AI Risk Assessment Engine:** Real-time risk scoring (0–100) with interactive parameter sliders (Rainfall, Soil Moisture, Slope, Weather multiplier, History, Recent reports).
+* **Rule-Based Risk Factor Explanation:** Transparent decomposition showing which environmental trigger contributes most to the danger level.
+* **Connectivity Impact Intelligence:** Automated detection of vulnerable roads, potential village isolation, hospital route access, and prototype alternative route suggestions.
+* **Community & Field Incident Reporting:** Geotagged reporting with photo upload, GPS acquisition, and authority verification workflow.
+* **IndexedDB Offline Reporting:** Full offline caching when connectivity drops in remote valleys, with one-click background synchronization (`SYNC NOW`).
+* **Multi-Channel Alert Dispatch:** Automated and manual bulletin issuance with real SMTP email dispatch to district magistrate / NDRF inboxes and SMS simulation.
+* **Interactive Demo Simulation:** 10-phase demonstration flow for judges to observe end-to-end hazard escalation and response in real time.
+
+---
+
+## 5. Main Innovation: Connectivity Impact Intelligence
+
+While traditional systems stop at predicting *where* a landslide might occur, AlertNex's primary breakthrough is **Connectivity Impact Intelligence**:
+* **Topological Disruption Mapping:** Categorizes affected road links into `NORMAL`, `MONITORING`, `POTENTIAL DISRUPTION`, and `CRITICAL DISRUPTION`.
+* **Village Isolation Vulnerability:** Analyzes single-access mountain hamlets and classifies their isolation vulnerability (`LOW`, `MODERATE`, `HIGH`, `CRITICAL`).
+* **Critical Healthcare Infrastructure:** Evaluates transit impedance to district hospitals and trauma centers.
+* **Prototype Alternative Route Suggestions:** Recommends secondary bypass corridors (e.g. Shillong-Mawsynram Bypass via Mawphlang) with calculated distance differentials and transit delay estimates for emergency convoys.
+
+---
+
+## 6. System Architecture
+
+```
+┌──────────────────────────────────────────────────────────────────────────┐
+│                             DATA SOURCES                                 │
+│  Precipitation (Demo) │ Soil Moisture (Demo) │ SRTM 30m DEM (Prototype) │
+│  Crowdsourced Citizen Reports │ Field Officer Ground Truth Observations │
+└────────────────────────────────────┬─────────────────────────────────────┘
+                                     │
+                                     ▼
+┌──────────────────────────────────────────────────────────────────────────┐
+│                   FASTAPI REST BACKEND & DATA LAYER                     │
+│  /api/zones  │  /api/risk  │  /api/reports  │  /api/alerts  │  /health    │
+│  SQLAlchemy ORM  │  SQLite Embedded DB (PostgreSQL/PostGIS Architecture) │
+└────────────────────────────────────┬─────────────────────────────────────┘
+                                     │
+                                     ▼
+┌──────────────────────────────────────────────────────────────────────────┐
+│                      PROTOTYPE RISK ENGINE & XAI                         │
+│  Formula: (Rain×0.30) + (Moist×0.25) + (Slope×0.20) + (Hist×0.15) + (Rep×0.10)│
+│  Classification: 0-25 LOW │ 26-50 MODERATE │ 51-75 HIGH │ 76-100 CRITICAL│
+│  Rule-Based Factor Attribution: Heavy Rain, Soil Saturation, Slope Angle │
+└────────────────────────────────────┬─────────────────────────────────────┘
+                                     │
+                                     ▼
+┌──────────────────────────────────────────────────────────────────────────┐
+│                     FRONTEND PRESENTATION LAYER                          │
+│  HTML5 + Vanilla CSS (Design Tokens) + Modular ES6+ JavaScript           │
+│  Leaflet GIS Engine │ Chart.js Analytics │ IndexedDB Offline Queue        │
+│  Deployed on Netlify: https://ministryofdevelopmentofnortheastern.netlify.app │
+└──────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 7. Technology Stack
+
+### Actually Implemented & Working:
+* **Frontend:**
+  * HTML5 Semantic Architecture (Accessible, SPA view routing)
+  * Vanilla CSS3 (Custom design system, CSS variables, dark command center theme, glassmorphism)
+  * Modular ES6+ JavaScript (`app.js`, `map.js`, `api.js`, `ai-engine.js`, `connectivity.js`, `alerts.js`, `reporting.js`, `simulation.js`, `charts.js`, `data.js`)
+  * Leaflet.js 1.9.4 (Interactive GIS map canvas with CartoDB Voyager tiles)
+  * Chart.js (Interactive analytical charts for risk trends and alert distributions)
+  * IndexedDB API (Client-side offline incident report caching with LocalStorage fallback)
+* **Backend:**
+  * Python 3.12+ runtime
+  * FastAPI 0.110+ (Asynchronous REST API framework)
+  * Uvicorn 0.28+ (ASGI production-ready web server)
+  * Pydantic v2 (Strict schema validation for telemetry and reports)
+  * SQLAlchemy 2.0 (ORM database layer with automatic table creation)
+  * SQLite (Embedded zero-configuration database, auto-seeded on launch)
+  * SMTP (Standard Python `smtplib` configured for emergency email alert dispatch)
+  * HTTPX & Requests (API communication and automated testing)
+
+---
+
+## 8. Project Structure
+
+```
+MinistryofDevelopmentofNorthEasternRegion(MDoNER)/
+├── alertnex-app/                 # Complete SPA Frontend (Netlify Publish Root)
+│   ├── index.html                # Single-page application entry point (10 views)
+│   ├── assets/                   # Static images, maps, and icons
+│   ├── css/
+│   │   ├── style.css             # Main responsive command center stylesheet
+│   │   └── responsive.css        # Mobile and tablet viewport breakpoints
+│   └── js/
+│       ├── api.js                # Environment-aware REST client with demo fallback
+│       ├── app.js                # Hash router, sidebar, clock, toast notifications
+│       ├── data.js               # Seed datasets, monitoring zones, NER roads, villages
+│       ├── map.js                # Leaflet GIS engine, risk buffer polygons, layer toggles
+│       ├── ai-engine.js          # Interactive risk calculator and rule-based XAI
+│       ├── connectivity.js       # Road disruption, village isolation, alt route engine
+│       ├── alerts.js             # Alert management, status update, email/SMS dispatch
+│       ├── reporting.js          # Incident submission, IndexedDB offline sync, verification
+│       ├── simulation.js         # 10-step professor demo simulation controller
+│       └── charts.js             # Chart.js visualizations for analytics
+├── backend/                      # FastAPI Python Backend
+│   ├── main.py                   # FastAPI app entry point, CORS, lifespan, routes
+│   ├── database.py               # SQLAlchemy engine & SQLite/PostgreSQL configuration
+│   ├── requirements.txt          # Python dependencies
+│   ├── .env.example              # Template environment variables
+│   ├── ml/
+│   │   └── risk_model.py         # Prototype risk model module
+│   ├── models/                   # SQLAlchemy ORM models (Zone, Report, Alert, Road, etc.)
+│   ├── routers/                  # API route definitions (zones, risk, reports, alerts, connectivity)
+│   ├── schemas/                  # Pydantic validation schemas
+│   ├── services/                 # Risk engine, connectivity analyzer, email service
+│   └── utils/
+│       └── seed_data.py          # Automatic seeding of realistic NER demo data
+├── netlify.toml                  # Netlify deployment configuration
+├── .gitignore                    # Git ignore rules (protects credentials and artifacts)
+└── README.md                     # Project documentation
+```
+
+---
+
+## 9. How to Run Frontend
+
+The frontend is a lightweight, zero-dependency Single Page Application that works out-of-the-box with built-in prototype fallback data.
+
+### Option A: Local Python Server
+```bash
+cd alertnex-app
+python -m http.server 8080
+```
+Open your browser at: **`http://localhost:8080`**
+
+### Option B: Direct Live Netlify Deployment
+The frontend is continuously deployed at:
+**[https://ministryofdevelopmentofnortheastern.netlify.app/](https://ministryofdevelopmentofnortheastern.netlify.app/)**
+
+---
+
+## 10. How to Run Backend
 
 ### Prerequisites
-- Python 3.10+ (for backend)
-- A modern web browser (Chrome, Firefox, Edge)
+* Python 3.10, 3.11, or 3.12+
+* Pip package manager
 
-### Option 1: Frontend Only (Quickest)
-
-The frontend works standalone with built-in demo data — no backend required.
-
-**Windows (One-Click):**
-```bash
-# Double-click launch_alertnex.bat
-# OR manually:
-cd alertnex-app
-python -m http.server 8080
-```
-Then open: `http://localhost:8080`
-
-**Any OS:**
-```bash
-cd alertnex-app
-python3 -m http.server 8080
-# OR use any static file server:
-# npx serve .
-```
-
-### Option 2: Full Stack (Frontend + Backend)
-
-```bash
-# 1. Install backend dependencies
-pip install -r backend/requirements.txt
-
-# 2. Start FastAPI backend
-uvicorn backend.main:app --host 127.0.0.1 --port 8000 --reload
-
-# 3. In another terminal, serve the frontend
-cd alertnex-app
-python -m http.server 8080
-```
-
-- Frontend: `http://localhost:8080`
-- Backend API: `http://127.0.0.1:8000`
-- Swagger Docs: `http://127.0.0.1:8000/docs`
-
-### Option 3: Docker Compose
-
-```bash
-docker-compose up --build
-```
-- Frontend: `http://localhost:3000`
-- Backend: `http://localhost:8000`
-- PostGIS: `localhost:5432`
-
----
-
-## 🌐 How to Deploy Frontend on Netlify
-
-The frontend is a **static HTML/CSS/JavaScript** site. No build step is required.
-
-### Step-by-Step:
-
-1. **Push this repository to GitHub:**
+### Steps
+1. Navigate to the project root:
    ```bash
-   git init
-   git add .
-   git commit -m "Initial commit: AlertNex SIH 2026"
-   git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPO.git
-   git push -u origin main
+   cd "MinistryofDevelopmentofNorthEasternRegion(MDoNER)"
    ```
-
-2. **Connect to Netlify:**
-   - Go to [app.netlify.com](https://app.netlify.com/)
-   - Click **"Add new site"** → **"Import an existing project"**
-   - Select **GitHub** and authorize access
-   - Choose your AlertNex repository
-
-3. **Configure Build Settings:**
-   - These are **automatically detected** from `netlify.toml`, but verify:
-   - **Build command:** `echo 'AlertNex: Static frontend — no build step required.'`
-   - **Publish directory:** `alertnex-app`
-
-4. **Deploy:**
-   - Click **"Deploy site"**
-   - Your site will be live at a Netlify URL (e.g., `https://alertnex.netlify.app`)
-
-5. **Automatic Updates:**
-   - Every `git push` to the `main` branch will trigger a new deployment automatically.
+2. Install Python dependencies:
+   ```bash
+   pip install -r backend/requirements.txt
+   ```
+3. Start the FastAPI development server:
+   ```bash
+   uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
+   ```
+4. Verify backend health:
+   * Root status: `http://localhost:8000/`
+   * Health check: `http://localhost:8000/health`
+   * Interactive Swagger API Docs: `http://localhost:8000/docs`
 
 ---
 
-## 🔐 How to Configure Environment Variables
+## 11. Environment Variables
 
-### Backend `.env` Configuration
+Create a `backend/.env` file based on `backend/.env.example`:
 
-Copy the example file and fill in your credentials:
-```bash
-cp backend/.env.example backend/.env
-```
+```ini
+# Backend Server Configuration
+HOST=0.0.0.0
+PORT=8000
+DEBUG=True
 
-Key variables:
-| Variable | Description |
-| :--- | :--- |
-| `DATABASE_URL` | PostgreSQL connection string (defaults to SQLite) |
-| `SMTP_ENABLED` | Enable real email delivery (`true`/`false`) |
-| `SMTP_HOST` | SMTP server (e.g., `smtp.gmail.com`) |
-| `SMTP_USERNAME` | Email address for sending alerts |
-| `SMTP_PASSWORD` | App password (not your regular password) |
-| `SMS_ENABLED` | Enable Twilio SMS (`true`/`false`) |
+# Database Configuration (Defaults to local SQLite)
+DATABASE_URL=sqlite:///./alertnex.db
 
-> ⚠️ **Never commit `.env` files to GitHub.** The `.gitignore` is configured to exclude them.
+# Production Frontend URL for CORS
+FRONTEND_URL=https://ministryofdevelopmentofnortheastern.netlify.app
 
-### Netlify Environment Variables (If Backend is Deployed)
+# Emergency Alert SMTP Email (Optional - for live email delivery)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your_email@gmail.com
+SMTP_PASS=your_app_specific_password
+FROM_EMAIL=your_email@gmail.com
 
-If you deploy the backend separately (e.g., on Render, Railway, or AWS), set the backend URL in Netlify:
-
-- Go to **Site Settings → Environment Variables**
-- Add: `ALERTNEX_API_URL` = `https://your-backend-domain.com/api`
-
----
-
-## ⚠️ Demo Data Disclaimer
-
-> **All environmental sensor data, monitoring zones, road networks, village populations, and hospital locations displayed in this prototype are simulated demo data** created specifically for Smart India Hackathon 2026 evaluation.
->
-> The risk scores, alert bulletins, and connectivity impact analyses represent realistic but **fictional scenarios** modeled after the geological and meteorological characteristics of Northeast India.
->
-> No real-time sensor feeds, government databases, or actual citizen data are used.
-
----
-
-## 🧪 Prototype Limitations
-
-| Limitation | Details |
-| :--- | :--- |
-| **Demo Sensor Data** | Environmental telemetry (rainfall, soil moisture, slope) uses pre-configured simulation values, not live feeds |
-| **No Real ML Training** | Risk scores use a weighted formula; production would use trained XGBoost/Random Forest models on historical GSI data |
-| **Backend Required for APIs** | Email/SMS dispatch, report persistence, and database operations require the FastAPI backend to be running |
-| **Frontend-Only on Netlify** | The Netlify deployment serves only the frontend prototype; all API calls gracefully fall back to local demo data |
-| **No Authentication** | The prototype does not implement user authentication or role-based access control |
-| **GIS Data** | Road networks and village coordinates are approximations for demonstration purposes |
-
----
-
-## 🏗️ Architecture Overview
-
-```
-┌────────────────────────────────────────────────────────────┐
-│          STATIC HTML/CSS/JS FRONTEND (Netlify)             │
-│    (Vanilla CSS, Leaflet GIS, Chart.js, ES6 Modules)       │
-│    Hash-based SPA routing (#dashboard, #map, #alerts...)   │
-└─────────────────────────┬──────────────────────────────────┘
-                          │ REST API (JSON / Multipart)
-                          │ (graceful fallback to demo data
-                          │  when backend is unavailable)
-                          ▼
-┌────────────────────────────────────────────────────────────┐
-│                   FASTAPI BACKEND                          │
-│     (Routers: zones, risk, reports, alerts, connectivity)  │
-├─────────────────────────┬──────────────────────────────────┤
-│      AI RISK ENGINE     │    CONNECTIVITY ENGINE           │
-│   (Weighted Formula)    │    (Isolation & Routes)          │
-└─────────────────────────┴──────────────────────────────────┘
-                          │ SQLAlchemy ORM
-                          ▼
-┌────────────────────────────────────────────────────────────┐
-│             POSTGRESQL + POSTGIS DATABASE                  │
-│    (Tables: zones, reports, alerts, roads, villages)       │
-│     *Automatic SQLite fallback when Postgres offline*      │
-└────────────────────────────────────────────────────────────┘
+# Twilio SMS (Optional - runs in simulation mode if absent)
+TWILIO_ACCOUNT_SID=
+TWILIO_AUTH_TOKEN=
+TWILIO_PHONE_NUMBER=
 ```
 
 ---
 
-## 📁 Project Structure
+## 12. Demo Data Explanation
 
-```
-AlertNex/
-├── alertnex-app/              ← Frontend (deployed to Netlify)
-│   ├── index.html             ← Main entry point (single-page app)
-│   ├── css/
-│   │   ├── style.css          ← Design system & component styles
-│   │   └── responsive.css     ← Mobile/tablet breakpoints
-│   ├── js/
-│   │   ├── app.js             ← Router & state orchestrator
-│   │   ├── api.js             ← REST API client (with demo fallback)
-│   │   ├── data.js            ← Demo/simulation data
-│   │   ├── map.js             ← Leaflet GIS module
-│   │   ├── ai-engine.js       ← AI risk analysis UI
-│   │   ├── connectivity.js    ← Impact analysis module
-│   │   ├── alerts.js          ← Alert management & notification
-│   │   ├── reporting.js       ← Incident reporting form
-│   │   └── charts.js          ← Chart.js analytics
-│   └── assets/
-│       ├── ner_hero.jpg       ← Landing page hero image
-│       └── sih_top_logo.png   ← SIH branding logo
-├── backend/                   ← FastAPI backend (separate hosting)
-│   ├── main.py                ← Application entry point
-│   ├── database.py            ← SQLAlchemy engine setup
-│   ├── .env.example           ← Environment variable template
-│   ├── requirements.txt       ← Python dependencies
-│   ├── routers/               ← API route handlers
-│   ├── schemas/               ← Pydantic validation models
-│   ├── services/              ← Business logic layer
-│   ├── models/                ← SQLAlchemy ORM models
-│   ├── ml/                    ← ML/AI risk computation
-│   └── utils/                 ← Seed data & helpers
-├── index.html                 ← Root redirect to alertnex-app/
-├── netlify.toml               ← Netlify deployment configuration
-├── docker-compose.yml         ← Full-stack Docker setup
-├── launch_alertnex.bat        ← Windows one-click launcher
-├── .gitignore                 ← Git ignore rules
-└── README.md                  ← This file
-```
+All demonstration data has been realistically calibrated to represent authentic geographic and meteorological realities across the North Eastern Region of India:
+* **Demo Zone A (Cherrapunji-Mawsynram Slopes, East Khasi Hills, Meghalaya):** Represents ultra-high precipitation escarpments subject to deep-seated rotational slides along NH-206.
+* **Demo Zone B (Haflong-Jatinga Hill Pass, Dima Hasao, Assam):** Represents critical railway and East-West highway corridor vulnerabilities across unstable shale formations.
+* **Demo Zone C (Gangtok-Tsomgo Alpine Pass, East Sikkim):** Represents high-altitude glacial and scree slopes along defense and tourism transit links.
+* **Demo Zone D (Kohima-Dimapur Valley, Nagaland):** Represents active urban slope creep and highway subsidence zones along NH-29.
 
 ---
 
-## 🔌 REST API Reference
+## 13. Prototype Risk Model
 
-When the FastAPI backend is running, interactive docs are available at `/docs`.
+The prototype calculation uses a transparent, explainable weighted multi-factor formula:
 
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/api/zones` | Retrieve all monitoring zones |
-| `GET` | `/api/zones/{id}` | Retrieve single zone telemetry |
-| `POST` | `/api/zones` | Create new monitoring zone |
-| `PUT` | `/api/zones/{id}` | Update telemetry & auto-recalculate risk |
-| `GET` | `/api/risk/{zone_id}` | Explainable AI factor attributions |
-| `POST` | `/api/risk/calculate` | Compute risk score from arbitrary inputs |
-| `GET` | `/api/connectivity/{zone_id}` | Road blockages, isolation & detour analysis |
-| `GET` | `/api/alerts` | List early warning bulletins |
-| `POST` | `/api/alerts` | Issue manual alert bulletin |
-| `PUT` | `/api/alerts/{id}/acknowledge` | Acknowledge active emergency alert |
-| `POST` | `/api/alerts/send-email` | Send real email alert via SMTP |
-| `POST` | `/api/alerts/send-sms` | Send SMS alert via Twilio |
-| `GET` | `/api/reports` | List field hazard reports |
-| `POST` | `/api/reports` | Submit incident report (multipart upload) |
+$$\text{Risk Score} = (R \times 0.30) + (SM \times 0.25) + (S \times 0.20) + (H \times 0.15) + (FR \times 0.10)$$
+
+Where:
+* $R$ = Normalized Rainfall Intensity (24h cumulative, 0–100 scale) — **30% Weight**
+* $SM$ = Soil Moisture Saturation percentage (0–100 scale) — **25% Weight**
+* $S$ = Slope Gradient angle normalized (0–100 scale) — **20% Weight**
+* $H$ = Historical Landslide Activity Index (0–100 scale) — **15% Weight**
+* $FR$ = Verified Field Ground Reports count (scaled to 100 max) — **10% Weight**
+
+### Risk Categorization:
+* **0 – 25:** LOW (Green — Normal baseline monitoring)
+* **26 – 50:** MODERATE (Yellow — Advisory watch active)
+* **51 – 75:** HIGH (Orange — Equipment mobilized, traffic regulated)
+* **76 – 100:** CRITICAL (Red — Immediate action, road closures, standby evacuation)
 
 ---
 
-## 👥 Team AlertNex (SIH 2026)
+## 14. Deployment Architecture
 
-| Member | Role | Responsibilities |
-| :--- | :--- | :--- |
-| **AYUSH KUMAR** | **Team Leader** | AI/ML Architecture, Risk Prediction Engine, System Architecture, Coordination |
-| **PRERANA MONDAL** | Member | Frontend Development, UI/UX Design, GIS Data Visualization |
-| **SONDEEP KUMAR** | Member | Backend Development, Database Architecture (PostGIS), API Integration |
-| **SHINJINI LOHAR** | Member | AI/ML Engineering, Computer Vision Hazard Detection, Remote Sensing |
-| **SUBHAM KUMAR MODI** | Member | GIS Spatial Analysis, Mobile Application Workflow, Offline Storage Sync |
-| **RAHUL DEO** | Member | Cloud Infrastructure, DevOps & CI/CD, System Security & Testing |
+* **Frontend:** Static Single Page Application hosted on **Netlify**, with automated CI/CD continuous deployment triggered on every Git push to the GitHub repository.
+* **Backend:** Container-ready FastAPI service designed to deploy on platforms such as **Render, Railway, Fly.io, or AWS EC2**.
+* **Database:** Default zero-configuration embedded SQLite for portable demonstration, with an abstraction layer ready for managed PostgreSQL/PostGIS in production.
 
 ---
 
-## ⚖️ Hackathon Ethics & Disclaimer
+## 15. Prototype Limitations (Academic Honesty)
 
-AlertNex is an AI-assisted decision-support system prototype built for **Smart India Hackathon 2026 (PS ID: SIH26001)** under the **Ministry of Development of North Eastern Region (MDoNER)**. All alternative route suggestions, risk scores, and alert broadcasts are simulated recommendations intended for evaluation and demonstration.
+In strict adherence to Smart India Hackathon integrity standards:
+1. **Environmental Telemetry:** Rainfall and soil moisture telemetry are currently demo simulations or pre-calibrated baseline datasets; physical IoT sensors are not deployed in the competition hall.
+2. **Risk Model:** The calculation is a transparent weighted formula and rule-based attribution prototype, not a black-box deep learning model trained on petabyte-scale imagery.
+3. **Geographic Scope:** Four representative NER sectors are currently modeled.
+4. **Authority Directives:** Alternative routes and advisories are algorithmic decision-support recommendations and do not represent official civil police or military transit orders.
+
+---
+
+## 16. Future Scope & Planned Integrations
+
+* **Satellite Remote Sensing:** Automated ingestion of Sentinel-1 InSAR surface displacement interferograms and Sentinel-2 optical moisture indices.
+* **IMD AWS API Integration:** Automated live polling of India Meteorological Department Automatic Weather Stations across the North East.
+* **C-DOT / NDMA CAP Integration:** Direct connection to the Common Alerting Protocol (CAP) gateway for localized cell-broadcast SMS.
+* **Dijkstra Dynamic Routing Engine:** Real-time road network graph solver considering slope angle, bridge capacity, and river flood gauge data.
+* **Mobile Field App:** React Native / Flutter offline client for frontline SDRF and PWD personnel.
+
+---
+
+## 17. Team AlertNex
+
+* **Team Name:** AlertNex
+* **Team Leader:** Ayush Kumar
+* **Smart India Hackathon:** Smart India Hackathon 2026
+* **Problem Statement ID:** SIH26001
+* **Ministry:** Ministry of Development of North Eastern Region (MDoNER)
+* **Theme:** Disaster Management
+* **Category:** Software

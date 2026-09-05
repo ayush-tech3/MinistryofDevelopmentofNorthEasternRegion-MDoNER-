@@ -21,6 +21,7 @@ const AlertNexApp = {
     if (window.AlertNexAlerts) AlertNexAlerts.init();
     if (window.AlertNexReporting) AlertNexReporting.init();
     if (window.AlertNexCharts) AlertNexCharts.init();
+    if (window.AlertNexSimulation) AlertNexSimulation.init();
 
     // Check URL hash or default to landing
     const initialHash = window.location.hash.replace("#", "");

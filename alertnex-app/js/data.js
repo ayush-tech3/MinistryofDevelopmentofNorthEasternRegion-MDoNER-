@@ -478,35 +478,44 @@ const AlertNexData = {
     }
   ],
 
+  // Data Sources & Integration Status (SIH Transparency)
+  dataSources: [
+    { name: "Rainfall Data", type: "Prototype Dataset", status: "DEMO", badgeClass: "demo" },
+    { name: "Terrain Data", type: "SRTM DEM / Prototype Terrain Data", status: "PROTOTYPE", badgeClass: "prototype" },
+    { name: "Historical Landslide Data", type: "Public Geotechnical Dataset", status: "PROTOTYPE", badgeClass: "prototype" },
+    { name: "Citizen & Ground Reports", type: "AlertNex Reporting System", status: "WORKING", badgeClass: "working" },
+    { name: "Satellite InSAR Integration", type: "Future Remote Sensing API", status: "PLANNED", badgeClass: "planned" }
+  ],
+
   // System Architecture & Tech Stack Specs
   techStack: {
     frontend: {
       name: "Frontend Architecture",
-      items: ["HTML5 Semantic Structure", "Modern Vanilla CSS (Custom Tokens)", "Modular ES6+ JavaScript", "Leaflet.js GIS Engine", "Chart.js Visualizations"]
+      items: ["HTML5 Semantic Structure", "Modern Vanilla CSS (Design Tokens)", "Modular ES6+ JavaScript", "Leaflet.js GIS Engine", "Chart.js Visualizations"]
     },
     backend: {
       name: "Backend & APIs",
-      items: ["Python 3.12+", "FastAPI High-Throughput REST APIs", "Uvicorn ASGI Server", "Pydantic Schemas"]
+      items: ["Python 3.12+", "FastAPI REST Framework", "Uvicorn ASGI Server", "Pydantic Schemas"]
     },
     aiMl: {
-      name: "AI / ML Risk Assessment Engine",
-      items: ["Python Scikit-Learn", "XGBoost / Random Forest Classifier", "Pandas & NumPy Vectorization", "SHAP (Explainable AI / Factor Contribution)"]
+      name: "Risk Assessment Engine",
+      items: ["Python NumPy & Pandas", "Transparent Multi-Factor Formula", "Rule-Based Risk Factor Explanation", "NER Geotechnical Calibration"]
     },
     database: {
-      name: "Database & Spatial Storage",
-      items: ["PostgreSQL 16+", "PostGIS Spatial Extensions", "GeoJSON Vector Layers", "Redis In-Memory Telemetry Cache"]
+      name: "Database & Persistence",
+      items: ["SQLite (Embedded Demo DB)", "SQLAlchemy ORM Data Models", "GeoJSON Vector Topologies", "PostgreSQL/PostGIS Architecture Ready"]
     },
     gis: {
-      name: "GIS & Remote Sensing",
-      items: ["Leaflet GIS Vector Layering", "Sentinel-1 InSAR / Sentinel-2 Multispectral", "SRTM 30m Digital Elevation Model (DEM)", "CartoDB Positron & Topo Basemaps"]
+      name: "GIS & Spatial Mapping",
+      items: ["Leaflet GIS Vector Layering", "CartoDB Topographic Basemaps", "SRTM 30m Digital Elevation Model (DEM)", "Interactive Risk Epicut/Buffer Geometry"]
     },
     offline: {
-      name: "Offline Field Capability",
-      items: ["IndexedDB Client Persistence", "LocalStorage Queue Fallback", "Service Worker Asset Cache", "Automated Background Resynchronization"]
+      name: "Offline Ground Capability",
+      items: ["IndexedDB Client Persistence", "LocalStorage Queue Fallback", "Automated Background Sync", "Field Officer Geotagged Reports"]
     },
     notifications: {
-      name: "Notification Gateway",
-      items: ["Firebase Cloud Messaging (FCM Ready)", "Government Disaster SMS Gateway Simulation", "Web Push Notifications", "Emergency Radio Protocol Ready"]
+      name: "Multi-Channel Alert Gateway",
+      items: ["SMTP Emergency Email Dispatch (Active)", "Twilio SMS / Simulated Gateway", "Browser Live Ticker & Toast Alerts", "NDMA CAP Gateway Compatible Protocol"]
     }
   }
 };

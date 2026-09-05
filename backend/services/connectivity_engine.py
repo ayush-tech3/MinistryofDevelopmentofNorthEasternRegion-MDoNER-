@@ -21,10 +21,10 @@ class ConnectivityEngineService:
             overall_road_status = "POTENTIAL DISRUPTION"
             hosp_status = "Accessible via Southern Bypass (+30 min delay)"
         elif is_moderate:
-            overall_road_status = "MONITORING (Single-lane Traffic)"
+            overall_road_status = "MONITORING"
             hosp_status = "Operational with caution"
         else:
-            overall_road_status = "NORMAL (Unrestricted Flow)"
+            overall_road_status = "NORMAL"
             hosp_status = "Fully Operational"
 
         # Realistic contextual roads for NER zones
@@ -61,7 +61,7 @@ class ConnectivityEngineService:
             ]
             suggested_route = {
                 "corridor_name": "Shillong-Mawsynram Bypass via Mawphlang (Clear)",
-                "status": "OPERATIONAL / VERIFIED ALTERNATIVE",
+                "status": "Prototype Alternative Route Suggestion",
                 "distance_differential": "+18 km (+25 minutes transit)",
                 "priority": "HIGH",
                 "recommendation_note": "Recommended priority corridor for medical evacuation and emergency supplies."
@@ -86,7 +86,7 @@ class ConnectivityEngineService:
             ]
             suggested_route = {
                 "corridor_name": "Umrangso-Lanka Alternate Ridge Track",
-                "status": "STANDBY ALTERNATIVE",
+                "status": "Prototype Alternative Route Suggestion",
                 "distance_differential": "+24 km (+40 minutes transit)",
                 "priority": "HIGH",
                 "recommendation_note": "Suitable for high-clearance 4x4 response vehicles and emergency supply convoys."

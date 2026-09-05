@@ -1,38 +1,122 @@
 /**
- * AlertNex - Community / Field Reporting System with Offline Sync
+ * AlertNex - Community & Field Incident Reporting System
  * Smart India Hackathon 2026 | PS ID: SIH26001
- * Team: AlertNex
+ * Theme: Disaster Management | Category: Software
+ * Team: AlertNex (Leader: Ayush Kumar)
+ * 
+ * Features:
+ * - IndexedDB local offline storage queue with fallback to LocalStorage
+ * - Real GPS detection with NER hill sector fallback
+ * - Full Report Lifecycle: Submitted -> PENDING -> Authority Review -> VERIFIED / REJECTED
+ * - Verified ground reports dynamically influence prototype risk assessment
  */
 
+// ─── IndexedDB Storage Helper ───────────────────────────────────────────────
+const AlertNexDB = {
+  dbName: "AlertNexOfflineDB",
+  storeName: "offline_reports",
+  dbVersion: 1,
+
+  async open() {
+    return new Promise((resolve) => {
+      if (!window.indexedDB) {
+        resolve(null); // Fallback to localStorage
+        return;
+      }
+      try {
+        const request = indexedDB.open(this.dbName, this.dbVersion);
+        request.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(this.storeName)) {
+            db.createObjectStore(this.storeName, { keyPath: "id" });
+          }
+        };
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => resolve(null);
+      } catch (err) {
+        resolve(null);
+      }
+    });
+  },
+
+  async getAll() {
+    const db = await this.open();
+    if (!db) {
+      try {
+        return JSON.parse(localStorage.getItem(this.storeName) || "[]");
+      } catch (e) {
+        return [];
+      }
+    }
+    return new Promise((resolve) => {
+      try {
+        const tx = db.transaction(this.storeName, "readonly");
+        const store = tx.objectStore(this.storeName);
+        const req = store.getAll();
+        req.onsuccess = () => resolve(req.result || []);
+        req.onerror = () => resolve([]);
+      } catch (e) {
+        resolve([]);
+      }
+    });
+  },
+
+  async add(report) {
+    const db = await this.open();
+    if (!db) {
+      const all = await this.getAll();
+      all.push(report);
+      localStorage.setItem(this.storeName, JSON.stringify(all));
+      return;
+    }
+    return new Promise((resolve) => {
+      try {
+        const tx = db.transaction(this.storeName, "readwrite");
+        const store = tx.objectStore(this.storeName);
+        store.put(report);
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => resolve(false);
+      } catch (e) {
+        resolve(false);
+      }
+    });
+  },
+
+  async clear() {
+    const db = await this.open();
+    if (!db) {
+      localStorage.removeItem(this.storeName);
+      return;
+    }
+    return new Promise((resolve) => {
+      try {
+        const tx = db.transaction(this.storeName, "readwrite");
+        const store = tx.objectStore(this.storeName);
+        store.clear();
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => resolve(false);
+      } catch (e) {
+        resolve(false);
+      }
+    });
+  }
+};
+
+// ─── AlertNex Reporting Controller ──────────────────────────────────────────
 const AlertNexReporting = {
   isOfflineMode: false,
   offlineQueue: [],
   selectedImageData: null,
 
-  init() {
-    this.loadOfflineQueue();
+  async init() {
+    await this.loadOfflineQueue();
     this.bindFormEvents();
     this.updateSyncUI();
     this.renderReportsList();
   },
 
-  loadOfflineQueue() {
-    try {
-      const stored = localStorage.getItem("alertnex_offline_reports");
-      if (stored) {
-        this.offlineQueue = JSON.parse(stored);
-      }
-    } catch (e) {
-      this.offlineQueue = [];
-    }
-  },
-
-  saveOfflineQueue() {
-    try {
-      localStorage.setItem("alertnex_offline_reports", JSON.stringify(this.offlineQueue));
-    } catch (e) {
-      console.warn("Storage quota or error saving offline queue", e);
-    }
+  async loadOfflineQueue() {
+    this.offlineQueue = await AlertNexDB.getAll();
   },
 
   bindFormEvents() {
@@ -51,13 +135,13 @@ const AlertNexReporting = {
               document.getElementById("reportLat").value = pos.coords.latitude.toFixed(4);
               document.getElementById("reportLng").value = pos.coords.longitude.toFixed(4);
               geoBtn.textContent = "✓ GPS Acquired";
-              if (window.AlertNexApp) AlertNexApp.showToast("GPS coordinates detected successfully");
+              if (window.AlertNexApp) AlertNexApp.showToast("GPS coordinates acquired successfully");
             },
-            (err) => {
+            () => {
               // Fallback for demo coordinates (Cherrapunji sector)
               document.getElementById("reportLat").value = "25.2980";
               document.getElementById("reportLng").value = "91.5815";
-              geoBtn.textContent = "✓ Sample NER GPS";
+              geoBtn.textContent = "✓ NER GPS Fallback";
               if (window.AlertNexApp) AlertNexApp.showToast("GPS fallback: Populated NER coordinates");
             },
             { timeout: 6000 }
@@ -75,7 +159,7 @@ const AlertNexReporting = {
             this.selectedImageData = event.target.result;
             const previewBox = document.getElementById("photoPreviewContainer");
             if (previewBox) {
-              previewBox.innerHTML = `<img src="${this.selectedImageData}" alt="Hazard Preview">`;
+              previewBox.innerHTML = `<img src="${this.selectedImageData}" alt="Hazard Preview" style="width:100%; height:120px; object-fit:cover; border-radius:6px;">`;
             }
           };
           reader.readAsDataURL(file);
@@ -88,7 +172,11 @@ const AlertNexReporting = {
         this.isOfflineMode = e.target.checked;
         this.updateSyncUI();
         if (window.AlertNexApp) {
-          AlertNexApp.showToast(this.isOfflineMode ? "Simulation: Offline mode ACTIVE. Reports will queue locally." : "Network reconnected. Ready to sync.");
+          AlertNexApp.showToast(
+            this.isOfflineMode
+              ? "SIMULATION: Offline mode ACTIVE. Reports will save to IndexedDB."
+              : "Network reconnected. Ready to sync queued reports."
+          );
         }
       });
     }
@@ -109,7 +197,7 @@ const AlertNexReporting = {
 
   async handleSubmit() {
     const reporterType = document.getElementById("reporterType").value;
-    const reporterName = document.getElementById("reporterName").value || (reporterType === "Citizen" ? "Citizen Informant" : "Field Surveyor");
+    const reporterName = document.getElementById("reporterName").value || (reporterType === "Citizen" ? "Citizen Informant" : "Field Officer");
     const incidentType = document.getElementById("incidentType").value;
     const severity = document.getElementById("reportSeverity").value;
     const locationName = document.getElementById("reportLocationName").value || "NER Hill Sector";
@@ -130,16 +218,16 @@ const AlertNexReporting = {
       description,
       image: this.selectedImageData || "assets/ner_hero.jpg",
       timestamp: "Just now",
-      syncStatus: this.isOfflineMode ? "Pending Sync (Offline)" : "Synced",
-      offlineStored: this.isOfflineMode,
-      aiRiskCorrelation: "Correlated with prototype spatial risk cluster"
+      status: "PENDING", // Initial workflow state
+      syncStatus: this.isOfflineMode ? "SAVED OFFLINE" : "Synced",
+      offlineStored: this.isOfflineMode
     };
 
     if (this.isOfflineMode) {
       this.offlineQueue.push(newReport);
-      this.saveOfflineQueue();
+      await AlertNexDB.add(newReport);
       if (window.AlertNexApp) {
-        AlertNexApp.showToast("SAVED OFFLINE: Stored in local storage queue!");
+        AlertNexApp.showToast("SAVED OFFLINE: Stored in local IndexedDB queue!");
       }
     } else {
       // Send to FastAPI Backend
@@ -157,10 +245,12 @@ const AlertNexReporting = {
 
         if (window.AlertNexAPI) {
           const apiRes = await AlertNexAPI.submitReport(formData);
-          newReport.id = `REP-DB-${apiRes.id}`;
+          if (apiRes && apiRes.id) {
+            newReport.id = `REP-DB-${apiRes.id}`;
+          }
         }
       } catch (err) {
-        console.warn("Backend submit failed, falling back to local state:", err);
+        console.warn("Backend submit fallback:", err);
       }
 
       AlertNexData.incidentReports.unshift(newReport);
@@ -169,7 +259,7 @@ const AlertNexReporting = {
         AlertNexMap.renderFieldReportPins();
       }
       if (window.AlertNexApp) {
-        AlertNexApp.showToast("Incident report successfully registered & saved to database!");
+        AlertNexApp.showToast("Report submitted successfully • Status: PENDING Authority Review");
       }
     }
 
@@ -184,7 +274,7 @@ const AlertNexReporting = {
     this.selectedImageData = null;
     const previewBox = document.getElementById("photoPreviewContainer");
     if (previewBox) {
-      previewBox.innerHTML = `<span style="color:#94a3b8; font-size:0.85rem;">Click to attach hazard photograph</span>`;
+      previewBox.innerHTML = `<img src="assets/ner_hero.jpg" alt="Preset Sample Field Image">`;
     }
   },
 
@@ -218,7 +308,7 @@ const AlertNexReporting = {
     }
 
     this.offlineQueue = [];
-    this.saveOfflineQueue();
+    await AlertNexDB.clear();
 
     if (window.AlertNexMap) {
       AlertNexMap.renderFieldReportPins();
@@ -228,7 +318,7 @@ const AlertNexReporting = {
     this.renderReportsList();
 
     if (window.AlertNexApp) {
-      AlertNexApp.showToast(`SYNCED SUCCESSFULLY: ${count} queued reports synced to backend!`);
+      AlertNexApp.showToast(`SYNCED SUCCESSFULLY: ${count} queued reports synced to system!`);
     }
   },
 
@@ -239,7 +329,7 @@ const AlertNexReporting = {
 
     if (statusPill) {
       if (this.isOfflineMode) {
-        statusPill.innerHTML = `<span class="pulse-dot red"></span> Offline (Local Storage Active)`;
+        statusPill.innerHTML = `<span class="pulse-dot red"></span> SAVED OFFLINE (IndexedDB Active)`;
         statusPill.style.color = "#fca5a5";
       } else {
         statusPill.innerHTML = `<span class="pulse-dot"></span> Cloud Connected (Auto-Sync)`;
@@ -256,26 +346,116 @@ const AlertNexReporting = {
     }
   },
 
+  async reviewReport(reportId, newStatus) {
+    // Find report
+    let report = AlertNexData.incidentReports.find(r => r.id === reportId);
+    if (!report) {
+      report = this.offlineQueue.find(r => r.id === reportId);
+    }
+    if (!report) return;
+
+    report.status = newStatus;
+
+    // Send update to backend if available
+    const numericId = reportId.replace("REP-DB-", "").replace("REP-2026-", "");
+    if (!isNaN(numericId) && window.AlertNexAPI) {
+      try {
+        await AlertNexAPI.put(`/api/reports/${numericId}/status`, { status: newStatus });
+      } catch (e) {
+        console.warn("Backend report status update fallback:", e);
+      }
+    }
+
+    if (newStatus === "VERIFIED") {
+      // Ground truth verified: Influence prototype risk calculation for active zone
+      const targetZone = AlertNexData.monitoringZones[0]; // Primary demonstration zone (Cherrapunji)
+      if (targetZone) {
+        targetZone.fieldReportsCount = (targetZone.fieldReportsCount || 0) + 1;
+        
+        // Recalculate risk using weighted formula
+        const rainScore = Math.min((targetZone.rainfall24h / 220) * 100, 100);
+        const moistureScore = targetZone.soilMoisture;
+        const slopeScore = Math.min((targetZone.slopeAngle / 55) * 100, 100);
+        const historyScore = 85;
+        const reportsScore = Math.min(targetZone.fieldReportsCount * 22, 100);
+
+        const newScore = Math.min(Math.round(
+          (rainScore * 0.30) + (moistureScore * 0.25) + (slopeScore * 0.20) + (historyScore * 0.15) + (reportsScore * 0.10)
+        ), 98);
+
+        targetZone.riskScore = newScore;
+        targetZone.riskLevel = newScore >= 76 ? "CRITICAL" : newScore >= 51 ? "HIGH" : newScore >= 26 ? "MODERATE" : "LOW";
+
+        // Update live map and engine if active
+        if (window.AlertNexMap) {
+          AlertNexMap.renderMonitoringZones();
+          AlertNexMap.displayZoneDetails(targetZone);
+        }
+        if (window.AlertNexAIEngine && AlertNexAIEngine.state) {
+          AlertNexAIEngine.state.fieldReports = targetZone.fieldReportsCount;
+          AlertNexAIEngine.calculateRisk();
+        }
+      }
+
+      if (window.AlertNexApp) {
+        AlertNexApp.showToast(`Report ${reportId} VERIFIED by Authority. Influenced Prototype Risk Analysis (+10% Weight)!`);
+      }
+    } else {
+      if (window.AlertNexApp) {
+        AlertNexApp.showToast(`Report ${reportId} marked as ${newStatus}.`);
+      }
+    }
+
+    this.renderReportsList();
+  },
+
   renderReportsList() {
     const container = document.getElementById("recentReportsFeed");
     if (!container) return;
 
     const allReports = [...this.offlineQueue, ...AlertNexData.incidentReports];
 
-    container.innerHTML = allReports.slice(0, 5).map(rep => `
+    container.innerHTML = allReports.slice(0, 6).map(rep => {
+      const repStatus = rep.status || "PENDING";
+      const statusColor = repStatus === "VERIFIED" ? "#10b981" : repStatus === "REJECTED" ? "#ef4444" : "#f59e0b";
+      const isPending = repStatus === "PENDING";
+
+      return `
       <div style="background:var(--navy-dark); border:1px solid var(--navy-border); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:8px;">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-          <span class="risk-tag ${rep.severity.toLowerCase()}">${rep.severity}</span>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="risk-tag ${rep.severity.toLowerCase()}">${rep.severity}</span>
+            <span style="font-size:0.75rem; font-weight:700; color:${statusColor}; background:rgba(255,255,255,0.06); padding:2px 8px; border-radius:4px;">
+              ${repStatus}
+            </span>
+          </div>
           <span style="font-size:0.75rem; color:#94a3b8;">${rep.timestamp}</span>
         </div>
         <div style="font-weight:700; color:#fff; font-size:0.95rem;">${rep.incidentType}: ${rep.locationName}</div>
         <p style="font-size:0.84rem; color:#cbd5e1; line-height:1.4;">${rep.description}</p>
-        <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#94a3b8; border-top:1px solid rgba(255,255,255,0.06); padding-top:6px;">
-          <span>By: ${rep.reporterName} (${rep.reporterType})</span>
+        
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.75rem; color:#94a3b8; border-top:1px solid rgba(255,255,255,0.06); padding-top:8px;">
+          <span>By: <strong>${rep.reporterName}</strong> (${rep.reporterType})</span>
           <span style="color:${rep.offlineStored ? '#f59e0b' : '#34d399'}; font-weight:600;">${rep.syncStatus}</span>
         </div>
+
+        ${isPending ? `
+        <div style="display:flex; gap:8px; margin-top:4px; padding-top:4px; border-top:1px dashed rgba(255,255,255,0.06);">
+          <button class="btn btn-sm btn-primary" style="background:#10b981; border-color:#10b981; font-size:0.75rem; padding:4px 10px;" onclick="AlertNexReporting.reviewReport('${rep.id}', 'VERIFIED')">
+            ✓ Verify Report (Influence Risk)
+          </button>
+          <button class="btn btn-sm btn-secondary" style="font-size:0.75rem; padding:4px 10px;" onclick="AlertNexReporting.reviewReport('${rep.id}', 'REJECTED')">
+            ✗ Reject
+          </button>
+        </div>
+        ` : `
+        <div style="font-size:0.72rem; color:${statusColor}; font-style:italic;">
+          ${repStatus === 'VERIFIED' ? '✓ Verified ground truth integrated into prototype spatial risk analysis' : '✗ Rejected by authority review'}
+        </div>
+        `}
       </div>
-    `).join("");
+    `;
+    }).join("");
   }
 };
 

@@ -44,22 +44,32 @@ const AlertNexConnectivity = {
     const hospAccessEl = document.getElementById("impactHospitalAccess");
     const altRouteEl = document.getElementById("impactAltRouteStatus");
 
-    if (statusRoadEl) statusRoadEl.textContent = zone.riskLevel === "CRITICAL" ? "Severe Disruption Likely" : zone.riskLevel === "HIGH" ? "Potential Disruption" : "Traffic Throttled";
+    if (statusRoadEl) {
+      statusRoadEl.textContent = zone.riskLevel === "CRITICAL" ? "CRITICAL DISRUPTION" :
+                                 zone.riskLevel === "HIGH" ? "POTENTIAL DISRUPTION" :
+                                 zone.riskLevel === "MODERATE" ? "MONITORING" : "NORMAL";
+    }
     if (affectedVillagesEl) affectedVillagesEl.textContent = `${zone.affectedVillages.length} Communities`;
     if (hospAccessEl) hospAccessEl.textContent = zone.riskLevel === "CRITICAL" ? "Corridor Vulnerable" : "Accessible via Detour";
-    if (altRouteEl) altRouteEl.textContent = "Verified Alternative Active";
+    if (altRouteEl) altRouteEl.textContent = "Prototype Alternative Route Suggestion";
 
     // Road Impact Table
     const roadTableBody = document.getElementById("impactRoadsTableBody");
     if (roadTableBody) {
-      roadTableBody.innerHTML = zone.affectedRoads.map((road, idx) => `
+      roadTableBody.innerHTML = zone.affectedRoads.map((road, idx) => {
+        const roadStatus = (idx === 0 && zone.riskLevel === "CRITICAL") ? "CRITICAL DISRUPTION" :
+                           (zone.riskLevel === "HIGH" || zone.riskLevel === "CRITICAL") ? "POTENTIAL DISRUPTION" :
+                           zone.riskLevel === "MODERATE" ? "MONITORING" : "NORMAL";
+        const tagClass = roadStatus === "CRITICAL DISRUPTION" ? "critical" : roadStatus === "POTENTIAL DISRUPTION" ? "high" : "moderate";
+        return `
         <tr>
           <td><strong style="color:#ffffff;">${road}</strong></td>
-          <td><span class="risk-tag ${idx === 0 ? 'critical' : 'high'}">${idx === 0 ? 'Disrupted / Vulnerable' : 'Single-Lane Advisory'}</span></td>
+          <td><span class="risk-tag ${tagClass}">${roadStatus}</span></td>
           <td><span style="color:#f87171; font-weight:700;">Priority 1 (Clearance)</span></td>
           <td><span style="font-size:0.8rem; color:#cbd5e1;">Heavy Earth Movers Stationed</span></td>
         </tr>
-      `).join("");
+      `;
+      }).join("");
     }
 
     // Village Isolation Analysis Table

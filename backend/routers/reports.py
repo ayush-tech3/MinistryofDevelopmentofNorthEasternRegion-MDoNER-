@@ -69,7 +69,7 @@ async def create_report(
         geometry=f'{{"type":"Point","coordinates":[{longitude},{latitude}]}}',
         severity=severity.upper(),
         image_path=saved_image_path,
-        status="VERIFIED",
+        status="PENDING",
         created_at=datetime.utcnow(),
         synced=True
     )
@@ -85,12 +85,47 @@ def update_report_status(
     payload: ReportStatusUpdate,
     db: Session = Depends(get_db)
 ):
-    """Update report operational lifecycle status (PENDING, VERIFIED, INVESTIGATING, RESOLVED)."""
+    """Update report operational lifecycle status (PENDING, VERIFIED, REJECTED, RESOLVED).
+    When verified, ground truth reports influence the prototype risk score of the closest monitoring zone.
+    """
     report = db.query(IncidentReport).filter(IncidentReport.id == report_id).first()
     if not report:
         raise HTTPException(status_code=404, detail="Incident report not found")
 
-    report.status = payload.status.upper()
+    old_status = report.status
+    new_status = payload.status.upper()
+    report.status = new_status
     db.commit()
     db.refresh(report)
+
+    # When report is verified, influence prototype risk analysis for closest monitoring zone
+    if new_status == "VERIFIED" and old_status != "VERIFIED":
+        from backend.models.monitoring_zone import MonitoringZone
+        from backend.services.risk_engine import RiskEngineService
+        
+        # Find closest zone or default zone
+        zones = db.query(MonitoringZone).all()
+        target_zone = None
+        min_dist = float("inf")
+        for z in zones:
+            dist = ((z.latitude - report.latitude) ** 2 + (z.longitude - report.longitude) ** 2) ** 0.5
+            if dist < min_dist:
+                min_dist = dist
+                target_zone = z
+        
+        if target_zone:
+            target_zone.recent_reports += 1
+            score, level = RiskEngineService.calculate_risk_score(
+                rainfall=target_zone.rainfall,
+                soil_moisture=target_zone.soil_moisture,
+                slope=target_zone.slope,
+                historical_activity=target_zone.historical_activity,
+                recent_reports=target_zone.recent_reports
+            )
+            target_zone.risk_score = score
+            target_zone.risk_level = level
+            db.commit()
+            db.refresh(target_zone)
+            RiskEngineService.evaluate_and_alert(target_zone, db)
+
     return report

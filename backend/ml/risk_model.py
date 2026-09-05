@@ -13,7 +13,7 @@ import numpy as np
 
 class LandslideMLPrototype:
     def __init__(self):
-        self.model_name = "AlertNex-RandomForest-NER-v2.6"
+        self.model_name = "AlertNex-WeightedPrototype-NER-v2.6"
         self.is_prototype = True
         self.feature_names = [
             "rainfall_mm",

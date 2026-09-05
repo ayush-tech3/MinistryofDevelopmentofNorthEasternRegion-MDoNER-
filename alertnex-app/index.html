@@ -340,6 +340,9 @@
           </div>
         </div>
 
+        <!-- Professor / Judge Demonstration Simulator Bar (Step 14) -->
+        <div id="demoSimulationContainer"></div>
+
         <!-- Top Statistics Cards -->
         <div class="kpi-grid">
           <div class="kpi-card">
@@ -647,10 +650,10 @@
             <div class="card">
               <div class="card-header">
                 <div>
-                  <div class="card-title">Explainable AI: Why Is The Risk High?</div>
-                  <div class="card-sub">Decomposition of model prediction into feature attributions</div>
+                  <div class="card-title">Prototype Explainable Risk Analysis: Why Is The Risk High?</div>
+                  <div class="card-sub">Rule-based decomposition of model score into weighted factor contributions</div>
                 </div>
-                <span class="prototype-badge">SHAP / XAI</span>
+                <span class="prototype-badge">PROTOTYPE EXPLAINABILITY</span>
               </div>
 
               <div class="xai-factors-grid" id="xaiFactorsList">
@@ -1051,31 +1054,31 @@
             <div class="flow-step-box">
               <div>
                 <div class="step-title">1. DATA INGESTION TIER</div>
-                <div class="step-desc">Rainfall Telemetry (IMD AWS), Soil Moisture Probes, SRTM 30m Digital Elevation Models, Sentinel-1 InSAR Surface Creep, Crowdsourced Citizen Reports, and Field Officer Observations.</div>
+                <div class="step-desc">Prototype Rainfall Simulation, Geotechnical Soil Moisture, SRTM 30m Digital Elevation Models, Crowdsourced Citizen Reports, and Field Officer Observations.</div>
               </div>
-              <span class="prototype-badge">MULTIMODAL INGEST</span>
+              <span class="prototype-badge">DEMO DATA / INGEST</span>
             </div>
 
             <div class="flow-step-box">
               <div>
                 <div class="step-title">2. GEOSPATIAL &amp; FEATURE PROCESSING</div>
-                <div class="step-desc">PostGIS spatial indexing, hydrological flow direction modeling, slope facet calculation, and temporal anomaly smoothing via asynchronous Python workers.</div>
+                <div class="step-desc">Coordinate-based spatial indexing, slope gradient calculation, terrain facet attribution, and asynchronous Python processing pipelines.</div>
               </div>
-              <span class="prototype-badge">POSTGIS / FASTAPI</span>
+              <span class="prototype-badge">PYTHON / FASTAPI</span>
             </div>
 
             <div class="flow-step-box">
               <div>
-                <div class="step-title">3. AI / ML RISK ASSESSMENT ENGINE</div>
-                <div class="step-desc">Trained ensemble models (XGBoost / Random Forest) calculating dynamic probability (0–100%) paired with SHAP explainability decomposition into risk drivers.</div>
+                <div class="step-title">3. PROTOTYPE RISK ASSESSMENT ENGINE</div>
+                <div class="step-desc">Transparent weighted multi-factor risk formula (Rainfall 30%, Moisture 25%, Slope 20%, History 15%, Reports 10%) with Rule-Based Factor Attribution.</div>
               </div>
-              <span class="prototype-badge">AI / XAI ENGINE</span>
+              <span class="prototype-badge">PROTOTYPE RISK ENGINE</span>
             </div>
 
             <div class="flow-step-box">
               <div>
                 <div class="step-title">4. CONNECTIVITY IMPACT INTELLIGENCE</div>
-                <div class="step-desc">Road graph disruption analysis, isolated village detection, hospital accessibility impact, and Dijkstra-based emergency detour recommendation.</div>
+                <div class="step-desc">Topological road graph disruption analysis, isolated village detection, hospital accessibility impact, and prototype emergency detour suggestions.</div>
               </div>
               <span class="prototype-badge">IMPACT INTELLIGENCE</span>
             </div>
@@ -1083,7 +1086,7 @@
             <div class="flow-step-box" style="border-color:var(--orange-primary);">
               <div>
                 <div class="step-title" style="color:var(--orange-primary);">5. MULTI-CHANNEL DECISION OUTPUTS</div>
-                <div class="step-desc">Authority Command Dashboard, Leaflet GIS spatial viewer, prototype SMS/Push notification dispatches, and printable disaster briefing reports.</div>
+                <div class="step-desc">Authority Command Dashboard, Leaflet GIS spatial viewer, prototype SMS/Email notification dispatches, and printable disaster briefing reports.</div>
               </div>
               <span class="status-online-pill">COMMAND OUTPUTS</span>
             </div>
@@ -1091,13 +1094,13 @@
         </div>
 
         <!-- Tech Stack Grid -->
-        <h2 style="font-size:1.3rem; color:#fff; margin:32px 0 16px;">Technology Stack</h2>
+        <h2 style="font-size:1.3rem; color:#fff; margin:32px 0 16px;">Technology Stack (Honest Architecture)</h2>
         <div class="tech-stack-grid">
           <div class="tech-card">
             <h4>FRONTEND</h4>
             <ul>
               <li>HTML5 Semantic Architecture</li>
-              <li>Modern Vanilla CSS (Custom Tokens)</li>
+              <li>Modern Vanilla CSS (Design Tokens)</li>
               <li>Modular ES6+ JavaScript</li>
               <li>Chart.js Visualizations</li>
             </ul>
@@ -1117,40 +1120,131 @@
             <h4>BACKEND &amp; APIS</h4>
             <ul>
               <li>Python 3.12+</li>
-              <li>FastAPI High-Speed REST Framework</li>
+              <li>FastAPI REST Framework</li>
               <li>Uvicorn Asynchronous Server</li>
-              <li>Pydantic Telemetry Schemas</li>
+              <li>Pydantic Schemas</li>
             </ul>
           </div>
 
           <div class="tech-card">
-            <h4>AI / ML ENGINE</h4>
+            <h4>RISK ENGINE</h4>
             <ul>
-              <li>Python Scikit-Learn</li>
-              <li>Pandas &amp; NumPy Vectorization</li>
-              <li>SHAP Explainable AI (XAI)</li>
-              <li>Dynamic Risk Scoring Formula</li>
+              <li>Python NumPy &amp; Pandas</li>
+              <li>Transparent Weighted Formula</li>
+              <li>Rule-Based Factor Attribution</li>
+              <li>NER Geotechnical Baseline</li>
             </ul>
           </div>
 
           <div class="tech-card">
             <h4>DATABASE &amp; STORAGE</h4>
             <ul>
-              <li>PostgreSQL Spatial</li>
-              <li>PostGIS Geospatial Engine</li>
-              <li>Redis Telemetry Cache</li>
-              <li>IndexedDB Client Persistence</li>
+              <li>SQLite (Embedded Demo DB)</li>
+              <li>SQLAlchemy ORM Models</li>
+              <li>GeoJSON Vector Topologies</li>
+              <li>PostGIS Architecture Ready</li>
             </ul>
           </div>
 
           <div class="tech-card">
             <h4>NOTIFICATION &amp; OFFLINE</h4>
             <ul>
-              <li>IndexedDB Local Offline Queue</li>
-              <li>LocalStorage Resynchronization</li>
-              <li>Firebase Cloud Messaging (FCM Ready)</li>
+              <li>IndexedDB Client Persistence (Live)</li>
+              <li>LocalStorage Queue Fallback</li>
+              <li>SMTP Emergency Email Dispatch</li>
               <li>Simulated Multi-Channel Gateway</li>
             </ul>
+          </div>
+        </div>
+
+        <!-- Step 7: Data Sources & Integration Status -->
+        <h2 style="font-size:1.3rem; color:#fff; margin:36px 0 16px;">Data Sources &amp; Integration Status</h2>
+        <div class="card" style="padding:0; overflow:hidden;">
+          <table class="data-sources-table">
+            <thead>
+              <tr>
+                <th>Data Source</th>
+                <th>Source Type</th>
+                <th>Integration Category</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Rainfall Data</strong></td>
+                <td>Precipitation Telemetry</td>
+                <td>Prototype Dataset (Calibrated to Cherrapunji)</td>
+                <td><span class="source-status-badge demo">DEMO</span></td>
+              </tr>
+              <tr>
+                <td><strong>Terrain &amp; Elevation Data</strong></td>
+                <td>Topographic Slope &amp; Aspect</td>
+                <td>SRTM 30m DEM / Prototype Terrain Data</td>
+                <td><span class="source-status-badge prototype">PROTOTYPE</span></td>
+              </tr>
+              <tr>
+                <td><strong>Historical Landslide Data</strong></td>
+                <td>Geotechnical Incident Log</td>
+                <td>Public Disaster Dataset / Geological Survey Baseline</td>
+                <td><span class="source-status-badge prototype">PROTOTYPE</span></td>
+              </tr>
+              <tr>
+                <td><strong>Citizen &amp; Ground Reports</strong></td>
+                <td>Community Geotagged Reports</td>
+                <td>AlertNex Incident Reporting System (IndexedDB + API)</td>
+                <td><span class="source-status-badge live">WORKING</span></td>
+              </tr>
+              <tr>
+                <td><strong>Satellite InSAR Integration</strong></td>
+                <td>Radar Surface Deformation (Sentinel-1)</td>
+                <td>Future Earth Observation API Pipeline</td>
+                <td><span class="source-status-badge planned">PLANNED</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Step 28: Prototype Status & Limitations -->
+        <h2 style="font-size:1.3rem; color:#fff; margin:36px 0 16px;">Current Prototype Status &amp; Limitations</h2>
+        <div class="limitations-card">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+            <span class="prototype-badge" style="background:rgba(239,68,68,0.15); color:#fca5a5; border-color:#ef4444;">ACADEMIC TRANSPARENCY NOTICE</span>
+            <span style="font-size:0.85rem; color:#cbd5e1; font-weight:600;">Smart India Hackathon 2026 Prototype Scope</span>
+          </div>
+          <p style="font-size:0.88rem; color:#cbd5e1; line-height:1.6; margin-bottom:16px;">
+            AlertNex is an applied hackathon prototype engineered for college-level and national demonstration. In adherence to strict academic honesty and Smart India Hackathon evaluation guidelines, the current prototype operational parameters are explicitly clarified below:
+          </p>
+
+          <div class="limitations-grid">
+            <div class="limitation-item">
+              <h5><span>⚠️</span> Prototype Environmental Data</h5>
+              <p>Rainfall and soil moisture telemetry values are simulated or pre-calibrated baseline figures designed to demonstrate dynamic multi-parameter risk calculation without requiring live physical IoT sensors in the competition hall.</p>
+            </div>
+
+            <div class="limitation-item">
+              <h5><span>⚠️</span> Prototype Risk Assessment Engine</h5>
+              <p>The current risk calculation uses a transparent weighted prototype engine (Rainfall 30%, Moisture 25%, Slope 20%, History 15%, Reports 10%) calibrated to NER topography. Heavy complex ML ensembles remain planned future work.</p>
+            </div>
+
+            <div class="limitation-item">
+              <h5><span>⚠️</span> Limited Monitoring Sectors</h5>
+              <p>Four primary demonstration sectors (Cherrapunji-Mawsynram, Haflong-Jatinga, Gangtok-Tsomgo, Kohima-Dimapur) are currently configured to showcase regional variability across Meghalaya, Assam, Sikkim, and Nagaland.</p>
+            </div>
+
+            <div class="limitation-item">
+              <h5><span>⚠️</span> Satellite Remote Sensing (Future)</h5>
+              <p>Sentinel-1 InSAR surface deformation tracking and Copernicus earth-observation feeds are architecturally designed for Phase 2 scaling but are not connected as live real-time feeds in this prototype.</p>
+            </div>
+
+            <div class="limitation-item">
+              <h5><span>⚠️</span> Decision-Support Only</h5>
+              <p>Alternative route suggestions and road disruption alerts are algorithmic prototype decision-support recommendations. They do not constitute official statutory evacuation orders from civil district authorities.</p>
+            </div>
+
+            <div class="limitation-item">
+              <h5><span>⚠️</span> Database Configuration</h5>
+              <p>For zero-configuration portability and offline demonstration, AlertNex runs on an embedded SQLite database with complete SQLAlchemy ORM models, designed for seamless migration to PostgreSQL/PostGIS in production.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -1378,6 +1472,7 @@
   <script src="js/alerts.js"></script>
   <script src="js/reporting.js"></script>
   <script src="js/charts.js"></script>
+  <script src="js/simulation.js"></script>
   <script src="js/app.js"></script>
 
 </body>
