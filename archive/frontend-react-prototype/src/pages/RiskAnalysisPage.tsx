@@ -50,7 +50,7 @@ export const RiskAnalysisPage: React.FC<RiskAnalysisPageProps> = ({ initialZoneI
             <span>AI Risk Assessment Engine</span>
           </h1>
           <p className="text-xs text-slate-400 mt-1">
-            Prototype Multi-Factor Risk Modeling with Real-Time Prototype Explainable Risk Analysis
+            Prototype Multi-Factor Risk Modeling with Real-Time Explainable AI (XAI)
           </p>
         </div>
         <span className="bg-amber-500/15 border border-amber-500/40 text-amber-300 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase">

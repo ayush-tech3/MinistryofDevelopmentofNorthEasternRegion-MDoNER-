@@ -10,7 +10,7 @@ router = APIRouter(prefix="/api/risk", tags=["AI Risk Assessment Engine"])
 @router.get("/{zone_id}", response_model=RiskExplanationResponse)
 def get_zone_risk_analysis(zone_id: int, db: Session = Depends(get_db)):
     """
-    Prototype Explainable Risk Analysis endpoint:
+    Explainable AI (XAI) factor attribution endpoint:
     Explains why a monitoring zone's landslide risk score is high.
     """
     zone = db.query(MonitoringZone).filter(MonitoringZone.id == zone_id).first()

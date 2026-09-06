@@ -1,5 +1,5 @@
 /**
- * AlertNex - AI Risk Assessment Engine & Prototype Explainable Risk Analysis
+ * AlertNex - AI Risk Assessment Engine & Explainable AI (XAI) Attribution
  * Smart India Hackathon 2026 | PS ID: SIH26001
  * Team: AlertNex
  */
@@ -137,7 +137,7 @@ const AlertNexAIEngine = {
       scoreCircleBar.style.background = riskColor;
     }
 
-    // Update Prototype Explainable Risk Analysis Contribution Factors
+    // Update Explainable AI (XAI) Contribution Factors
     this.updateExplainableAI(rainScore, moistureScore, slopeScore, historyScore, reportsScore, finalScore);
 
     // Update Trend Chart if initialized

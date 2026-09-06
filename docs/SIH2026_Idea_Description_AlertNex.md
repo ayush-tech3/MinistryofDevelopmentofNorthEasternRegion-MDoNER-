@@ -123,7 +123,7 @@ Rather than acting as a simple hazard map, AlertNex combines multi-source enviro
 | **Hospital Accessibility Matrix** | Emergency Services / 108 | Flags which primary health centers and district hospitals will become unreachable. |
 | **Dynamic Alternate Route Planner** | Ambulances / Convoys | Computes safe bypass corridors to maintain medical and supply transit. |
 | **Offline Mobile Reporting** | Citizens / Field Patrols | Captures geotagged photos of tension cracks without internet, auto-syncing when network returns. |
-| **Prototype Explainable Risk Analysis** | Disaster Decision Makers | Transparently shows *why* a location is high-risk (e.g. Rainfall 42%, Moisture 21%, Slope 15%). |
+| **Explainable AI (XAI)** | Disaster Decision Makers | Transparently shows *why* a location is high-risk (e.g. Rainfall 42%, Moisture 21%, Slope 15%). |
 | **Multi-Channel Early Warning** | Public & Transporters | Instant SMS and push notifications alerting commuters to avoid endangered road segments. |
 
 ---
@@ -143,7 +143,7 @@ In remote Himalayan valleys where cellular networks frequently collapse during s
 * Ground observations (cracks, soil creep, rockfalls, blocked culverts) are geotagged and stored in a **local SQLite database**.
 * When the user's phone reconnects to 2G, 3G, 4G, or Wi-Fi, the report **automatically synchronizes** with the central server.
 
-### 🌟 Third Innovation: Prototype Explainable Risk Analysis
+### 🌟 Third Innovation: Explainable AI (XAI) for Authority Trust & Auditability
 Government officials will not order road closures or evacuations based on a black-box percentage. AlertNex provides clear, auditable explanations:
 ```
 ALERT STATUS: CRITICAL RISK — 87%

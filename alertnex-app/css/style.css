@@ -1084,7 +1084,7 @@ input, select, textarea {
 }
 
 /* ==========================================================================
-   PAGE 4: AI RISK ANALYSIS & PROTOTYPE EXPLAINABLE RISK ANALYSIS
+   PAGE 4: AI RISK ANALYSIS & EXPLAINABLE AI (XAI)
    ========================================================================== */
 .ai-analysis-layout {
   display: grid;
@@ -1142,7 +1142,7 @@ input, select, textarea {
   box-shadow: 0 0 8px rgba(249, 115, 22, 0.6);
 }
 
-/* Prototype Explainable Risk Analysis Cards */
+/* Explainable AI (XAI) Factor Cards */
 .xai-factors-grid {
   display: grid;
   grid-template-columns: 1fr;
