@@ -55,11 +55,11 @@ const AlertNexMap = {
 
   getRiskColor(level) {
     switch (level) {
-      case "CRITICAL": return "#ef4444";
-      case "HIGH": return "#f97316";
-      case "MODERATE": return "#f59e0b";
-      case "LOW": return "#10b981";
-      default: return "#94a3b8";
+      case "CRITICAL": return "#dc2626";
+      case "HIGH": return "#ea580c";
+      case "MODERATE": return "#d97706";
+      case "LOW": return "#15803d";
+      default: return "#64748b";
     }
   },
 
