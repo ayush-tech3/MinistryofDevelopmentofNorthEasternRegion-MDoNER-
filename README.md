@@ -20,7 +20,7 @@
   <strong>An intelligent, Explainable AI (XAI) early-warning platform and topological connectivity graph solver built for disaster management commanders in the North Eastern Region of India.</strong>
 </p>
 
-[Explore Live Web App](https://ministryofdevelopmentofnortheastern.netlify.app/) • [Demo Walkthrough](DEMO_WALKTHROUGH.md) • [Pitch Deck](PITCH_DECK.md) • [API Swagger Docs](#-rest-api-documentation) • [Deploy Now](#-1-click-instant-cloud-deployment)
+[Explore Live Web App](https://ministryofdevelopmentofnortheastern.netlify.app/) • [Download Official PPTX](AlertNex_Official_Presentation.pptx) • [Idea Description PDF](AlertNex_Idea_Description.pdf) • [Demo Walkthrough](DEMO_WALKTHROUGH.md) • [Pitch Deck](PITCH_DECK.md) • [Deploy Now](#-1-click-instant-cloud-deployment)
 
 </div>
 
@@ -31,12 +31,14 @@
 | Deliverable | Resource / Link | Description |
 | :--- | :--- | :--- |
 | **🌐 Production Live App** | [ministryofdevelopmentofnortheastern.netlify.app](https://ministryofdevelopmentofnortheastern.netlify.app/) | Live, continuously deployed production command center on Netlify |
+| **📑 Official Presentation PPTX** | [AlertNex_Official_Presentation.pptx](AlertNex_Official_Presentation.pptx) | Downloadable 6-slide official SIH presentation PowerPoint |
+| **📝 Official Idea Description PDF** | [AlertNex_Idea_Description.pdf](AlertNex_Idea_Description.pdf) | Official 4-page SIH idea description submission PDF |
+| **📄 Idea Description (Markdown)** | [IDEA_DESCRIPTION.md](IDEA_DESCRIPTION.md) | Complete 4-page idea description with team roster, workflow, and architecture |
+| **📊 Presentation Deck (Markdown)** | [IDEA_PRESENTATION.md](IDEA_PRESENTATION.md) | Slide-by-slide 6-card representation of presentation deck |
+| **🎥 Demo Walkthrough** | [DEMO_WALKTHROUGH.md](DEMO_WALKTHROUGH.md) | Complete step-by-step product walkthrough & evaluation timestamps |
+| **📈 Executive Pitch Deck** | [PITCH_DECK.md](PITCH_DECK.md) | 8-slide structured competition pitch deck & ministry adoption plan |
 | **📄 GitHub Pages Mirror** | [ayush-tech3.github.io/MDoNER](https://ayush-tech3.github.io/MinistryofDevelopmentofNorthEasternRegion-MDoNER-/) | Automated GitHub Pages mirror via GitHub Actions |
 | **📂 Source Repository** | [github.com/ayush-tech3/MDoNER](https://github.com/ayush-tech3/MinistryofDevelopmentofNorthEasternRegion-MDoNER-) | Official source repository with commit history and branch controls |
-| **🎥 Demo Walkthrough** | [DEMO_WALKTHROUGH.md](DEMO_WALKTHROUGH.md) | Complete step-by-step product walkthrough & evaluation timestamps |
-| **📊 Executive Pitch Deck** | [PITCH_DECK.md](PITCH_DECK.md) | 8-slide structured competition pitch deck & ministry adoption plan |
-| **📑 Presentation Deck (.pptx)** | [SIH2026_AlertNex_Presentation.pptx](presentation/SIH2026_AlertNex_Presentation.pptx) | Downloadable presentation slides for jury evaluation |
-| **📝 Idea Proposal Documents** | [SIH2026_AlertNex_IdeaDescription.pdf](docs/SIH2026_AlertNex_IdeaDescription.pdf) | Official 4-page and extended SIH submission PDF documentation |
 | **📡 Interactive Swagger Docs** | `http://localhost:8000/docs` | OpenAPI 3.0 interactive API documentation & testing console |
 | **📦 Architecture Guide** | [FRONTEND_INTEGRATION.md](FRONTEND_INTEGRATION.md) | In-depth technical architecture of GIS, AI Engine, and IndexedDB sync |
 
@@ -411,8 +413,10 @@ MinistryofDevelopmentofNorthEasternRegion(MDoNER)/
 │       └── seed_data.py              # Automatic seeding of realistic NER demo data
 ├── docs/                             # Official SIH Proposal PDFs & Generators
 ├── presentation/                     # PowerPoint Decks (.pptx) & Slide Builders
-├── .env.example                      # Root environment configuration template
-├── .gitignore                        # Git exclusion rules
+├── AlertNex_Official_Presentation.pptx # Official 6-slide SIH PowerPoint Presentation
+├── AlertNex_Idea_Description.pdf      # Official 4-page SIH Idea Description PDF
+├── IDEA_DESCRIPTION.md                # 4-page idea description (Markdown)
+├── IDEA_PRESENTATION.md               # 6-slide presentation deck (Markdown)
 ├── DEMO_WALKTHROUGH.md               # Step-by-step product demonstration guide
 ├── docker-compose.yml                # Multi-container orchestration (PostGIS, FastAPI, Nginx)
 ├── Dockerfile                        # Root multi-stage Docker build file
