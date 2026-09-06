@@ -38,7 +38,7 @@ Landslides are among the most frequent and destructive natural hazards in the **
 AlertNex solves this challenge through a multi-tier prototype architecture:
 1. **Multimodal Environmental Telemetry Ingestion:** Combines rainfall intensity, soil moisture saturation, slope gradient, historical slide frequency, and crowdsourced ground observations.
 2. **Transparent Prototype Risk Assessment Engine:** Calculates a standardized risk score (0–100) using a transparent weighted formula calibrated against NER geotechnical parameters.
-3. **Prototype Explainable Risk Analysis (Rule-Based Attribution):** Breaks down model outputs into human-understandable factor contributions (Heavy Rainfall, Saturated Soil, Steep Terrain, etc.) so emergency commanders know *why* a slope is vulnerable.
+3. **Explainable AI (XAI) & Factor Attribution:** Decomposes hazard risk assessments into transparent, human-auditable factor contributions (Rainfall saturation, Soil moisture, Slope angle, Historical susceptibility, Field ground reports) so disaster management commanders know precisely *why* an alert is triggered.
 4. **Connectivity Impact Intelligence (Core Innovation):** Evaluates road graph blockages, detects vulnerable isolated villages, assesses hospital transit accessibility, and suggests prototype emergency corridors.
 5. **Resilient Field Incident Reporting:** Features an offline-first reporting workflow with client-side IndexedDB caching and authority review lifecycle (`PENDING` -> `VERIFIED`/`REJECTED`).
 
@@ -49,7 +49,7 @@ AlertNex solves this challenge through a multi-tier prototype architecture:
 * **Authority Command Dashboard:** Real-time KPI summaries, active risk distribution, live alert ticker, and an interactive **Professor Demo Simulation** bar.
 * **Interactive GIS Risk Map:** Leaflet-powered spatial viewer featuring CartoDB topographic basemaps, monitoring zones with pulsing risk epicenters, road networks, village nodes, and hospital locations.
 * **Prototype AI Risk Assessment Engine:** Real-time risk scoring (0–100) with interactive parameter sliders (Rainfall, Soil Moisture, Slope, Weather multiplier, History, Recent reports).
-* **Rule-Based Risk Factor Explanation:** Transparent decomposition showing which environmental trigger contributes most to the danger level.
+* **Explainable AI (XAI) Factor Breakdown:** Transparent multi-parameter attribution breaking down risk scores into distinct factor weights and severity impact indicators for authority trust and decision auditability.
 * **Connectivity Impact Intelligence:** Automated detection of vulnerable roads, potential village isolation, hospital route access, and prototype alternative route suggestions.
 * **Community & Field Incident Reporting:** Geotagged reporting with photo upload, GPS acquisition, and authority verification workflow.
 * **IndexedDB Offline Reporting:** Full offline caching when connectivity drops in remote valleys, with one-click background synchronization (`SYNC NOW`).
@@ -86,10 +86,10 @@ While traditional systems stop at predicting *where* a landslide might occur, Al
                                      │
                                      ▼
 ┌──────────────────────────────────────────────────────────────────────────┐
-│         PROTOTYPE RISK ENGINE & EXPLAINABLE RISK ANALYSIS                │
+│         PROTOTYPE RISK ENGINE & EXPLAINABLE AI (XAI) ATTRIBUTION         │
 │  Formula: (Rain×0.30) + (Moist×0.25) + (Slope×0.20) + (Hist×0.15) + (Rep×0.10)│
 │  Classification: 0-25 LOW │ 26-50 MODERATE │ 51-75 HIGH │ 76-100 CRITICAL│
-│  Rule-Based Factor Attribution: Heavy Rain, Soil Saturation, Slope Angle │
+│  Explainable Factor Attribution: Heavy Rain, Soil Saturation, Slope Angle, etc.│
 └────────────────────────────────────┬─────────────────────────────────────┘
                                      │
                                      ▼
@@ -140,7 +140,7 @@ MinistryofDevelopmentofNorthEasternRegion(MDoNER)/
 │       ├── app.js                # Hash router, sidebar, clock, toast notifications
 │       ├── data.js               # Seed datasets, monitoring zones, NER roads, villages
 │       ├── map.js                # Leaflet GIS engine, risk buffer polygons, layer toggles
-│       ├── ai-engine.js          # Interactive risk calculator and rule-based risk factor explanation
+│       ├── ai-engine.js          # Interactive risk calculator & Explainable AI (XAI) factor breakdown
 │       ├── connectivity.js       # Road disruption, village isolation, alt route engine
 │       ├── alerts.js             # Alert management, status update, email/SMS dispatch
 │       ├── reporting.js          # Incident submission, IndexedDB offline sync, verification
@@ -254,9 +254,9 @@ All demonstration data has been realistically calibrated to represent authentic 
 
 ---
 
-## 13. Prototype Risk Model
+## 13. Prototype Risk Model & Explainable AI (XAI)
 
-The prototype calculation uses a transparent, explainable weighted multi-factor formula:
+The prototype risk scoring and Explainable AI (XAI) engine utilizes a transparent, auditable weighted multi-factor formula calibrated to North Eastern geotechnical conditions:
 
 $$\text{Risk Score} = (R \times 0.30) + (SM \times 0.25) + (S \times 0.20) + (H \times 0.15) + (FR \times 0.10)$$
 
@@ -266,6 +266,9 @@ Where:
 * $S$ = Slope Gradient angle normalized (0–100 scale) — **20% Weight**
 * $H$ = Historical Landslide Activity Index (0–100 scale) — **15% Weight**
 * $FR$ = Verified Field Ground Reports count (scaled to 100 max) — **10% Weight**
+
+### Explainable AI (XAI) Factor Attribution:
+Rather than delivering an opaque "black-box" risk number, the system computes the exact mathematical contribution percentage of every parameter. The command center displays visual contribution progress bars and impact classification tags (`HIGH IMPACT`, `MODERATE IMPACT`, `BASELINE`) so district officers can immediately inspect whether a hazard surge is driven by sudden torrential precipitation, saturated subsurface soil, steep terrain angles, or recent field ground cracks.
 
 ### Risk Categorization:
 * **0 – 25:** LOW (Green — Normal baseline monitoring)
@@ -287,7 +290,7 @@ Where:
 
 In strict adherence to Smart India Hackathon integrity standards:
 1. **Environmental Telemetry:** Rainfall and soil moisture telemetry are currently demo simulations or pre-calibrated baseline datasets; physical IoT sensors are not deployed in the competition hall.
-2. **Risk Model:** The calculation is a transparent weighted formula and rule-based attribution prototype, not a black-box deep learning model trained on petabyte-scale imagery.
+2. **Risk Model & XAI:** The current calculation is an auditable weighted formula and rule-based XAI factor attribution engine rather than a black-box deep learning model, ensuring transparent decision auditability for hackathon demonstration.
 3. **Geographic Scope:** Four representative NER sectors are currently modeled.
 4. **Authority Directives:** Alternative routes and advisories are algorithmic decision-support recommendations and do not represent official civil police or military transit orders.
 
@@ -295,6 +298,7 @@ In strict adherence to Smart India Hackathon integrity standards:
 
 ## 16. Future Scope & Planned Integrations
 
+* **Machine Learning & SHAP Explainability:** Integration of trained XGBoost/LightGBM landslide susceptibility models with SHAP (SHapley Additive exPlanations) values for granular feature attribution on multidimensional telemetry.
 * **Satellite Remote Sensing:** Automated ingestion of Sentinel-1 InSAR surface displacement interferograms and Sentinel-2 optical moisture indices.
 * **IMD AWS API Integration:** Automated live polling of India Meteorological Department Automatic Weather Stations across the North East.
 * **C-DOT / NDMA CAP Integration:** Direct connection to the Common Alerting Protocol (CAP) gateway for localized cell-broadcast SMS.
