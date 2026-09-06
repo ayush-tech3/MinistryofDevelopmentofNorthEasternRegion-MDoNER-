@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlertNex | AI-Based Early Warning & Landslide Monitoring System (SIH26001)</title>
+  <meta name="description" content="AlertNex: AI-Powered Early Warning and Landslide Monitoring Decision-Support System for the North Eastern Region (NER) of India. Built for Smart India Hackathon 2026.">
+  <meta name="author" content="Team AlertNex (Leader: Ayush Kumar)">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Leaflet GIS CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+  <!-- Chart.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- =========================================================================
+       TOP GOVERNMENT & HACKATHON COMMAND HEADER
+       ========================================================================= -->
+  <header class="topbar">
+    <div class="brand-wrapper">
+      <button class="menu-toggle-btn" id="sidebarToggleBtn" title="Toggle Navigation">
+        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+
+      <div class="brand-logo-group" data-view="landing">
+        <div class="brand-emblem">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+        </div>
+        <div class="brand-title-area">
+          <div class="brand-name">Alert<span class="highlight">Nex</span></div>
+          <div class="brand-sub">AI-Powered Early Warning for Safer Communities</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center System Status & Gov Affiliation -->
+    <div class="topbar-center">
+      <div class="gov-crest-pill">
+        <span>🇮🇳</span>
+        <span>SIH 2026 • <strong>MDoNER</strong> (Ministry of DoNER)</span>
+      </div>
+      <div class="status-online-pill">
+        <span class="pulse-dot"></span>
+        <span>SYSTEM: ONLINE</span>
+      </div>
+      <span class="prototype-badge">DEMO SIMULATION</span>
+    </div>
+
+    <!-- Right Controls -->
+    <div class="topbar-right">
+      <div id="systemLiveClock" class="font-mono" style="font-size:0.8rem; color:#cbd5e1; font-weight:600;">--:--:-- IST</div>
+      <button class="btn btn-secondary btn-sm" data-view="dashboard">
+        <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+        <span>Authority Access</span>
+      </button>
+      <button class="btn btn-primary btn-sm" data-view="reporting">
+        <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+        <span>Report Hazard</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       APPLICATION SHELL (COLLAPSIBLE SIDEBAR + MAIN CONTENT WORKSPACE)
+       ========================================================================= -->
+  <div class="app-container">
+
+    <!-- Collapsible Navigation Sidebar -->
+    <aside class="sidebar" id="mainSidebar">
+      <div class="sidebar-nav">
+        <div class="sidebar-section-title">PORTAL NAVIGATION</div>
+        
+        <a href="#landing" class="nav-link" data-view="landing">
+          <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          <span class="nav-text">Landing Portal</span>
+        </a>
+
+        <a href="#dashboard" class="nav-link" data-view="dashboard">
+          <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path></svg>
+          <span class="nav-text">Authority Dashboard</span>
+        </a>
+
+        <a href="#map" class="nav-link" data-view="map">
+          <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+          <span class="nav-text">Live Risk Map</span>
+          <span class="nav-badge danger">LIVE</span>
+        </a>
+
+        <div class="sidebar-section-title" style="margin-top:10px;">AI & DECISION SUPPORT</div>
+
+        <a href="#ai-engine" class="nav-link" data-view="ai-engine">
+          <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+          <span class="nav-text">AI Risk Analysis</span>
+        </a>
+
+        <a href="#connectivity" class="nav-link" data-view="connectivity">
+          <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+          <span class="nav-text">Impact Analysis</span>
+          <span class="nav-badge" style="background:#f97316; color:#fff;">CORE</span>
+        </a>
+
+        <a href="#alerts" class="nav-link" data-view="alerts">
+          <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+          <span class="nav-text">Alerts & Warnings</span>
+          <span class="nav-badge danger">6</span>
+        </a>
+
+        <div class="sidebar-section-title" style="margin-top:10px;">OPERATIONS & REPORTS</div>
+
+        <a href="#reporting" class="nav-link" data-view="reporting">
+          <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+          <span class="nav-text">Report Incident</span>
+        </a>
+
+        <a href="#analytics" class="nav-link" data-view="analytics">
+          <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+          <span class="nav-text">Reports & Analytics</span>
+        </a>
+
+        <a href="#system" class="nav-link" data-view="system">
+          <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          <span class="nav-text">System Info</span>
+        </a>
+
+        <a href="#team" class="nav-link" data-view="team">
+          <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+          <span class="nav-text">Team AlertNex</span>
+        </a>
+      </div>
+
+      <!-- Sidebar Hackathon Footer Info -->
+      <div class="sidebar-footer">
+        <div class="sih-badge-box">
+          <div class="sih-title">SIH 2026 PROTOTYPE</div>
+          <div class="sih-sub">ID: <strong>SIH26001</strong></div>
+          <div class="sih-sub">Team: <strong>AlertNex</strong></div>
+          <div class="sih-sub">Lead: <strong>Ayush Kumar</strong></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Dynamic Content Workspace -->
+    <main class="main-content">
+
+      <!-- =====================================================================
+           PAGE 1: LANDING PAGE
+           ===================================================================== -->
+      <section id="view-landing" class="page-view active">
+        <div class="landing-hero">
+          <div class="hero-text-area">
+            <div class="hero-badge-row">
+              <span class="prototype-badge">SMART INDIA HACKATHON 2026</span>
+              <span class="status-online-pill"><span class="pulse-dot"></span> MDoNER Disasters Response</span>
+            </div>
+
+            <h1 class="hero-heading">
+              AI-Based Early Warning &amp; <br>
+              <span class="gradient-text">Landslide Monitoring System</span>
+            </h1>
+
+            <p class="hero-subtitle">
+              A Smart Decision-Support Platform for Monitoring Landslide Risks and Supporting Disaster Response in the North Eastern Region of India.
+            </p>
+
+            <div class="hero-cta-group">
+              <button class="btn btn-primary" data-view="dashboard">
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <span>VIEW LIVE DASHBOARD</span>
+              </button>
+              <button class="btn btn-secondary" data-view="reporting">
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                <span>REPORT AN INCIDENT</span>
+              </button>
+              <button class="btn btn-secondary" data-view="map">
+                <span>EXPLORE GIS MAP</span>
+              </button>
+            </div>
+
+            <div style="margin-top:14px; display:flex; gap:16px; font-size:0.8rem; color:#94a3b8;">
+              <div>✔ 8 NER States Modeled</div>
+              <div>✔ Offline Field Reporting</div>
+              <div>✔ Explainable AI (XAI) Decision Support</div>
+            </div>
+          </div>
+
+          <!-- Hero Visual -->
+          <div class="hero-visual-card">
+            <img src="assets/ner_hero.jpg" alt="NER Mountain GIS Landslide Monitoring Simulation">
+            <div class="hero-visual-overlay">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <div style="font-weight:700; color:#fff; font-size:0.95rem;">NER Slope &amp; Rainfall Telemetry Grid</div>
+                  <div style="font-size:0.76rem; color:#cbd5e1;">Prototype Rainfall &amp; Terrain Monitoring</div>
+                </div>
+                <span class="risk-tag high">HIGH ALERT SECTORS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="features-section">
+          <div class="section-title-box">
+            <h2>Engineered for High-Stakes Disaster Response</h2>
+            <p>Built specifically for the unique geological thrust belts, heavy monsoonal precipitation, and fragile highway lifelines of Northeast India.</p>
+          </div>
+
+          <div class="features-grid">
+            <div class="feature-card" data-view="ai-engine" style="cursor:pointer;">
+              <div class="feature-icon-box">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+              </div>
+              <h3>AI Risk Analysis</h3>
+              <p>Dynamic assessment fusing real-time rainfall, soil moisture, slope gradient, and historical landslide hazard indices.</p>
+            </div>
+
+            <div class="feature-card" data-view="map" style="cursor:pointer;">
+              <div class="feature-icon-box">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+              </div>
+              <h3>Live Risk Mapping</h3>
+              <p>GIS-powered geospatial dashboard highlighting active risk zones across Assam, Meghalaya, Sikkim, Nagaland, and Arunachal.</p>
+            </div>
+
+            <div class="feature-card" data-view="alerts" style="cursor:pointer;">
+              <div class="feature-icon-box">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+              </div>
+              <h3>Early Warning Alerts</h3>
+              <p>Multi-tier alerts categorized into Low, Moderate, High, and Critical with actionable recommendations for district authorities.</p>
+            </div>
+
+            <div class="feature-card" data-view="connectivity" style="cursor:pointer;">
+              <div class="feature-icon-box">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+              </div>
+              <h3>Connectivity Impact Analysis</h3>
+              <p>Identifies road disruptions, calculates village isolation risk, and computes alternative emergency bypass routes.</p>
+            </div>
+
+            <div class="feature-card" data-view="reporting" style="cursor:pointer;">
+              <div class="feature-icon-box">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+              </div>
+              <h3>Offline Field Reporting</h3>
+              <p>Enables frontline field officers and remote citizens to file hazard reports offline with automated cloud synchronization.</p>
+            </div>
+
+            <div class="feature-card" data-view="ai-engine" style="cursor:pointer;">
+              <div class="feature-icon-box">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+              </div>
+              <h3>Explainable AI (XAI) Attribution</h3>
+              <p>Transparent factor contributions explaining precisely WHY risk is high, giving commanders defensible decision justification.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- How It Works Pipeline -->
+        <div class="pipeline-section">
+          <div class="section-title-box">
+            <h2>End-to-End Decision-Support Pipeline</h2>
+            <p>From environmental telemetry ingestion to rapid emergency corridor activation.</p>
+          </div>
+
+          <div class="pipeline-flow">
+            <div class="pipeline-node">
+              <div class="node-step">STEP 01</div>
+              <div class="node-label">DATA SOURCES</div>
+              <div style="font-size:0.72rem; color:#94a3b8; margin-top:4px;">Rainfall, Soil, DEM, Crowd</div>
+            </div>
+            <div class="pipeline-arrow">➔</div>
+
+            <div class="pipeline-node">
+              <div class="node-step">STEP 02</div>
+              <div class="node-label">AI ANALYSIS</div>
+              <div style="font-size:0.72rem; color:#94a3b8; margin-top:4px;">Prototype Multi-Factor Risk Modeling</div>
+            </div>
+            <div class="pipeline-arrow">➔</div>
+
+            <div class="pipeline-node">
+              <div class="node-step">STEP 03</div>
+              <div class="node-label">RISK ASSESSMENT</div>
+              <div style="font-size:0.72rem; color:#94a3b8; margin-top:4px;">Dynamic 0–100 Score</div>
+            </div>
+            <div class="pipeline-arrow">➔</div>
+
+            <div class="pipeline-node">
+              <div class="node-step">STEP 04</div>
+              <div class="node-label">GIS MAP</div>
+              <div style="font-size:0.72rem; color:#94a3b8; margin-top:4px;">Zonal Spatial Overlay</div>
+            </div>
+            <div class="pipeline-arrow">➔</div>
+
+            <div class="pipeline-node">
+              <div class="node-step">STEP 05</div>
+              <div class="node-label">IMPACT ANALYSIS</div>
+              <div style="font-size:0.72rem; color:#94a3b8; margin-top:4px;">Roads, Villages, Routes</div>
+            </div>
+            <div class="pipeline-arrow">➔</div>
+
+            <div class="pipeline-node" style="border-color:var(--orange-primary);">
+              <div class="node-step">STEP 06</div>
+              <div class="node-label" style="color:var(--orange-primary);">ALERTS &amp; RESPONSE</div>
+              <div style="font-size:0.72rem; color:#cbd5e1; margin-top:4px;">Actionable Command Orders</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="landing-footer">
+          <div>
+            <strong>Team AlertNex</strong> • Smart India Hackathon 2026
+            <div style="font-size:0.75rem; color:#94a3b8; margin-top:2px;">Problem Statement ID: SIH26001 | Category: Software | Theme: Disaster Management</div>
+          </div>
+          <div>
+            <span>Developed for: <strong>Ministry of Development of North Eastern Region (MDoNER)</strong></span>
+          </div>
+        </footer>
+      </section>
+
+      <!-- =====================================================================
+           PAGE 2: AUTHORITY DASHBOARD
+           ===================================================================== -->
+      <section id="view-dashboard" class="page-view">
+        <div class="view-header">
+          <div class="view-header-title-group">
+            <h1>Welcome to AlertNex Command Center</h1>
+            <p>Real-Time Landslide Risk Monitoring &amp; Decision-Support Platform | North Eastern Region</p>
+          </div>
+          <div class="view-header-actions">
+            <span class="status-online-pill"><span class="pulse-dot"></span> TELEMETRY ONLINE</span>
+            <span class="prototype-badge">DEMO / PROTOTYPE DATA</span>
+          </div>
+        </div>
+
+        <!-- Professor / Judge Demonstration Simulator Bar (Step 14) -->
+        <div id="demoSimulationContainer"></div>
+
+        <!-- Top Statistics Cards -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <span class="kpi-label">TOTAL MONITORED AREAS</span>
+            <div class="kpi-value">128</div>
+            <span class="kpi-meta">Across 8 NER States</span>
+          </div>
+          <div class="kpi-card low">
+            <span class="kpi-label">LOW RISK AREAS</span>
+            <div class="kpi-value" style="color:var(--risk-low);">82</div>
+            <span class="kpi-meta">Normal Baseline Status</span>
+          </div>
+          <div class="kpi-card moderate">
+            <span class="kpi-label">MODERATE RISK AREAS</span>
+            <div class="kpi-value" style="color:var(--risk-moderate);">28</div>
+            <span class="kpi-meta">Advisory Watch Active</span>
+          </div>
+          <div class="kpi-card high">
+            <span class="kpi-label">HIGH RISK AREAS</span>
+            <div class="kpi-value" style="color:var(--risk-high);">12</div>
+            <span class="kpi-meta">Preparedness Mobilized</span>
+          </div>
+          <div class="kpi-card critical">
+            <span class="kpi-label">CRITICAL RISK AREAS</span>
+            <div class="kpi-value" style="color:var(--risk-critical);">6</div>
+            <span class="kpi-meta"><span class="pulse-dot red"></span> Immediate Action Required</span>
+          </div>
+        </div>
+
+        <!-- Live Alert Section -->
+        <div class="live-alert-ticker">
+          <div class="ticker-left">
+            <span class="risk-tag critical"><span class="pulse-dot red"></span> CRITICAL</span>
+            <div class="ticker-content">
+              <h4>High landslide risk detected • Possible road disruption identified</h4>
+              <p>Location: Demo Monitoring Zone A (East Khasi Hills, Meghalaya) • Potential NH-206 cutoff • Recently Updated</p>
+            </div>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-secondary btn-sm" onclick="AlertNexApp.switchToConnectivity('zone-ner-01')">Analyze Impact</button>
+            <button class="btn btn-primary btn-sm" data-view="alerts">View All Alerts</button>
+          </div>
+        </div>
+
+        <!-- Quick Action Buttons -->
+        <div class="quick-action-bar">
+          <span class="quick-action-title">Quick Actions:</span>
+          <button class="btn btn-secondary btn-sm" data-view="map">🗺️ View Risk Map</button>
+          <button class="btn btn-secondary btn-sm" data-view="connectivity">🛣️ Analyze Impact</button>
+          <button class="btn btn-secondary btn-sm" data-view="alerts">🚨 Send Alert</button>
+          <button class="btn btn-secondary btn-sm" data-view="analytics">📊 View Reports</button>
+          <button class="btn btn-primary btn-sm" data-view="reporting">📢 Report Incident</button>
+        </div>
+
+        <!-- Dashboard Charts Grid -->
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap:20px; margin-top:20px;">
+          <!-- Chart 1: Risk Distribution -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Landslide Risk Distribution</div>
+                <div class="card-sub">Current distribution across 128 monitored zones</div>
+              </div>
+              <span class="prototype-badge">DEMO DATA</span>
+            </div>
+            <div style="height:230px; position:relative;">
+              <canvas id="chartRiskDist"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 2: Rainfall Trend -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Rainfall Trend (24h)</div>
+                <div class="card-sub">Precipitation spikes in key hill sectors (mm)</div>
+              </div>
+              <span class="prototype-badge">SIMULATED SENSORS</span>
+            </div>
+            <div style="height:230px; position:relative;">
+              <canvas id="chartRainfallTrend"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 3: Risk Trend Over Time -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Risk Trend Over Time</div>
+                <div class="card-sub">Regional weighted vulnerability average (7 days)</div>
+              </div>
+              <span class="prototype-badge">HISTORICAL / DEMO</span>
+            </div>
+            <div style="height:230px; position:relative;">
+              <canvas id="chartRiskTrendTime"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 4: Alerts by Risk Level -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Alerts by Risk Level</div>
+                <div class="card-sub">Current active early warning bulletins</div>
+              </div>
+              <span class="prototype-badge">ACTIVE FEEDS</span>
+            </div>
+            <div style="height:230px; position:relative;">
+              <canvas id="chartAlertsByLevel"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           PAGE 3: LIVE RISK MAP (GIS)
+           ===================================================================== -->
+      <section id="view-map" class="page-view">
+        <div class="view-header">
+          <div class="view-header-title-group">
+            <h1>North Eastern Region Interactive Risk Map</h1>
+            <p>GIS-Based Geospatial Visualization of Landslide Hazard Zones, Roads, and Community Lifelines</p>
+          </div>
+          <div class="view-header-actions">
+            <span class="prototype-badge">PROTOTYPE SIMULATION / DEMO DATA</span>
+          </div>
+        </div>
+
+        <div class="map-view-container">
+          <!-- Main Map Canvas -->
+          <div class="map-viewport-wrapper">
+            <!-- Filter Bar Overlay -->
+            <div class="map-control-overlay">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <label for="mapRiskFilter" style="font-size:0.78rem; font-weight:700; color:#cbd5e1;">FILTER RISK:</label>
+                <select id="mapRiskFilter" class="form-control" style="padding:4px 8px; font-size:0.8rem; background:var(--navy-surface);">
+                  <option value="ALL">All Risk Levels (8 Zones)</option>
+                  <option value="CRITICAL">Critical Risk Only</option>
+                  <option value="HIGH">High Risk Only</option>
+                  <option value="MODERATE">Moderate Risk Only</option>
+                  <option value="LOW">Low Risk Only</option>
+                </select>
+              </div>
+
+              <div style="height:18px; width:1px; background:var(--navy-border);"></div>
+
+              <!-- Layer Toggles -->
+              <div style="display:flex; gap:12px; font-size:0.76rem; color:#cbd5e1;">
+                <label style="display:flex; align-items:center; gap:4px; cursor:pointer;">
+                  <input type="checkbox" id="toggleRoads" checked> Roads &amp; Lifelines
+                </label>
+                <label style="display:flex; align-items:center; gap:4px; cursor:pointer;">
+                  <input type="checkbox" id="toggleVillages" checked> Villages
+                </label>
+                <label style="display:flex; align-items:center; gap:4px; cursor:pointer;">
+                  <input type="checkbox" id="toggleHospitals" checked> Hospitals
+                </label>
+                <label style="display:flex; align-items:center; gap:4px; cursor:pointer;">
+                  <input type="checkbox" id="toggleReports" checked> Ground Reports
+                </label>
+              </div>
+            </div>
+
+            <!-- The Leaflet Map Container -->
+            <div id="gisMap"></div>
+
+            <!-- Legend Overlay -->
+            <div class="map-legend-overlay">
+              <div style="font-size:0.75rem; font-weight:700; color:#fff; text-transform:uppercase; margin-bottom:2px;">RISK CLASSIFICATION</div>
+              <div class="legend-item"><span class="legend-color-dot" style="background:#ef4444;"></span> Critical Risk (Score &gt; 75%)</div>
+              <div class="legend-item"><span class="legend-color-dot" style="background:#f97316;"></span> High Risk (Score 51–75%)</div>
+              <div class="legend-item"><span class="legend-color-dot" style="background:#f59e0b;"></span> Moderate Risk (Score 26–50%)</div>
+              <div class="legend-item"><span class="legend-color-dot" style="background:#10b981;"></span> Low Risk (Score 0–25%)</div>
+              <div style="font-size:0.68rem; color:#94a3b8; margin-top:2px;">Click any marker to inspect telemetry</div>
+            </div>
+          </div>
+
+          <!-- Zone Detail Drawer -->
+          <div class="map-details-drawer" id="zoneDetailsPanel">
+            <!-- Populated dynamically by AlertNexMap -->
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           PAGE 4: AI RISK ANALYSIS & EXPLAINABLE AI (XAI)
+           ===================================================================== -->
+      <section id="view-ai-engine" class="page-view">
+        <div class="view-header">
+          <div class="view-header-title-group">
+            <h1>AI Risk Assessment Engine</h1>
+            <p>Multi-Factor Hazard Risk Modeling with Explainable AI (XAI) Factor Attribution &amp; Parameter Sensitivity</p>
+          </div>
+          <div class="view-header-actions">
+            <span class="prototype-badge">DEMO AI RISK SIMULATION MODEL</span>
+          </div>
+        </div>
+
+        <div class="ai-analysis-layout">
+          <!-- Left: Dynamic Inputs & Formulation -->
+          <div class="card calculator-card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Environmental Input Parameters</div>
+                <div class="card-sub">Simulate telemetry changes to test real-time AI risk response</div>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="AlertNexAIEngine.loadZoneIntoEngine('zone-ner-01')">Load Cherrapunji Data</button>
+            </div>
+
+            <!-- Input 1: Rainfall -->
+            <div class="input-slider-group">
+              <div class="slider-label-row">
+                <span>Rainfall Intensity (24h Cumulative)</span>
+                <span class="slider-val-badge" id="valRainfall">185 mm</span>
+              </div>
+              <input type="range" min="0" max="300" value="185" class="range-input" id="aiRainfall">
+              <div style="display:flex; justify-content:space-between; font-size:0.72rem; color:#64748b;">
+                <span>0 mm (Dry)</span>
+                <span>150 mm (Heavy)</span>
+                <span>300 mm (Extreme)</span>
+              </div>
+            </div>
+
+            <!-- Input 2: Soil Moisture -->
+            <div class="input-slider-group">
+              <div class="slider-label-row">
+                <span>Soil Moisture Saturation</span>
+                <span class="slider-val-badge" id="valSoilMoisture">82%</span>
+              </div>
+              <input type="range" min="10" max="100" value="82" class="range-input" id="aiSoilMoisture">
+            </div>
+
+            <!-- Input 3: Slope Angle -->
+            <div class="input-slider-group">
+              <div class="slider-label-row">
+                <span>Terrain Slope Gradient</span>
+                <span class="slider-val-badge" id="valSlope">42°</span>
+              </div>
+              <input type="range" min="10" max="65" value="42" class="range-input" id="aiSlope">
+            </div>
+
+            <!-- Input 4 & 5: Weather & History Dropdowns -->
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px;">
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="aiWeather">Weather Condition</label>
+                <select id="aiWeather" class="form-control">
+                  <option value="1.0">Moderate Rainfall (1.0x)</option>
+                  <option value="1.15" selected>Torrential Downpour (1.15x)</option>
+                  <option value="1.3">Cloudburst Surge (1.30x)</option>
+                  <option value="0.8">Light Drizzle (0.80x)</option>
+                </select>
+              </div>
+
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="aiHistory">Historical Landslide Activity</label>
+                <select id="aiHistory" class="form-control">
+                  <option value="85" selected>High Historical (85)</option>
+                  <option value="50">Moderate Historical (50)</option>
+                  <option value="20">Low Historical (20)</option>
+                  <option value="100">Critical Past Breaches (100)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Input 6: Recent Field Reports -->
+            <div class="input-slider-group">
+              <div class="slider-label-row">
+                <span>Recent Ground Field Reports</span>
+                <span class="slider-val-badge" id="valReports">4 Reports</span>
+              </div>
+              <input type="range" min="0" max="10" value="4" class="range-input" id="aiReports">
+            </div>
+
+            <div style="background:rgba(255,255,255,0.02); border:1px solid var(--navy-border); border-radius:8px; padding:12px; font-size:0.78rem; color:#94a3b8;">
+              ℹ️ <strong>Prototype Risk Model Formula:</strong> <code>Score = [Rainfall(30%) + Moisture(25%) + Slope(20%) + History(15%) + FieldReports(10%)] × WeatherMultiplier</code>
+            </div>
+          </div>
+
+          <!-- Right: Dynamic Output & Explainable AI (XAI) Factor Attribution -->
+          <div style="display:flex; flex-direction:column; gap:20px;">
+            <!-- Output Score Card -->
+            <div class="card" style="text-align:center;">
+              <div class="card-header" style="justify-content:center; margin-bottom:10px;">
+                <div style="font-size:0.82rem; font-weight:700; text-transform:uppercase; color:#94a3b8; letter-spacing:0.06em;">
+                  DYNAMIC RISK ASSESSMENT OUTPUT
+                </div>
+              </div>
+
+              <div style="display:flex; align-items:baseline; justify-content:center; gap:10px;">
+                <div id="aiScoreValue" style="font-size:4rem; font-weight:800; line-height:1; color:var(--risk-critical);">87%</div>
+                <div id="aiScoreBadge" class="risk-tag critical">CRITICAL RISK</div>
+              </div>
+
+              <!-- Progress bar -->
+              <div style="width:100%; height:8px; background:var(--navy-dark); border-radius:999px; overflow:hidden; margin:16px 0 10px;">
+                <div id="aiScoreProgress" style="height:100%; width:87%; background:var(--risk-critical); transition:all 0.3s ease;"></div>
+              </div>
+
+              <div style="font-size:0.8rem; color:#94a3b8;">
+                Classification: <strong>0–25 Low</strong> | <strong>26–50 Moderate</strong> | <strong>51–75 High</strong> | <strong>76–100 Critical</strong>
+              </div>
+            </div>
+
+            <!-- Explainable AI (XAI) Section -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Explainable AI (XAI): Why Is The Risk Level High?</div>
+                  <div class="card-sub">Multi-factor mathematical attribution of risk score into weighted trigger factors</div>
+                </div>
+                <span class="prototype-badge">EXPLAINABLE AI (XAI)</span>
+              </div>
+
+              <div class="xai-factors-grid" id="xaiFactorsList">
+                <!-- Dynamically populated by AlertNexAIEngine -->
+              </div>
+            </div>
+
+            <!-- 24-Hour Trend Chart -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">24-Hour Risk Progression Curve</div>
+                <span class="prototype-badge">DIURNAL TREND</span>
+              </div>
+              <div style="height:140px; position:relative;">
+                <canvas id="aiTrendChartCanvas"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           PAGE 5: CONNECTIVITY IMPACT ANALYSIS (KEY INNOVATION)
+           ===================================================================== -->
+      <section id="view-connectivity" class="page-view">
+        <div class="view-header">
+          <div class="view-header-title-group">
+            <h1>Connectivity Impact Intelligence</h1>
+            <p><strong>Core AlertNex Innovation:</strong> Moving beyond hazard identification to evaluate systemic road disruptions, isolated villages, and emergency detour routes.</p>
+          </div>
+          <div class="view-header-actions">
+            <label for="impactZoneSelector" style="font-size:0.82rem; font-weight:700; color:#cbd5e1;">SELECT MONITORING ZONE:</label>
+            <select id="impactZoneSelector" class="form-control" style="background:var(--navy-surface); font-weight:600;">
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+        </div>
+
+        <!-- Summary Strip -->
+        <div class="impact-summary-strip">
+          <div class="impact-metric-box" style="border-left:4px solid #ef4444;">
+            <span class="metric-title">ROAD NETWORK STATUS</span>
+            <div class="metric-value" id="impactRoadStatus" style="font-size:1.25rem; color:#ef4444; margin-top:4px;">Severe Disruption Likely</div>
+          </div>
+          <div class="impact-metric-box" style="border-left:4px solid #f97316;">
+            <span class="metric-title">AFFECTED VILLAGES</span>
+            <div class="metric-value" id="impactAffectedVillages" style="font-size:1.25rem; color:#f97316; margin-top:4px;">3 Communities</div>
+          </div>
+          <div class="impact-metric-box" style="border-left:4px solid #f59e0b;">
+            <span class="metric-title">HOSPITAL ACCESSIBILITY</span>
+            <div class="metric-value" id="impactHospitalAccess" style="font-size:1.25rem; color:#f59e0b; margin-top:4px;">Corridor Vulnerable</div>
+          </div>
+          <div class="impact-metric-box" style="border-left:4px solid #10b981;">
+            <span class="metric-title">ALTERNATIVE ROUTE</span>
+            <div class="metric-value" id="impactAltRouteStatus" style="font-size:1.25rem; color:#10b981; margin-top:4px;">Prototype Alternative Route Suggested</div>
+          </div>
+        </div>
+
+        <!-- Visual Network Corridor Canvas -->
+        <div class="card" style="margin-bottom:24px;">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Visual Corridor &amp; Topological Isolation Model</div>
+              <div class="card-sub">Dynamic graph illustrating primary highway blockage vs. suggested secondary detour bypass</div>
+            </div>
+            <span class="prototype-badge">DECISION-SUPPORT VISUALIZATION</span>
+          </div>
+          <div id="corridorVisualCanvas" class="network-graph-container">
+            <!-- Rendered dynamically by AlertNexConnectivity -->
+          </div>
+        </div>
+
+        <!-- Emergency Route Suggestion Box -->
+        <div id="emergencyRouteBox" class="emergency-route-callout" style="margin-bottom:24px;">
+          <!-- Populated dynamically -->
+        </div>
+
+        <!-- Two Impact Tables: Road Disruption & Village Isolation -->
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+          <!-- Road Impact Table -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Potentially Affected Roads &amp; Lifelines</div>
+              <span class="prototype-badge">ROAD CLEARANCE</span>
+            </div>
+            <div style="overflow-x:auto;">
+              <table class="table-custom">
+                <thead>
+                  <tr>
+                    <th>Road / Corridor</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Mitigation</th>
+                  </tr>
+                </thead>
+                <tbody id="impactRoadsTableBody">
+                  <!-- Dynamic rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Village Isolation Analysis Table -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Village Isolation Risk Assessment</div>
+              <span class="prototype-badge">COMMUNITY IMPACT</span>
+            </div>
+            <div style="overflow-x:auto;">
+              <table class="table-custom">
+                <thead>
+                  <tr>
+                    <th>Village</th>
+                    <th>Isolation Level</th>
+                    <th>Primary Cutoff Cause</th>
+                    <th>Alternate Access</th>
+                  </tr>
+                </thead>
+                <tbody id="impactVillagesTableBody">
+                  <!-- Dynamic rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           PAGE 6: ALERTS AND WARNINGS
+           ===================================================================== -->
+      <section id="view-alerts" class="page-view">
+        <div class="view-header">
+          <div class="view-header-title-group">
+            <h1>Early Warning &amp; Alert Management</h1>
+            <p>Active Landslide Bulletins, Notification Routing, and Inter-Agency Escalation</p>
+          </div>
+          <div class="view-header-actions">
+            <!-- Risk Filter Buttons -->
+            <div style="display:flex; gap:6px;">
+              <button class="btn btn-secondary btn-sm alert-filter-btn active" data-level="ALL">All (6)</button>
+              <button class="btn btn-secondary btn-sm alert-filter-btn" data-level="CRITICAL">Critical</button>
+              <button class="btn btn-secondary btn-sm alert-filter-btn" data-level="HIGH">High</button>
+              <button class="btn btn-secondary btn-sm alert-filter-btn" data-level="MODERATE">Moderate</button>
+              <button class="btn btn-secondary btn-sm alert-filter-btn" data-level="LOW">Low</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alert Feed Cards -->
+        <div class="alert-cards-feed" id="alertsFeedContainer">
+          <!-- Populated dynamically by AlertNexAlerts -->
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           PAGE 7: COMMUNITY & FIELD REPORTING (WITH OFFLINE SYNC)
+           ===================================================================== -->
+      <section id="view-reporting" class="page-view">
+        <div class="view-header">
+          <div class="view-header-title-group">
+            <h1>Report a Landslide Hazard</h1>
+            <p>Citizen &amp; Field Officer Crowdsourced Reporting with Offline Local Storage Synchronization</p>
+          </div>
+          <div class="view-header-actions">
+            <span class="status-online-pill" id="syncStatusPill"><span class="pulse-dot"></span> Cloud Connected (Auto-Sync)</span>
+          </div>
+        </div>
+
+        <div class="reporting-layout">
+          <!-- Left: Reporting Form -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Hazard Incident Report Form</div>
+              <span class="prototype-badge">CROWDSOURCED GROUND TRUTH</span>
+            </div>
+
+            <form id="hazardReportForm">
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px;">
+                <div class="form-group">
+                  <label for="reporterType">Reporter Type *</label>
+                  <select id="reporterType" class="form-control" required>
+                    <option value="Citizen">Citizen Resident</option>
+                    <option value="Field Officer" selected>Field Officer / Geologist</option>
+                    <option value="Authority">Disaster Management Authority (SDRF/NDRF)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="reporterName">Reporter Name / Call-Sign</label>
+                  <input type="text" id="reporterName" class="form-control" placeholder="e.g. T. Sangma (Geol. Asst)">
+                </div>
+              </div>
+
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px;">
+                <div class="form-group">
+                  <label for="incidentType">Incident Type *</label>
+                  <select id="incidentType" class="form-control" required>
+                    <option value="Dangerous Slope">Dangerous Slope (Creep)</option>
+                    <option value="Ground Crack" selected>Ground Crack / Fissure</option>
+                    <option value="Ground Movement">Ground Movement / Slump</option>
+                    <option value="Rockfall">Rockfall / Scree Roll</option>
+                    <option value="Road Blockage">Road Blockage / Debris</option>
+                    <option value="Landslide">Active Landslide</option>
+                    <option value="Other">Other Hazard</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="reportSeverity">Estimated Severity *</label>
+                  <select id="reportSeverity" class="form-control" required>
+                    <option value="Low">Low (Minor Rill)</option>
+                    <option value="Moderate">Moderate (Single lane affected)</option>
+                    <option value="High" selected>High (Significant threat)</option>
+                    <option value="Critical">Critical (Life / Structural hazard)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="reportLocationName">Location / Landmark Description *</label>
+                <input type="text" id="reportLocationName" class="form-control" placeholder="e.g. Km 18 Cherrapunji Escarpment, East Khasi Hills" required>
+              </div>
+
+              <!-- GPS Coordinates -->
+              <div style="display:grid; grid-template-columns: 1fr 1fr 130px; gap:10px; align-items:flex-end;">
+                <div class="form-group" style="margin-bottom:0;">
+                  <label for="reportLat">Latitude (GPS)</label>
+                  <input type="number" step="0.0001" id="reportLat" class="form-control" placeholder="25.3020" value="25.3020">
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                  <label for="reportLng">Longitude (GPS)</label>
+                  <input type="number" step="0.0001" id="reportLng" class="form-control" placeholder="91.5840" value="91.5840">
+                </div>
+                <button type="button" class="btn btn-secondary" id="btnGetGeolocation" style="height:42px;">
+                  📍 Get GPS
+                </button>
+              </div>
+
+              <div class="form-group" style="margin-top:14px;">
+                <label for="reportDescription">Detailed Hazard Observations *</label>
+                <textarea id="reportDescription" rows="3" class="form-control" placeholder="Describe soil characteristics, active water flow, crack dimensions, or structural distress..." required>Observed continuous transverse fissure measuring approx 18m length, width 4.5cm on the upper shoulder of the village road. Runoff water infiltrating actively.</textarea>
+              </div>
+
+              <!-- Photo Upload -->
+              <div class="form-group">
+                <label>Attach Hazard Photo (Geotagged Photo Simulation)</label>
+                <input type="file" id="reportPhotoInput" accept="image/*" style="display:none;">
+                <div class="photo-preview-box" id="photoPreviewContainer" onclick="document.getElementById('reportPhotoInput').click();" style="cursor:pointer;">
+                  <img src="assets/ner_hero.jpg" alt="Preset Sample Field Image">
+                </div>
+                <span style="font-size:0.75rem; color:#94a3b8; margin-top:4px;">Click image box above to browse or take photograph on mobile.</span>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width:100%; padding:12px; margin-top:10px;">
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                <span>SUBMIT HAZARD REPORT</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Right: Offline Support & Recent Feed -->
+          <div style="display:flex; flex-direction:column; gap:20px;">
+            <!-- Offline Simulation Card -->
+            <div class="offline-sync-card">
+              <div class="card-header" style="margin-bottom:4px;">
+                <div class="card-title">Offline Capability Simulation</div>
+                <span class="prototype-badge" id="offlineQueueBadge">0 Queued</span>
+              </div>
+
+              <p style="font-size:0.86rem; color:#cbd5e1; line-height:1.5;">
+                In remote NER valleys where mobile connectivity is severed, AlertNex caches reports in client-side <strong>IndexedDB / LocalStorage</strong>. Once connectivity resumes, reports are dispatched automatically.
+              </p>
+
+              <div style="background:var(--navy-dark); border:1px solid var(--navy-border); border-radius:8px; padding:12px;">
+                <label style="display:flex; align-items:center; gap:10px; font-size:0.88rem; font-weight:600; color:#fff; cursor:pointer;">
+                  <input type="checkbox" id="simulateOfflineToggle">
+                  <span>Simulate "No Network Connection" (Offline Mode)</span>
+                </label>
+              </div>
+
+              <button class="btn btn-secondary" id="btnSyncNow" disabled>
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                <span>Sync Queued Reports Now</span>
+              </button>
+            </div>
+
+            <!-- Recent Reports Feed -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">Recent Registered Reports</div>
+                <span class="status-online-pill" style="font-size:0.7rem;">LIVE SYNC</span>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:10px;" id="recentReportsFeed">
+                <!-- Dynamically populated by AlertNexReporting -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           PAGE 8: REPORTS AND ANALYTICS
+           ===================================================================== -->
+      <section id="view-analytics" class="page-view">
+        <div class="view-header">
+          <div class="view-header-title-group">
+            <h1>Analytics &amp; Monitoring Reports</h1>
+            <p>Historical Hazard Intelligence, Precipitation Correlation, and Formal Decision Briefings</p>
+          </div>
+          <div class="view-header-actions">
+            <button class="btn btn-primary btn-sm" onclick="AlertNexApp.openExportModal()">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+              <span>Export Summary Report (Prototype)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Filters Bar -->
+        <div class="card" style="margin-bottom:20px; padding:14px 20px;">
+          <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+            <div style="font-size:0.8rem; font-weight:700; color:#94a3b8; text-transform:uppercase;">ANALYTICS FILTERS:</div>
+            
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span style="font-size:0.8rem; color:#cbd5e1;">Region:</span>
+              <select class="form-control" style="padding:4px 10px; font-size:0.8rem;">
+                <option>All NER States (8)</option>
+                <option>Assam &amp; Meghalaya</option>
+                <option>Sikkim Himalayan Belt</option>
+                <option>Arunachal Border Axes</option>
+              </select>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span style="font-size:0.8rem; color:#cbd5e1;">Time Horizon:</span>
+              <select class="form-control" style="padding:4px 10px; font-size:0.8rem;">
+                <option>Monsoon Season (Current)</option>
+                <option>Past 30 Days</option>
+                <option>Past 90 Days</option>
+                <option>Historical 5 Years</option>
+              </select>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span style="font-size:0.8rem; color:#cbd5e1;">Risk Threshold:</span>
+              <select class="form-control" style="padding:4px 10px; font-size:0.8rem;">
+                <option>High &amp; Critical (&gt;50%)</option>
+                <option>All Levels</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Rainfall vs. Risk Correlation</div>
+              <span class="prototype-badge">CORRELATION ANALYSIS</span>
+            </div>
+            <div style="height:260px; position:relative;">
+              <canvas id="chartRainVsRisk"></canvas>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Incident Reports by Hazard Category</div>
+              <span class="prototype-badge">FIELD VALIDATION</span>
+            </div>
+            <div style="height:260px; position:relative;">
+              <canvas id="chartReportsByCategory"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           PAGE 9: SYSTEM INFORMATION & ARCHITECTURE
+           ===================================================================== -->
+      <section id="view-system" class="page-view">
+        <div class="view-header">
+          <div class="view-header-title-group">
+            <h1>How AlertNex Works</h1>
+            <p>High-Level System Architecture, Data Pipelines, AI Risk Algorithms &amp; Technical Specifications</p>
+          </div>
+          <div class="view-header-actions">
+            <span class="prototype-badge">ARCHITECTURE OVERVIEW</span>
+          </div>
+        </div>
+
+        <!-- Workflow Pipeline -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">End-to-End System Workflow Architecture</div>
+          </div>
+
+          <div class="architecture-flow">
+            <div class="flow-step-box">
+              <div>
+                <div class="step-title">1. DATA INGESTION TIER</div>
+                <div class="step-desc">Prototype Rainfall Simulation, Geotechnical Soil Moisture, SRTM 30m Digital Elevation Models, Crowdsourced Citizen Reports, and Field Officer Observations.</div>
+              </div>
+              <span class="prototype-badge">DEMO DATA / INGEST</span>
+            </div>
+
+            <div class="flow-step-box">
+              <div>
+                <div class="step-title">2. GEOSPATIAL &amp; FEATURE PROCESSING</div>
+                <div class="step-desc">Coordinate-based spatial indexing, slope gradient calculation, terrain facet attribution, and asynchronous Python processing pipelines.</div>
+              </div>
+              <span class="prototype-badge">PYTHON / FASTAPI</span>
+            </div>
+
+            <div class="flow-step-box">
+              <div>
+                <div class="step-title">3. PROTOTYPE RISK ASSESSMENT ENGINE</div>
+                <div class="step-desc">Transparent weighted multi-factor risk formula (Rainfall 30%, Moisture 25%, Slope 20%, History 15%, Reports 10%) with Rule-Based Factor Attribution.</div>
+              </div>
+              <span class="prototype-badge">PROTOTYPE RISK ENGINE</span>
+            </div>
+
+            <div class="flow-step-box">
+              <div>
+                <div class="step-title">4. CONNECTIVITY IMPACT INTELLIGENCE</div>
+                <div class="step-desc">Topological road graph disruption analysis, isolated village detection, hospital accessibility impact, and Prototype Alternative Route Decision Support.</div>
+              </div>
+              <span class="prototype-badge">DECISION SUPPORT</span>
+            </div>
+
+            <div class="flow-step-box" style="border-color:var(--orange-primary);">
+              <div>
+                <div class="step-title" style="color:var(--orange-primary);">5. MULTI-CHANNEL DECISION OUTPUTS</div>
+                <div class="step-desc">Authority Command Dashboard, Leaflet GIS spatial viewer, prototype SMS/Email notification dispatches, and printable disaster briefing reports.</div>
+              </div>
+              <span class="status-online-pill">COMMAND OUTPUTS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tech Stack Grid -->
+        <h2 style="font-size:1.3rem; color:#fff; margin:32px 0 16px;">Technology Stack &amp; Architecture Audit</h2>
+        
+        <!-- Category 1: Current Prototype Implementation -->
+        <div style="margin-bottom:20px;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+            <span class="source-status-badge live">WORKING</span>
+            <h3 style="font-size:1.05rem; color:#38bdf8; margin:0; text-transform:uppercase; letter-spacing:0.04em;">1. Current Prototype Implementation (Actually Used)</h3>
+          </div>
+          <div class="tech-stack-grid">
+            <div class="tech-card">
+              <h4>FRONTEND</h4>
+              <ul>
+                <li>HTML5 Semantic Architecture</li>
+                <li>Modern Vanilla CSS (Design Tokens)</li>
+                <li>Modular ES6+ JavaScript</li>
+                <li>Chart.js Visualizations</li>
+              </ul>
+            </div>
+
+            <div class="tech-card">
+              <h4>GIS &amp; MAPPING</h4>
+              <ul>
+                <li>Leaflet GIS Engine</li>
+                <li>CartoDB Topographic Tiles</li>
+                <li>GeoJSON Spatial Layers</li>
+                <li>Custom SVG Marker Overlays</li>
+              </ul>
+            </div>
+
+            <div class="tech-card">
+              <h4>BACKEND &amp; APIS</h4>
+              <ul>
+                <li>Python 3.12+</li>
+                <li>FastAPI REST Framework</li>
+                <li>Uvicorn Asynchronous Server</li>
+                <li>Pydantic Schemas</li>
+              </ul>
+            </div>
+
+            <div class="tech-card">
+              <h4>RISK ENGINE (PROTOTYPE)</h4>
+              <ul>
+                <li>Python NumPy &amp; Pandas</li>
+                <li>Transparent Weighted Formula</li>
+                <li>Rule-Based Factor Attribution</li>
+                <li>NER Geotechnical Baseline</li>
+              </ul>
+            </div>
+
+            <div class="tech-card">
+              <h4>DATABASE &amp; STORAGE</h4>
+              <ul>
+                <li>SQLite (Embedded Demo DB)</li>
+                <li>SQLAlchemy ORM Models</li>
+                <li>GeoJSON Vector Topologies</li>
+                <li>PostGIS Architecture Ready</li>
+              </ul>
+            </div>
+
+            <div class="tech-card">
+              <h4>OFFLINE &amp; MESSAGING</h4>
+              <ul>
+                <li>IndexedDB Client Persistence</li>
+                <li>LocalStorage Queue Fallback</li>
+                <li>SMTP Emergency Email Dispatch</li>
+                <li>Simulated Multi-Channel Gateway</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category 2: Demo / Simulated Components -->
+        <div style="margin-bottom:20px;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+            <span class="source-status-badge demo">DEMO / PROTOTYPE</span>
+            <h3 style="font-size:1.05rem; color:#facc15; margin:0; text-transform:uppercase; letter-spacing:0.04em;">2. Demo / Simulated Components</h3>
+          </div>
+          <div class="tech-stack-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+            <div class="tech-card" style="border-color:rgba(250,204,21,0.3); background:rgba(250,204,21,0.03);">
+              <h4 style="color:#facc15;">ENVIRONMENTAL DEMO TELEMETRY</h4>
+              <ul>
+                <li>Synthetic 24-Hour Rainfall Precipitation Curves</li>
+                <li>Calibrated Soil Moisture Saturation Levels</li>
+                <li>Simulated Diurnal Humidity &amp; Temperature Variations</li>
+                <li>No physical IoT sensors active in demo hall</li>
+              </ul>
+            </div>
+
+            <div class="tech-card" style="border-color:rgba(250,204,21,0.3); background:rgba(250,204,21,0.03);">
+              <h4 style="color:#facc15;">PROTOTYPE MONITORING ZONES</h4>
+              <ul>
+                <li>4 Pre-Calibrated NER Demonstration Sectors</li>
+                <li>Cherrapunji, Haflong, Gangtok &amp; Kohima</li>
+                <li>Simulated Road Disruption Corridors (NH-206, NH-27)</li>
+                <li>Synthetic 10-Step Professor Incident Walkthrough</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category 3: Planned Future Integrations -->
+        <div style="margin-bottom:24px;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+            <span class="source-status-badge planned">PLANNED</span>
+            <h3 style="font-size:1.05rem; color:#a855f7; margin:0; text-transform:uppercase; letter-spacing:0.04em;">3. Planned Future Integrations (Phase 2 Roadmap)</h3>
+          </div>
+          <div class="tech-stack-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+            <div class="tech-card" style="border-color:rgba(168,85,247,0.3); background:rgba(168,85,247,0.03);">
+              <h4 style="color:#c084fc;">REMOTE SENSING &amp; WEATHER APIS</h4>
+              <ul>
+                <li>Sentinel-1 InSAR Surface Creep Interferometry</li>
+                <li>Copernicus Sentinel-2 Optical Moisture Indices</li>
+                <li>India Meteorological Department (IMD) AWS Live Feeds</li>
+                <li>Live Physical MEMS/Piezometer IoT Sensors</li>
+              </ul>
+            </div>
+
+            <div class="tech-card" style="border-color:rgba(168,85,247,0.3); background:rgba(168,85,247,0.03);">
+              <h4 style="color:#c084fc;">ENTERPRISE CLOUD &amp; ML</h4>
+              <ul>
+                <li>PostgreSQL 16+ &amp; PostGIS Spatial Engine</li>
+                <li>Trained XGBoost / Random Forest ML Ensembles</li>
+                <li>SHAP (SHapley Additive exPlanations) Model Explainability</li>
+                <li>Redis Telemetry Cache &amp; Firebase Cloud Messaging</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 7: Data Sources & Integration Status -->
+        <h2 style="font-size:1.3rem; color:#fff; margin:36px 0 16px;">Data Sources &amp; Integration Status</h2>
+        <div class="card" style="padding:0; overflow:hidden;">
+          <table class="data-sources-table">
+            <thead>
+              <tr>
+                <th>Data Source</th>
+                <th>Source Type</th>
+                <th>Integration Category</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Rainfall Data</strong></td>
+                <td>Precipitation Telemetry</td>
+                <td>Prototype Dataset (Calibrated to Cherrapunji)</td>
+                <td><span class="source-status-badge demo">DEMO</span></td>
+              </tr>
+              <tr>
+                <td><strong>Terrain &amp; Elevation Data</strong></td>
+                <td>Topographic Slope &amp; Aspect</td>
+                <td>SRTM 30m DEM / Prototype Terrain Data</td>
+                <td><span class="source-status-badge prototype">PROTOTYPE</span></td>
+              </tr>
+              <tr>
+                <td><strong>Historical Landslide Data</strong></td>
+                <td>Geotechnical Incident Log</td>
+                <td>Public Disaster Dataset / Geological Survey Baseline</td>
+                <td><span class="source-status-badge prototype">PROTOTYPE</span></td>
+              </tr>
+              <tr>
+                <td><strong>Citizen &amp; Ground Reports</strong></td>
+                <td>Community Geotagged Reports</td>
+                <td>AlertNex Incident Reporting System (IndexedDB + API)</td>
+                <td><span class="source-status-badge live">WORKING</span></td>
+              </tr>
+              <tr>
+                <td><strong>Satellite InSAR Integration</strong></td>
+                <td>Radar Surface Deformation (Sentinel-1)</td>
+                <td>Future Earth Observation API Pipeline</td>
+                <td><span class="source-status-badge planned">PLANNED</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Step 28: Prototype Status & Limitations -->
+        <h2 style="font-size:1.3rem; color:#fff; margin:36px 0 16px;">Current Prototype Status &amp; Limitations</h2>
+        <div class="limitations-card">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+            <span class="prototype-badge" style="background:rgba(239,68,68,0.15); color:#fca5a5; border-color:#ef4444;">ACADEMIC TRANSPARENCY NOTICE</span>
+            <span style="font-size:0.85rem; color:#cbd5e1; font-weight:600;">Smart India Hackathon 2026 Prototype Scope</span>
+          </div>
+          <p style="font-size:0.88rem; color:#cbd5e1; line-height:1.6; margin-bottom:16px;">
+            AlertNex is an applied hackathon prototype engineered for college-level and national demonstration. In adherence to strict academic honesty and Smart India Hackathon evaluation guidelines, the current prototype operational parameters are explicitly clarified below:
+          </p>
+
+          <div class="limitations-grid">
+            <div class="limitation-item">
+              <h5><span>⚠️</span> Prototype Environmental Data</h5>
+              <p>Rainfall and soil moisture telemetry values are simulated or pre-calibrated baseline figures designed to demonstrate dynamic multi-parameter risk calculation without requiring live physical IoT sensors in the competition hall.</p>
+            </div>
+
+            <div class="limitation-item">
+              <h5><span>⚠️</span> Prototype Risk Assessment Engine</h5>
+              <p>The current risk calculation uses a transparent weighted prototype engine (Rainfall 30%, Moisture 25%, Slope 20%, History 15%, Reports 10%) calibrated to NER topography. Heavy complex ML ensembles remain planned future work.</p>
+            </div>
+
+            <div class="limitation-item">
+              <h5><span>⚠️</span> Limited Monitoring Sectors</h5>
+              <p>Four primary demonstration sectors (Cherrapunji-Mawsynram, Haflong-Jatinga, Gangtok-Tsomgo, Kohima-Dimapur) are currently configured to showcase regional variability across Meghalaya, Assam, Sikkim, and Nagaland.</p>
+            </div>
+
+            <div class="limitation-item">
+              <h5><span>⚠️</span> Satellite Remote Sensing (Future)</h5>
+              <p>Sentinel-1 InSAR surface deformation tracking and Copernicus earth-observation feeds are architecturally designed for Phase 2 scaling but are not connected as live real-time feeds in this prototype.</p>
+            </div>
+
+            <div class="limitation-item">
+              <h5><span>⚠️</span> Decision-Support Only</h5>
+              <p>Alternative route suggestions and road disruption alerts are algorithmic prototype decision-support recommendations. They do not constitute official statutory evacuation orders from civil district authorities.</p>
+            </div>
+
+            <div class="limitation-item">
+              <h5><span>⚠️</span> Database Configuration</h5>
+              <p>For zero-configuration portability and offline demonstration, AlertNex runs on an embedded SQLite database with complete SQLAlchemy ORM models, designed for seamless migration to PostgreSQL/PostGIS in production.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           PAGE 10: TEAM ALERTNEX
+           ===================================================================== -->
+      <section id="view-team" class="page-view">
+        <div class="view-header">
+          <div class="view-header-title-group">
+            <h1>Meet Team AlertNex</h1>
+            <p>Smart India Hackathon 2026 • Problem Statement: <strong>SIH26001</strong> • Theme: <strong>Disaster Management</strong></p>
+          </div>
+          <div class="view-header-actions">
+            <span class="status-online-pill">TEAM ALERTNEX</span>
+          </div>
+        </div>
+
+        <div class="team-grid">
+          <!-- Team Leader: Ayush Kumar -->
+          <div class="team-card leader">
+            <div class="team-avatar-box">
+              <div class="avatar-circle">AK</div>
+              <div class="team-meta">
+                <h3>AYUSH KUMAR</h3>
+                <div class="team-role">TEAM LEADER</div>
+              </div>
+            </div>
+            <p style="font-size:0.86rem; color:#cbd5e1; line-height:1.5;">
+              Responsible for overall project coordination, prototype system architecture, decision-support logic, and SIH submission alignment.
+            </p>
+            <div class="team-tags-list">
+              <span class="team-tag">System Architecture</span>
+              <span class="team-tag">Prototype Risk Model</span>
+              <span class="team-tag">Decision Support</span>
+              <span class="team-tag">Project Coordination</span>
+            </div>
+          </div>
+
+          <!-- Prerana Mondal -->
+          <div class="team-card">
+            <div class="team-avatar-box">
+              <div class="avatar-circle">PM</div>
+              <div class="team-meta">
+                <h3>PRERANA MONDAL</h3>
+                <div class="team-role" style="color:#38bdf8;">TEAM MEMBER</div>
+              </div>
+            </div>
+            <p style="font-size:0.86rem; color:#cbd5e1; line-height:1.5;">
+              Developed the user interface, dashboard components, responsive layouts, and interactive project visualizations.
+            </p>
+            <div class="team-tags-list">
+              <span class="team-tag">Frontend Development</span>
+              <span class="team-tag">UI/UX Design</span>
+              <span class="team-tag">Data Visualization</span>
+            </div>
+          </div>
+
+          <!-- Sondeep Kumar -->
+          <div class="team-card">
+            <div class="team-avatar-box">
+              <div class="avatar-circle">SK</div>
+              <div class="team-meta">
+                <h3>SONDEEP KUMAR</h3>
+                <div class="team-role" style="color:#38bdf8;">TEAM MEMBER</div>
+              </div>
+            </div>
+            <p style="font-size:0.86rem; color:#cbd5e1; line-height:1.5;">
+              Developed FastAPI APIs, backend services, database integration, and application data flow.
+            </p>
+            <div class="team-tags-list">
+              <span class="team-tag">Backend Development</span>
+              <span class="team-tag">FastAPI REST APIs</span>
+              <span class="team-tag">Database Integration</span>
+            </div>
+          </div>
+
+          <!-- Shinjini Lohar -->
+          <div class="team-card">
+            <div class="team-avatar-box">
+              <div class="avatar-circle">SL</div>
+              <div class="team-meta">
+                <h3>SHINJINI LOHAR</h3>
+                <div class="team-role" style="color:#38bdf8;">TEAM MEMBER</div>
+              </div>
+            </div>
+            <p style="font-size:0.86rem; color:#cbd5e1; line-height:1.5;">
+              Developed the prototype weighted risk assessment engine, environmental factor processing, and risk classification logic.
+            </p>
+            <div class="team-tags-list">
+              <span class="team-tag">Risk Assessment Engine</span>
+              <span class="team-tag">Factor Processing</span>
+              <span class="team-tag">Risk Classification</span>
+            </div>
+          </div>
+
+          <!-- Subham Kumar Modi -->
+          <div class="team-card">
+            <div class="team-avatar-box">
+              <div class="avatar-circle">SM</div>
+              <div class="team-meta">
+                <h3>SUBHAM KUMAR MODI</h3>
+                <div class="team-role" style="color:#38bdf8;">TEAM MEMBER</div>
+              </div>
+            </div>
+            <p style="font-size:0.86rem; color:#cbd5e1; line-height:1.5;">
+              Developed GIS visualization, connectivity impact analysis, and prototype route decision-support features.
+            </p>
+            <div class="team-tags-list">
+              <span class="team-tag">GIS Visualization</span>
+              <span class="team-tag">Connectivity Analysis</span>
+              <span class="team-tag">Route Decision Support</span>
+            </div>
+          </div>
+
+          <!-- Rahul Deo -->
+          <div class="team-card">
+            <div class="team-avatar-box">
+              <div class="avatar-circle">RD</div>
+              <div class="team-meta">
+                <h3>RAHUL DEO</h3>
+                <div class="team-role" style="color:#38bdf8;">TEAM MEMBER</div>
+              </div>
+            </div>
+            <p style="font-size:0.86rem; color:#cbd5e1; line-height:1.5;">
+              Managed system integration, deployment configuration, testing, GitHub repository setup, and Netlify deployment.
+            </p>
+            <div class="team-tags-list">
+              <span class="team-tag">System Integration</span>
+              <span class="team-tag">Netlify Deployment</span>
+              <span class="team-tag">Testing &amp; QA</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hackathon Submission Box -->
+        <div class="card" style="margin-top:32px; background:linear-gradient(135deg, rgba(249,115,22,0.1) 0%, rgba(16,36,62,0.8) 100%); border-color:var(--orange-primary);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+            <div>
+              <div style="font-size:0.75rem; font-weight:700; color:var(--orange-primary); text-transform:uppercase;">SMART INDIA HACKATHON 2026 OFFICIAL SUBMISSION</div>
+              <h3 style="font-size:1.25rem; color:#fff; margin-top:4px;">Team: AlertNex | Problem Statement ID: SIH26001</h3>
+              <p style="font-size:0.88rem; color:#cbd5e1; margin-top:2px;">Title: AI-Based Early Warning and Landslide Monitoring System in NER • Category: Software • Ministry: MDoNER</p>
+            </div>
+            <button class="btn btn-primary" data-view="dashboard">Launch Authority Dashboard</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- =========================================================================
+       MODAL DIALOG: NOTIFICATION DISPATCH SIMULATOR
+       ========================================================================= -->
+  <div class="modal-backdrop" id="notificationModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>Dispatch Early Warning Bulletin</h3>
+        <button onclick="AlertNexAlerts.closeModal()" style="color:#94a3b8; font-size:1.2rem;">✕</button>
+      </div>
+      <div class="modal-body" id="notificationModalBody">
+        <!-- Populated dynamically -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" onclick="AlertNexAlerts.closeModal()">Cancel</button>
+        <button class="btn btn-primary btn-sm" onclick="AlertNexAlerts.dispatchSimulatedNotification()">Confirm &amp; Broadcast</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL DIALOG: PROTOTYPE REPORT EXPORT PREVIEW
+       ========================================================================= -->
+  <div class="modal-backdrop" id="exportReportModal">
+    <div class="modal-dialog" style="max-width:620px;">
+      <div class="modal-header">
+        <h3>AlertNex Monitoring Summary (Briefing Preview)</h3>
+        <button onclick="AlertNexApp.closeExportModal()" style="color:#94a3b8; font-size:1.2rem;">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="background:#fff; color:#0f172a; padding:20px; border-radius:8px; font-family:'Plus Jakarta Sans',sans-serif;">
+          <div style="display:flex; justify-content:space-between; border-bottom:2px solid #0f172a; padding-bottom:8px; margin-bottom:12px;">
+            <div>
+              <strong style="font-size:1.1rem; color:#0b192c;">AlertNex Disaster Intelligence Briefing</strong>
+              <div style="font-size:0.75rem; color:#64748b;">MDoNER / SIH26001 • Team AlertNex</div>
+            </div>
+            <div style="text-align:right; font-size:0.75rem; color:#64748b;">
+              <div>Date: 05-Sep-2026</div>
+              <div>Status: <strong>PROTOTYPE REPORT</strong></div>
+            </div>
+          </div>
+
+          <p style="font-size:0.85rem; line-height:1.5; color:#334155;">
+            <strong>Selected Region:</strong> Demo NER Monitoring Area (East Khasi Hills &amp; Dima Hasao Sectors)<br>
+            <strong>Current Risk Status:</strong> <span style="color:#ef4444; font-weight:bold;">HIGH TO CRITICAL (Score 87%)</span><br>
+            <strong>Major Contributing Factors:</strong> Heavy Rainfall (215 mm/24h), Saturated Soil Pore Pressure (88%), Recent Slope Crack Reports.<br>
+            <strong>Potential Impact:</strong> NH-206 connectivity vulnerability; isolation threat to Mawlyndep village.<br>
+            <strong>Recommended Priority:</strong> Maintain standby SDRF equipment and activate suggested Mawphlang bypass route.
+          </p>
+
+          <div style="margin-top:14px; padding:8px 12px; background:#f1f5f9; border-radius:6px; font-size:0.72rem; color:#64748b;">
+            * This document represents an automated decision-support briefing generated from simulated sensor feeds.
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" onclick="AlertNexApp.closeExportModal()">Close</button>
+        <button class="btn btn-primary btn-sm" onclick="AlertNexApp.triggerPrototypePrint()">Print / Save PDF (Demo)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Leaflet GIS JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- AlertNex Application Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/ai-engine.js"></script>
+  <script src="js/connectivity.js"></script>
+  <script src="js/alerts.js"></script>
+  <script src="js/reporting.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/simulation.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
