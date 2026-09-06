@@ -1,0 +1,59 @@
+name: AlertNex Continuous Integration
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  backend-test:
+    name: Backend Lint & Pytest Suite
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+        cache: "pip"
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest httpx
+        if [ -f backend/requirements.txt ]; then pip install -r backend/requirements.txt; fi
+
+    - name: Lint with Flake8
+      run: |
+        # Stop build if syntax errors or undefined names exist
+        flake8 backend --count --select=E9,F63,F7,F82 --show-source --statistics
+        # Exit-zero treats all warnings non-critically
+        flake8 backend --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    - name: Run Backend Pytest Suite
+      run: |
+        PYTHONPATH=. pytest -v backend/tests/
+
+  frontend-check:
+    name: Frontend Syntax & Asset Integrity
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Validate Frontend Assets & Static Structure
+      run: |
+        test -f alertnex-app/index.html || exit 1
+        test -f alertnex-app/css/style.css || exit 1
+        test -f alertnex-app/js/app.js || exit 1
+        test -f alertnex-app/js/map.js || exit 1
+        test -f alertnex-app/js/ai-engine.js || exit 1
+        echo "All frontend files and modules validated successfully."

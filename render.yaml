@@ -1,0 +1,41 @@
+# ============================================================
+# AlertNex - Render Infrastructure Blueprint
+# Ministry of Development of North Eastern Region (MDoNER)
+# Smart India Hackathon 2026 | PS ID: SIH26001
+# ============================================================
+
+services:
+  # 1. FastAPI REST Backend & Decision-Support Engine
+  - type: web
+    name: alertnex-backend
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: DATABASE_URL
+        value: sqlite:///./alertnex.db
+      - key: PROTOTYPE_MODE
+        value: "true"
+      - key: HOST
+        value: "0.0.0.0"
+
+  # 2. AlertNex GIS Command Center Static Web App
+  - type: web
+    name: alertnex-frontend
+    env: static
+    region: oregon
+    plan: free
+    buildCommand: echo "AlertNex Static Frontend Ready"
+    staticPublishPath: alertnex-app
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: SAMEORIGIN
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff

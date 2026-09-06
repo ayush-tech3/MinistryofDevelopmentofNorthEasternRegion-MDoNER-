@@ -1,6 +1,5 @@
 /**
  * AlertNex - Analytical Charts & Visualizations
- * Theme: Government Disaster Management & Landslide Monitoring Platform
  * Smart India Hackathon 2026 | PS ID: SIH26001
  * Team: AlertNex
  */
@@ -11,8 +10,8 @@ const AlertNexCharts = {
   init() {
     if (typeof Chart === "undefined") return;
 
-    // Set standard Chart.js light government dashboard defaults
-    Chart.defaults.color = "#475569";
+    // Set standard Chart.js dark theme defaults
+    Chart.defaults.color = "#94a3b8";
     Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
 
     this.renderDashboardCharts();
@@ -34,16 +33,16 @@ const AlertNexCharts = {
               AlertNexData.kpiStats.highRiskAreas,
               AlertNexData.kpiStats.criticalRiskAreas
             ],
-            backgroundColor: ["#15803d", "#d97706", "#ea580c", "#dc2626"],
+            backgroundColor: ["#10b981", "#f59e0b", "#f97316", "#ef4444"],
             borderWidth: 2,
-            borderColor: "#ffffff"
+            borderColor: "#10243e"
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { position: "bottom", labels: { boxWidth: 12, font: { size: 11, weight: "600" }, color: "#334155" } }
+            legend: { position: "bottom", labels: { boxWidth: 12, font: { size: 11 } } }
           },
           cutout: "68%"
         }
@@ -61,15 +60,15 @@ const AlertNexCharts = {
             {
               label: "Cherrapunji (Meghalaya)",
               data: [42, 68, 95, 140, 185, 215, 230],
-              borderColor: "#dc2626",
-              backgroundColor: "rgba(220, 38, 38, 0.08)",
+              borderColor: "#ef4444",
+              backgroundColor: "transparent",
               tension: 0.3,
-              borderWidth: 2.5
+              borderWidth: 2
             },
             {
               label: "Haflong (Assam)",
               data: [20, 35, 60, 85, 115, 138, 145],
-              borderColor: "#ea580c",
+              borderColor: "#f97316",
               backgroundColor: "transparent",
               tension: 0.3,
               borderWidth: 2
@@ -77,7 +76,7 @@ const AlertNexCharts = {
             {
               label: "Gangtok (Sikkim)",
               data: [15, 28, 45, 70, 92, 118, 128],
-              borderColor: "#d97706",
+              borderColor: "#f59e0b",
               backgroundColor: "transparent",
               tension: 0.3,
               borderWidth: 2
@@ -88,14 +87,13 @@ const AlertNexCharts = {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { position: "top", labels: { boxWidth: 10, font: { size: 11, weight: "600" }, color: "#334155" } }
+            legend: { position: "top", labels: { boxWidth: 10, font: { size: 10 } } }
           },
           scales: {
-            x: { grid: { color: "rgba(0, 0, 0, 0.05)" }, ticks: { color: "#64748b" } },
+            x: { grid: { color: "rgba(255, 255, 255, 0.05)" } },
             y: {
-              grid: { color: "rgba(0, 0, 0, 0.05)" },
-              ticks: { color: "#64748b" },
-              title: { display: true, text: "Rainfall (mm)", color: "#475569", font: { weight: "600" } }
+              grid: { color: "rgba(255, 255, 255, 0.05)" },
+              title: { display: true, text: "Rainfall (mm)", color: "#94a3b8" }
             }
           }
         }
@@ -112,11 +110,11 @@ const AlertNexCharts = {
           datasets: [{
             label: "Average Regional Vulnerability (%)",
             data: [32, 38, 45, 52, 68, 79, 84],
-            borderColor: "#1b4d3e",
-            backgroundColor: "rgba(27, 77, 62, 0.1)",
+            borderColor: "#f97316",
+            backgroundColor: "rgba(249, 115, 22, 0.12)",
             fill: true,
             tension: 0.35,
-            borderWidth: 2.5
+            borderWidth: 2
           }]
         },
         options: {
@@ -124,8 +122,8 @@ const AlertNexCharts = {
           maintainAspectRatio: false,
           plugins: { legend: { display: false } },
           scales: {
-            x: { grid: { color: "rgba(0, 0, 0, 0.05)" }, ticks: { color: "#64748b" } },
-            y: { min: 0, max: 100, grid: { color: "rgba(0, 0, 0, 0.05)" }, ticks: { color: "#64748b" } }
+            x: { grid: { color: "rgba(255,255,255,0.05)" } },
+            y: { min: 0, max: 100, grid: { color: "rgba(255,255,255,0.05)" } }
           }
         }
       });
@@ -141,8 +139,8 @@ const AlertNexCharts = {
           datasets: [{
             label: "Active Alerts",
             data: [2, 5, 8, 4],
-            backgroundColor: ["#15803d", "#d97706", "#ea580c", "#dc2626"],
-            borderRadius: 4
+            backgroundColor: ["#10b981", "#f59e0b", "#f97316", "#ef4444"],
+            borderRadius: 6
           }]
         },
         options: {
@@ -150,8 +148,8 @@ const AlertNexCharts = {
           maintainAspectRatio: false,
           plugins: { legend: { display: false } },
           scales: {
-            x: { grid: { display: false }, ticks: { color: "#475569", font: { weight: "600" } } },
-            y: { grid: { color: "rgba(0, 0, 0, 0.05)" }, ticks: { stepSize: 2, color: "#64748b" } }
+            x: { grid: { display: false } },
+            y: { grid: { color: "rgba(255,255,255,0.05)" }, ticks: { stepSize: 2 } }
           }
         }
       });
@@ -170,14 +168,14 @@ const AlertNexCharts = {
             {
               label: "Average Risk Score (%)",
               data: [18, 38, 64, 82, 94],
-              backgroundColor: "rgba(27, 77, 62, 0.85)",
-              borderRadius: 4
+              backgroundColor: "rgba(249, 115, 22, 0.8)",
+              borderRadius: 6
             },
             {
               label: "Incident Probability (%)",
               data: [12, 29, 58, 79, 91],
-              backgroundColor: "rgba(220, 38, 38, 0.85)",
-              borderRadius: 4
+              backgroundColor: "rgba(239, 68, 68, 0.8)",
+              borderRadius: 6
             }
           ]
         },
@@ -185,11 +183,11 @@ const AlertNexCharts = {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { position: "top", labels: { boxWidth: 10, font: { size: 11, weight: "600" }, color: "#334155" } }
+            legend: { position: "top", labels: { boxWidth: 10, font: { size: 11 } } }
           },
           scales: {
-            x: { grid: { display: false }, ticks: { color: "#64748b" } },
-            y: { min: 0, max: 100, grid: { color: "rgba(0, 0, 0, 0.05)" }, ticks: { color: "#64748b" } }
+            x: { grid: { display: false } },
+            y: { min: 0, max: 100, grid: { color: "rgba(255, 255, 255, 0.05)" } }
           }
         }
       });
@@ -204,16 +202,16 @@ const AlertNexCharts = {
           labels: ["Dangerous Slope", "Ground Crack", "Rockfall", "Road Blockage", "Active Landslide", "Other"],
           datasets: [{
             data: [32, 28, 18, 15, 8, 4],
-            backgroundColor: ["#8b5a2b", "#d97706", "#dc2626", "#1b4d3e", "#b91c1c", "#64748b"],
+            backgroundColor: ["#f59e0b", "#f97316", "#ef4444", "#8b5cf6", "#ec4899", "#64748b"],
             borderWidth: 2,
-            borderColor: "#ffffff"
+            borderColor: "#10243e"
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { position: "right", labels: { boxWidth: 12, font: { size: 10, weight: "500" }, color: "#334155" } }
+            legend: { position: "right", labels: { boxWidth: 12, font: { size: 10 } } }
           }
         }
       });
