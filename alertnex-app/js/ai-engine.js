@@ -196,12 +196,13 @@ const AlertNexAIEngine = {
         datasets: [{
           label: "Risk Score Trend (%)",
           data: [28, 35, 42, 58, 69, 78, 87],
-          borderColor: "#f97316",
-          backgroundColor: "rgba(249, 115, 22, 0.15)",
+          borderColor: "#1b4d3e",
+          backgroundColor: "rgba(27, 77, 62, 0.08)",
           fill: true,
           tension: 0.35,
-          pointBackgroundColor: "#f97316",
-          pointRadius: 4
+          pointBackgroundColor: "#1b4d3e",
+          pointRadius: 4,
+          borderWidth: 2.5
         }]
       },
       options: {
@@ -217,15 +218,15 @@ const AlertNexAIEngine = {
         },
         scales: {
           x: {
-            grid: { color: "rgba(255, 255, 255, 0.05)" },
-            ticks: { color: "#94a3b8", font: { size: 11 } }
+            grid: { color: "rgba(0, 0, 0, 0.05)" },
+            ticks: { color: "#64748b", font: { size: 11 } }
           },
           y: {
             min: 0,
             max: 100,
-            grid: { color: "rgba(255, 255, 255, 0.05)" },
+            grid: { color: "rgba(0, 0, 0, 0.05)" },
             ticks: {
-              color: "#94a3b8",
+              color: "#64748b",
               font: { size: 11 },
               callback: (val) => `${val}%`
             }
