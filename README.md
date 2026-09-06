@@ -378,8 +378,7 @@ MinistryofDevelopmentofNorthEasternRegion(MDoNER)/
 ├── .github/
 │   └── workflows/
 │       ├── ci.yml                    # Automated linting & pytest test execution
-│       ├── deploy-pages.yml          # GitHub Pages automated publishing workflow
-│       └── python-app.yml            # Legacy Python CI workflow
+│       └── deploy-pages.yml          # GitHub Pages automated publishing workflow
 ├── alertnex-app/                     # Complete SPA Frontend (Netlify & Vercel Root)
 │   ├── index.html                    # Single-page application entry point (10 views)
 │   ├── assets/                       # Static media, icons, and map overlays
