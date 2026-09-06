@@ -113,15 +113,18 @@ While traditional systems stop at predicting *where* a landslide might occur, Al
   * Leaflet.js 1.9.4 (Interactive GIS map canvas with CartoDB Voyager tiles)
   * Chart.js (Interactive analytical charts for risk trends and alert distributions)
   * IndexedDB API (Client-side offline incident report caching with LocalStorage fallback)
-* **Backend:**
+* **Backend & API:**
   * Python 3.12+ runtime
   * FastAPI 0.110+ (Asynchronous REST API framework)
   * Uvicorn 0.28+ (ASGI production-ready web server)
   * Pydantic v2 (Strict schema validation for telemetry and reports)
-  * SQLAlchemy 2.0 (ORM database layer with automatic table creation)
-  * SQLite (Embedded zero-configuration database, auto-seeded on launch)
+  * SQLAlchemy 2.0 (Decoupled ORM database layer with automatic table creation)
   * SMTP (Standard Python `smtplib` configured for emergency email alert dispatch)
   * HTTPX & Requests (API communication and automated testing)
+* **Database & Storage Layer (SQLite vs. PostgreSQL/PostGIS):**
+  * **Embedded SQLite (`alertnex.db`):** Zero-configuration local database used out-of-the-box for hackathon evaluation, portable live demonstrations, and automated CI/CD test suites without requiring external database services.
+  * **PostgreSQL 16 + PostGIS (Production Target):** Enterprise spatial geodatabase configured in `docker-compose.yml` and supported by `backend/database.py` via `DATABASE_URL` for production scale, R-Tree spatial indexing, and high-concurrency multi-agency access.
+  * **Client-Side IndexedDB:** Browser-embedded offline datastore for the Single Page Application to support disconnected field incident logging in remote valleys.
 
 ---
 
@@ -282,7 +285,9 @@ Rather than delivering an opaque "black-box" risk number, the system computes th
 
 * **Frontend:** Static Single Page Application hosted on **Netlify**, with automated CI/CD continuous deployment triggered on every Git push to the GitHub repository.
 * **Backend:** Container-ready FastAPI service designed to deploy on platforms such as **Render, Railway, Fly.io, or AWS EC2**.
-* **Database:** Default zero-configuration embedded SQLite for portable demonstration, with an abstraction layer ready for managed PostgreSQL/PostGIS in production.
+* **Database Layer (SQLite vs. PostgreSQL/PostGIS):**
+  * **Evaluation & Demo Mode (SQLite):** Runs out-of-the-box using embedded `alertnex.db` with auto-seeding, eliminating external database dependencies for evaluators and judges.
+  * **Production Enterprise Mode (PostgreSQL + PostGIS):** `backend/database.py` seamlessly connects to managed PostgreSQL with PostGIS extensions when `DATABASE_URL` is set, enabling native spatial indexing and high-concurrency disaster management ops.
 
 ---
 
@@ -291,8 +296,9 @@ Rather than delivering an opaque "black-box" risk number, the system computes th
 In strict adherence to Smart India Hackathon integrity standards:
 1. **Environmental Telemetry:** Rainfall and soil moisture telemetry are currently demo simulations or pre-calibrated baseline datasets; physical IoT sensors are not deployed in the competition hall.
 2. **Risk Model & XAI:** The current calculation is an auditable weighted formula and rule-based XAI factor attribution engine rather than a black-box deep learning model, ensuring transparent decision auditability for hackathon demonstration.
-3. **Geographic Scope:** Four representative NER sectors are currently modeled.
-4. **Authority Directives:** Alternative routes and advisories are algorithmic decision-support recommendations and do not represent official civil police or military transit orders.
+3. **Database Architecture:** Uses an embedded SQLite instance for portable, zero-setup hackathon evaluation while maintaining complete SQLAlchemy ORM model compatibility with enterprise PostgreSQL/PostGIS.
+4. **Geographic Scope:** Four representative NER sectors are currently modeled.
+5. **Authority Directives:** Alternative routes and advisories are algorithmic decision-support recommendations and do not represent official civil police or military transit orders.
 
 ---
 
