@@ -54,7 +54,7 @@
 
     <!-- Right Controls -->
     <div class="topbar-right">
-      <div id="systemLiveClock" class="font-mono" style="font-size:0.8rem; color:#cbd5e1; font-weight:600;">--:--:-- IST</div>
+      <div id="systemLiveClock" class="font-mono" style="font-size:0.8rem; color:var(--text-on-dark-sub); font-weight:600;">--:--:-- IST</div>
       <button class="btn btn-secondary btn-sm" data-view="dashboard">
         <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
         <span>Authority Access</span>
@@ -182,7 +182,7 @@
               </button>
             </div>
 
-            <div style="margin-top:14px; display:flex; gap:16px; font-size:0.8rem; color:#94a3b8;">
+            <div style="margin-top:14px; display:flex; gap:16px; font-size:0.8rem; color:var(--text-muted);">
               <div>✔ 8 NER States Modeled</div>
               <div>✔ Offline Field Reporting</div>
               <div>✔ Explainable AI (XAI) Decision Support</div>
@@ -195,8 +195,8 @@
             <div class="hero-visual-overlay">
               <div style="display:flex; justify-content:space-between; align-items:center;">
                 <div>
-                  <div style="font-weight:700; color:#fff; font-size:0.95rem;">NER Slope &amp; Rainfall Telemetry Grid</div>
-                  <div style="font-size:0.76rem; color:#cbd5e1;">Prototype Rainfall &amp; Terrain Monitoring</div>
+                  <div style="font-weight:700; color:var(--text-on-dark); font-size:0.95rem;">NER Slope &amp; Rainfall Telemetry Grid</div>
+                  <div style="font-size:0.76rem; color:var(--text-on-dark-sub);">Prototype Rainfall &amp; Terrain Monitoring</div>
                 </div>
                 <span class="risk-tag high">HIGH ALERT SECTORS</span>
               </div>
@@ -273,42 +273,42 @@
             <div class="pipeline-node">
               <div class="node-step">STEP 01</div>
               <div class="node-label">DATA SOURCES</div>
-              <div style="font-size:0.72rem; color:#94a3b8; margin-top:4px;">Rainfall, Soil, DEM, Crowd</div>
+              <div style="font-size:0.72rem; color:var(--text-muted); margin-top:4px;">Rainfall, Soil, DEM, Crowd</div>
             </div>
             <div class="pipeline-arrow">➔</div>
 
             <div class="pipeline-node">
               <div class="node-step">STEP 02</div>
               <div class="node-label">AI ANALYSIS</div>
-              <div style="font-size:0.72rem; color:#94a3b8; margin-top:4px;">Prototype Multi-Factor Risk Modeling</div>
+              <div style="font-size:0.72rem; color:var(--text-muted); margin-top:4px;">Prototype Multi-Factor Risk Modeling</div>
             </div>
             <div class="pipeline-arrow">➔</div>
 
             <div class="pipeline-node">
               <div class="node-step">STEP 03</div>
               <div class="node-label">RISK ASSESSMENT</div>
-              <div style="font-size:0.72rem; color:#94a3b8; margin-top:4px;">Dynamic 0–100 Score</div>
+              <div style="font-size:0.72rem; color:var(--text-muted); margin-top:4px;">Dynamic 0–100 Score</div>
             </div>
             <div class="pipeline-arrow">➔</div>
 
             <div class="pipeline-node">
               <div class="node-step">STEP 04</div>
               <div class="node-label">GIS MAP</div>
-              <div style="font-size:0.72rem; color:#94a3b8; margin-top:4px;">Zonal Spatial Overlay</div>
+              <div style="font-size:0.72rem; color:var(--text-muted); margin-top:4px;">Zonal Spatial Overlay</div>
             </div>
             <div class="pipeline-arrow">➔</div>
 
             <div class="pipeline-node">
               <div class="node-step">STEP 05</div>
               <div class="node-label">IMPACT ANALYSIS</div>
-              <div style="font-size:0.72rem; color:#94a3b8; margin-top:4px;">Roads, Villages, Routes</div>
+              <div style="font-size:0.72rem; color:var(--text-muted); margin-top:4px;">Roads, Villages, Routes</div>
             </div>
             <div class="pipeline-arrow">➔</div>
 
             <div class="pipeline-node" style="border-color:var(--orange-primary);">
               <div class="node-step">STEP 06</div>
               <div class="node-label" style="color:var(--orange-primary);">ALERTS &amp; RESPONSE</div>
-              <div style="font-size:0.72rem; color:#cbd5e1; margin-top:4px;">Actionable Command Orders</div>
+              <div style="font-size:0.72rem; color:var(--text-muted); margin-top:4px;">Actionable Command Orders</div>
             </div>
           </div>
         </div>
@@ -317,7 +317,7 @@
         <footer class="landing-footer">
           <div>
             <strong>Team AlertNex</strong> • Smart India Hackathon 2026
-            <div style="font-size:0.75rem; color:#94a3b8; margin-top:2px;">Problem Statement ID: SIH26001 | Category: Software | Theme: Disaster Management</div>
+            <div style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">Problem Statement ID: SIH26001 | Category: Software | Theme: Disaster Management</div>
           </div>
           <div>
             <span>Developed for: <strong>Ministry of Development of North Eastern Region (MDoNER)</strong></span>
@@ -477,8 +477,8 @@
             <!-- Filter Bar Overlay -->
             <div class="map-control-overlay">
               <div style="display:flex; align-items:center; gap:8px;">
-                <label for="mapRiskFilter" style="font-size:0.78rem; font-weight:700; color:#cbd5e1;">FILTER RISK:</label>
-                <select id="mapRiskFilter" class="form-control" style="padding:4px 8px; font-size:0.8rem; background:var(--navy-surface);">
+                <label for="mapRiskFilter" style="font-size:0.78rem; font-weight:700; color:var(--text-secondary);">FILTER RISK:</label>
+                <select id="mapRiskFilter" class="form-control" style="padding:4px 8px; font-size:0.8rem; background:var(--bg-card); color:var(--text-main); border:1px solid var(--border-dark);">
                   <option value="ALL">All Risk Levels (8 Zones)</option>
                   <option value="CRITICAL">Critical Risk Only</option>
                   <option value="HIGH">High Risk Only</option>
@@ -487,10 +487,10 @@
                 </select>
               </div>
 
-              <div style="height:18px; width:1px; background:var(--navy-border);"></div>
+              <div style="height:18px; width:1px; background:var(--border-main);"></div>
 
               <!-- Layer Toggles -->
-              <div style="display:flex; gap:12px; font-size:0.76rem; color:#cbd5e1;">
+              <div style="display:flex; gap:12px; font-size:0.76rem; color:var(--text-secondary);">
                 <label style="display:flex; align-items:center; gap:4px; cursor:pointer;">
                   <input type="checkbox" id="toggleRoads" checked> Roads &amp; Lifelines
                 </label>
@@ -511,12 +511,12 @@
 
             <!-- Legend Overlay -->
             <div class="map-legend-overlay">
-              <div style="font-size:0.75rem; font-weight:700; color:#fff; text-transform:uppercase; margin-bottom:2px;">RISK CLASSIFICATION</div>
+              <div style="font-size:0.75rem; font-weight:700; color:var(--text-main); text-transform:uppercase; margin-bottom:2px;">RISK CLASSIFICATION</div>
               <div class="legend-item"><span class="legend-color-dot" style="background:#ef4444;"></span> Critical Risk (Score &gt; 75%)</div>
               <div class="legend-item"><span class="legend-color-dot" style="background:#f97316;"></span> High Risk (Score 51–75%)</div>
               <div class="legend-item"><span class="legend-color-dot" style="background:#f59e0b;"></span> Moderate Risk (Score 26–50%)</div>
               <div class="legend-item"><span class="legend-color-dot" style="background:#10b981;"></span> Low Risk (Score 0–25%)</div>
-              <div style="font-size:0.68rem; color:#94a3b8; margin-top:2px;">Click any marker to inspect telemetry</div>
+              <div style="font-size:0.68rem; color:var(--text-secondary); margin-top:2px;">Click any marker to inspect telemetry</div>
             </div>
           </div>
 
@@ -616,7 +616,7 @@
               <input type="range" min="0" max="10" value="4" class="range-input" id="aiReports">
             </div>
 
-            <div style="background:rgba(255,255,255,0.02); border:1px solid var(--navy-border); border-radius:8px; padding:12px; font-size:0.78rem; color:#94a3b8;">
+            <div style="background:var(--bg-card-subtle); border:1px solid var(--border-main); border-radius:8px; padding:12px; font-size:0.78rem; color:var(--text-secondary);">
               ℹ️ <strong>Prototype Risk Model Formula:</strong> <code>Score = [Rainfall(30%) + Moisture(25%) + Slope(20%) + History(15%) + FieldReports(10%)] × WeatherMultiplier</code>
             </div>
           </div>
@@ -626,7 +626,7 @@
             <!-- Output Score Card -->
             <div class="card" style="text-align:center;">
               <div class="card-header" style="justify-content:center; margin-bottom:10px;">
-                <div style="font-size:0.82rem; font-weight:700; text-transform:uppercase; color:#94a3b8; letter-spacing:0.06em;">
+                <div style="font-size:0.82rem; font-weight:700; text-transform:uppercase; color:var(--text-secondary); letter-spacing:0.06em;">
                   DYNAMIC RISK ASSESSMENT OUTPUT
                 </div>
               </div>
@@ -637,11 +637,11 @@
               </div>
 
               <!-- Progress bar -->
-              <div style="width:100%; height:8px; background:var(--navy-dark); border-radius:999px; overflow:hidden; margin:16px 0 10px;">
+              <div style="width:100%; height:8px; background:var(--border-main); border-radius:999px; overflow:hidden; margin:16px 0 10px;">
                 <div id="aiScoreProgress" style="height:100%; width:87%; background:var(--risk-critical); transition:all 0.3s ease;"></div>
               </div>
 
-              <div style="font-size:0.8rem; color:#94a3b8;">
+              <div style="font-size:0.8rem; color:var(--text-muted);">
                 Classification: <strong>0–25 Low</strong> | <strong>26–50 Moderate</strong> | <strong>51–75 High</strong> | <strong>76–100 Critical</strong>
               </div>
             </div>
@@ -685,8 +685,8 @@
             <p><strong>Core AlertNex Innovation:</strong> Moving beyond hazard identification to evaluate systemic road disruptions, isolated villages, and emergency detour routes.</p>
           </div>
           <div class="view-header-actions">
-            <label for="impactZoneSelector" style="font-size:0.82rem; font-weight:700; color:#cbd5e1;">SELECT MONITORING ZONE:</label>
-            <select id="impactZoneSelector" class="form-control" style="background:var(--navy-surface); font-weight:600;">
+            <label for="impactZoneSelector" style="font-size:0.82rem; font-weight:700; color:var(--text-secondary);">SELECT MONITORING ZONE:</label>
+            <select id="impactZoneSelector" class="form-control" style="background:var(--bg-card); border:1px solid var(--border-dark); color:var(--text-main); font-weight:600;">
               <!-- Populated dynamically -->
             </select>
           </div>
@@ -904,7 +904,7 @@
                 <div class="photo-preview-box" id="photoPreviewContainer" onclick="document.getElementById('reportPhotoInput').click();" style="cursor:pointer;">
                   <img src="assets/ner_hero.jpg" alt="Preset Sample Field Image">
                 </div>
-                <span style="font-size:0.75rem; color:#94a3b8; margin-top:4px;">Click image box above to browse or take photograph on mobile.</span>
+                <span style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">Click image box above to browse or take photograph on mobile.</span>
               </div>
 
               <button type="submit" class="btn btn-primary" style="width:100%; padding:12px; margin-top:10px;">
@@ -923,12 +923,12 @@
                 <span class="prototype-badge" id="offlineQueueBadge">0 Queued</span>
               </div>
 
-              <p style="font-size:0.86rem; color:#cbd5e1; line-height:1.5;">
+              <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.5;">
                 In remote NER valleys where mobile connectivity is severed, AlertNex caches reports in client-side <strong>IndexedDB / LocalStorage</strong>. Once connectivity resumes, reports are dispatched automatically.
               </p>
 
-              <div style="background:var(--navy-dark); border:1px solid var(--navy-border); border-radius:8px; padding:12px;">
-                <label style="display:flex; align-items:center; gap:10px; font-size:0.88rem; font-weight:600; color:#fff; cursor:pointer;">
+              <div style="background:var(--bg-card-subtle); border:1px solid var(--border-main); border-radius:8px; padding:12px;">
+                <label style="display:flex; align-items:center; gap:10px; font-size:0.88rem; font-weight:600; color:var(--text-main); cursor:pointer;">
                   <input type="checkbox" id="simulateOfflineToggle">
                   <span>Simulate "No Network Connection" (Offline Mode)</span>
                 </label>
@@ -974,10 +974,10 @@
         <!-- Filters Bar -->
         <div class="card" style="margin-bottom:20px; padding:14px 20px;">
           <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
-            <div style="font-size:0.8rem; font-weight:700; color:#94a3b8; text-transform:uppercase;">ANALYTICS FILTERS:</div>
+            <div style="font-size:0.8rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase;">ANALYTICS FILTERS:</div>
             
             <div style="display:flex; align-items:center; gap:6px;">
-              <span style="font-size:0.8rem; color:#cbd5e1;">Region:</span>
+              <span style="font-size:0.8rem; color:var(--text-secondary);">Region:</span>
               <select class="form-control" style="padding:4px 10px; font-size:0.8rem;">
                 <option>All NER States (8)</option>
                 <option>Assam &amp; Meghalaya</option>
@@ -987,7 +987,7 @@
             </div>
 
             <div style="display:flex; align-items:center; gap:6px;">
-              <span style="font-size:0.8rem; color:#cbd5e1;">Time Horizon:</span>
+              <span style="font-size:0.8rem; color:var(--text-secondary);">Time Horizon:</span>
               <select class="form-control" style="padding:4px 10px; font-size:0.8rem;">
                 <option>Monsoon Season (Current)</option>
                 <option>Past 30 Days</option>
@@ -997,7 +997,7 @@
             </div>
 
             <div style="display:flex; align-items:center; gap:6px;">
-              <span style="font-size:0.8rem; color:#cbd5e1;">Risk Threshold:</span>
+              <span style="font-size:0.8rem; color:var(--text-secondary);">Risk Threshold:</span>
               <select class="form-control" style="padding:4px 10px; font-size:0.8rem;">
                 <option>High &amp; Critical (&gt;50%)</option>
                 <option>All Levels</option>
@@ -1094,13 +1094,13 @@
         </div>
 
         <!-- Tech Stack Grid -->
-        <h2 style="font-size:1.3rem; color:#fff; margin:32px 0 16px;">Technology Stack &amp; Architecture Audit</h2>
+        <h2 style="font-size:1.3rem; color:var(--text-main); margin:32px 0 16px;">Technology Stack &amp; Architecture Audit</h2>
         
         <!-- Category 1: Current Prototype Implementation -->
         <div style="margin-bottom:20px;">
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
             <span class="source-status-badge live">WORKING</span>
-            <h3 style="font-size:1.05rem; color:#38bdf8; margin:0; text-transform:uppercase; letter-spacing:0.04em;">1. Current Prototype Implementation (Actually Used)</h3>
+            <h3 style="font-size:1.05rem; color:var(--forest-light); margin:0; text-transform:uppercase; letter-spacing:0.04em;">1. Current Prototype Implementation (Actually Used)</h3>
           </div>
           <div class="tech-stack-grid">
             <div class="tech-card">
@@ -1169,11 +1169,11 @@
         <div style="margin-bottom:20px;">
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
             <span class="source-status-badge demo">DEMO / PROTOTYPE</span>
-            <h3 style="font-size:1.05rem; color:#facc15; margin:0; text-transform:uppercase; letter-spacing:0.04em;">2. Demo / Simulated Components</h3>
+            <h3 style="font-size:1.05rem; color:var(--earth-accent); margin:0; text-transform:uppercase; letter-spacing:0.04em;">2. Demo / Simulated Components</h3>
           </div>
           <div class="tech-stack-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
-            <div class="tech-card" style="border-color:rgba(250,204,21,0.3); background:rgba(250,204,21,0.03);">
-              <h4 style="color:#facc15;">ENVIRONMENTAL DEMO TELEMETRY</h4>
+            <div class="tech-card" style="border-color:var(--earth-border); background:var(--earth-subtle);">
+              <h4 style="color:var(--earth-accent);">ENVIRONMENTAL DEMO TELEMETRY</h4>
               <ul>
                 <li>Synthetic 24-Hour Rainfall Precipitation Curves</li>
                 <li>Calibrated Soil Moisture Saturation Levels</li>
@@ -1182,8 +1182,8 @@
               </ul>
             </div>
 
-            <div class="tech-card" style="border-color:rgba(250,204,21,0.3); background:rgba(250,204,21,0.03);">
-              <h4 style="color:#facc15;">PROTOTYPE MONITORING ZONES</h4>
+            <div class="tech-card" style="border-color:var(--earth-border); background:var(--earth-subtle);">
+              <h4 style="color:var(--earth-accent);">PROTOTYPE MONITORING ZONES</h4>
               <ul>
                 <li>4 Pre-Calibrated NER Demonstration Sectors</li>
                 <li>Cherrapunji, Haflong, Gangtok &amp; Kohima</li>
@@ -1198,11 +1198,11 @@
         <div style="margin-bottom:24px;">
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
             <span class="source-status-badge planned">PLANNED</span>
-            <h3 style="font-size:1.05rem; color:#a855f7; margin:0; text-transform:uppercase; letter-spacing:0.04em;">3. Planned Future Integrations (Phase 2 Roadmap)</h3>
+            <h3 style="font-size:1.05rem; color:var(--text-secondary); margin:0; text-transform:uppercase; letter-spacing:0.04em;">3. Planned Future Integrations (Phase 2 Roadmap)</h3>
           </div>
           <div class="tech-stack-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
-            <div class="tech-card" style="border-color:rgba(168,85,247,0.3); background:rgba(168,85,247,0.03);">
-              <h4 style="color:#c084fc;">REMOTE SENSING &amp; WEATHER APIS</h4>
+            <div class="tech-card" style="border-color:var(--border-dark); background:var(--bg-card-subtle);">
+              <h4 style="color:var(--text-secondary);">REMOTE SENSING &amp; WEATHER APIS</h4>
               <ul>
                 <li>Sentinel-1 InSAR Surface Creep Interferometry</li>
                 <li>Copernicus Sentinel-2 Optical Moisture Indices</li>
@@ -1211,8 +1211,8 @@
               </ul>
             </div>
 
-            <div class="tech-card" style="border-color:rgba(168,85,247,0.3); background:rgba(168,85,247,0.03);">
-              <h4 style="color:#c084fc;">ENTERPRISE CLOUD &amp; ML</h4>
+            <div class="tech-card" style="border-color:var(--border-dark); background:var(--bg-card-subtle);">
+              <h4 style="color:var(--text-secondary);">ENTERPRISE CLOUD &amp; ML</h4>
               <ul>
                 <li>PostgreSQL 16+ &amp; PostGIS Spatial Engine</li>
                 <li>Trained XGBoost / Random Forest ML Ensembles</li>
@@ -1224,7 +1224,7 @@
         </div>
 
         <!-- Step 7: Data Sources & Integration Status -->
-        <h2 style="font-size:1.3rem; color:#fff; margin:36px 0 16px;">Data Sources &amp; Integration Status</h2>
+        <h2 style="font-size:1.3rem; color:var(--text-main); margin:36px 0 16px;">Data Sources &amp; Integration Status</h2>
         <div class="card" style="padding:0; overflow:hidden;">
           <table class="data-sources-table">
             <thead>
@@ -1271,13 +1271,13 @@
         </div>
 
         <!-- Step 28: Prototype Status & Limitations -->
-        <h2 style="font-size:1.3rem; color:#fff; margin:36px 0 16px;">Current Prototype Status &amp; Limitations</h2>
+        <h2 style="font-size:1.3rem; color:var(--text-main); margin:36px 0 16px;">Current Prototype Status &amp; Limitations</h2>
         <div class="limitations-card">
           <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-            <span class="prototype-badge" style="background:rgba(239,68,68,0.15); color:#fca5a5; border-color:#ef4444;">ACADEMIC TRANSPARENCY NOTICE</span>
-            <span style="font-size:0.85rem; color:#cbd5e1; font-weight:600;">Smart India Hackathon 2026 Prototype Scope</span>
+            <span class="prototype-badge" style="background:var(--risk-critical-bg); color:var(--risk-critical-text); border-color:var(--risk-critical-border);">ACADEMIC TRANSPARENCY NOTICE</span>
+            <span style="font-size:0.85rem; color:var(--text-secondary); font-weight:600;">Smart India Hackathon 2026 Prototype Scope</span>
           </div>
-          <p style="font-size:0.88rem; color:#cbd5e1; line-height:1.6; margin-bottom:16px;">
+          <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6; margin-bottom:16px;">
             AlertNex is an applied hackathon prototype engineered for college-level and national demonstration. In adherence to strict academic honesty and Smart India Hackathon evaluation guidelines, the current prototype operational parameters are explicitly clarified below:
           </p>
 
@@ -1339,7 +1339,7 @@
                 <div class="team-role">TEAM LEADER</div>
               </div>
             </div>
-            <p style="font-size:0.86rem; color:#cbd5e1; line-height:1.5;">
+            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.5;">
               Responsible for overall project coordination, prototype system architecture, decision-support logic, and SIH submission alignment.
             </p>
             <div class="team-tags-list">
@@ -1356,10 +1356,10 @@
               <div class="avatar-circle">PM</div>
               <div class="team-meta">
                 <h3>PRERANA MONDAL</h3>
-                <div class="team-role" style="color:#38bdf8;">TEAM MEMBER</div>
+                <div class="team-role" style="color:var(--forest-light);">TEAM MEMBER</div>
               </div>
             </div>
-            <p style="font-size:0.86rem; color:#cbd5e1; line-height:1.5;">
+            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.5;">
               Developed the user interface, dashboard components, responsive layouts, and interactive project visualizations.
             </p>
             <div class="team-tags-list">
@@ -1375,10 +1375,10 @@
               <div class="avatar-circle">SK</div>
               <div class="team-meta">
                 <h3>SONDEEP KUMAR</h3>
-                <div class="team-role" style="color:#38bdf8;">TEAM MEMBER</div>
+                <div class="team-role" style="color:var(--forest-light);">TEAM MEMBER</div>
               </div>
             </div>
-            <p style="font-size:0.86rem; color:#cbd5e1; line-height:1.5;">
+            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.5;">
               Developed FastAPI APIs, backend services, database integration, and application data flow.
             </p>
             <div class="team-tags-list">
@@ -1394,10 +1394,10 @@
               <div class="avatar-circle">SL</div>
               <div class="team-meta">
                 <h3>SHINJINI LOHAR</h3>
-                <div class="team-role" style="color:#38bdf8;">TEAM MEMBER</div>
+                <div class="team-role" style="color:var(--forest-light);">TEAM MEMBER</div>
               </div>
             </div>
-            <p style="font-size:0.86rem; color:#cbd5e1; line-height:1.5;">
+            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.5;">
               Developed the prototype weighted risk assessment engine, environmental factor processing, and risk classification logic.
             </p>
             <div class="team-tags-list">
@@ -1413,10 +1413,10 @@
               <div class="avatar-circle">SM</div>
               <div class="team-meta">
                 <h3>SUBHAM KUMAR MODI</h3>
-                <div class="team-role" style="color:#38bdf8;">TEAM MEMBER</div>
+                <div class="team-role" style="color:var(--forest-light);">TEAM MEMBER</div>
               </div>
             </div>
-            <p style="font-size:0.86rem; color:#cbd5e1; line-height:1.5;">
+            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.5;">
               Developed GIS visualization, connectivity impact analysis, and prototype route decision-support features.
             </p>
             <div class="team-tags-list">
@@ -1432,10 +1432,10 @@
               <div class="avatar-circle">RD</div>
               <div class="team-meta">
                 <h3>RAHUL DEO</h3>
-                <div class="team-role" style="color:#38bdf8;">TEAM MEMBER</div>
+                <div class="team-role" style="color:var(--forest-light);">TEAM MEMBER</div>
               </div>
             </div>
-            <p style="font-size:0.86rem; color:#cbd5e1; line-height:1.5;">
+            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.5;">
               Managed system integration, deployment configuration, testing, GitHub repository setup, and Netlify deployment.
             </p>
             <div class="team-tags-list">
@@ -1447,12 +1447,12 @@
         </div>
 
         <!-- Hackathon Submission Box -->
-        <div class="card" style="margin-top:32px; background:linear-gradient(135deg, rgba(249,115,22,0.1) 0%, rgba(16,36,62,0.8) 100%); border-color:var(--orange-primary);">
+        <div class="card" style="margin-top:32px; background:linear-gradient(135deg, rgba(45,106,79,0.15) 0%, rgba(10,35,25,0.85) 100%); border-color:var(--orange-primary);">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
             <div>
-              <div style="font-size:0.75rem; font-weight:700; color:var(--orange-primary); text-transform:uppercase;">SMART INDIA HACKATHON 2026 OFFICIAL SUBMISSION</div>
-              <h3 style="font-size:1.25rem; color:#fff; margin-top:4px;">Team: AlertNex | Problem Statement ID: SIH26001</h3>
-              <p style="font-size:0.88rem; color:#cbd5e1; margin-top:2px;">Title: AI-Based Early Warning and Landslide Monitoring System in NER • Category: Software • Ministry: MDoNER</p>
+              <div style="font-size:0.75rem; font-weight:700; color:var(--forest-light); text-transform:uppercase;">SMART INDIA HACKATHON 2026 OFFICIAL SUBMISSION</div>
+              <h3 style="font-size:1.25rem; color:var(--text-on-dark); margin-top:4px;">Team: AlertNex | Problem Statement ID: SIH26001</h3>
+              <p style="font-size:0.88rem; color:var(--text-on-dark-sub); margin-top:2px;">Title: AI-Based Early Warning and Landslide Monitoring System in NER • Category: Software • Ministry: MDoNER</p>
             </div>
             <button class="btn btn-primary" data-view="dashboard">Launch Authority Dashboard</button>
           </div>
@@ -1469,7 +1469,7 @@
     <div class="modal-dialog">
       <div class="modal-header">
         <h3>Dispatch Early Warning Bulletin</h3>
-        <button onclick="AlertNexAlerts.closeModal()" style="color:#94a3b8; font-size:1.2rem;">✕</button>
+        <button onclick="AlertNexAlerts.closeModal()" style="color:var(--text-muted); font-size:1.2rem;">✕</button>
       </div>
       <div class="modal-body" id="notificationModalBody">
         <!-- Populated dynamically -->
@@ -1488,7 +1488,7 @@
     <div class="modal-dialog" style="max-width:620px;">
       <div class="modal-header">
         <h3>AlertNex Monitoring Summary (Briefing Preview)</h3>
-        <button onclick="AlertNexApp.closeExportModal()" style="color:#94a3b8; font-size:1.2rem;">✕</button>
+        <button onclick="AlertNexApp.closeExportModal()" style="color:var(--text-muted); font-size:1.2rem;">✕</button>
       </div>
       <div class="modal-body">
         <div style="background:#fff; color:#0f172a; padding:20px; border-radius:8px; font-family:'Plus Jakarta Sans',sans-serif;">

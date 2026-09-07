@@ -36,10 +36,10 @@ const AlertNexAlerts = {
 
     if (filtered.length === 0) {
       container.innerHTML = `
-        <div style="text-align:center; padding:50px 20px; background:var(--navy-surface); border:1px dashed var(--navy-border); border-radius:12px;">
+        <div style="text-align:center; padding:50px 20px; background:var(--bg-card-subtle); border:1px dashed var(--border-dark); border-radius:12px;">
           <div style="font-size:2rem; margin-bottom:10px;">🔔</div>
-          <h4 style="color:#fff; font-size:1.1rem;">No Alerts Found</h4>
-          <p style="color:#94a3b8; font-size:0.88rem; margin-top:4px;">No alerts match the selected risk filter (${this.filterLevel}).</p>
+          <h4 style="color:var(--text-main); font-size:1.1rem;">No Alerts Found</h4>
+          <p style="color:var(--text-muted); font-size:0.88rem; margin-top:4px;">No alerts match the selected risk filter (${this.filterLevel}).</p>
         </div>
       `;
       return;
@@ -59,7 +59,7 @@ const AlertNexAlerts = {
               <span class="alert-location-text">📍 ${alert.location}</span>
             </div>
             <div style="display:flex; align-items:center; gap:10px;">
-              <span style="font-size:0.75rem; color:#94a3b8;">${alert.timestamp}</span>
+              <span style="font-size:0.75rem; color:var(--text-muted);">${alert.timestamp}</span>
               <span class="status-online-pill" style="font-size:0.72rem; padding:2px 8px;">Status: ${alert.status}</span>
             </div>
           </div>
@@ -69,12 +69,12 @@ const AlertNexAlerts = {
             <p><strong>Potential Impact:</strong> ${alert.impact}</p>
             <p style="margin-top:4px;"><strong>Recommended Action:</strong> ${alert.action}</p>
             <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
-              ${alert.sensorTriggers.map(t => `<span style="background:rgba(255,255,255,0.06); padding:2px 8px; border-radius:4px; font-size:0.74rem; color:#cbd5e1;">⚡ ${t}</span>`).join("")}
+              ${alert.sensorTriggers.map(t => `<span style="background:var(--bg-muted); padding:2px 8px; border-radius:4px; font-size:0.74rem; color:var(--text-secondary);">⚡ ${t}</span>`).join("")}
             </div>
           </div>
 
           <div class="alert-action-strip">
-            <div style="font-size:0.78rem; color:#94a3b8;">
+            <div style="font-size:0.78rem; color:var(--text-muted);">
               Channels: <strong>${alert.channels.join(", ")}</strong>
             </div>
             <div style="display:flex; gap:8px;">
@@ -126,44 +126,44 @@ const AlertNexAlerts = {
 
     if (modalContent) {
       modalContent.innerHTML = `
-        <div style="background:var(--navy-dark); padding:12px; border-radius:8px; border:1px solid var(--navy-border);">
+        <div style="background:var(--bg-card-subtle); padding:12px; border-radius:8px; border:1px solid var(--border-main);">
           <div style="font-size:0.78rem; color:#f97316; font-weight:700;">ACTIVE ALERT TARGET</div>
-          <div style="font-weight:700; color:#fff; font-size:1rem; margin-top:2px;">${alert.title}</div>
-          <div style="font-size:0.8rem; color:#94a3b8;">Target Sector: ${alert.location} • Risk: ${alert.riskScore}% (${alert.level})</div>
+          <div style="font-weight:700; color:var(--text-main); font-size:1rem; margin-top:2px;">${alert.title}</div>
+          <div style="font-size:0.8rem; color:var(--text-muted);">Target Sector: ${alert.location} • Risk: ${alert.riskScore}% (${alert.level})</div>
         </div>
 
         <!-- Real Email Delivery Input -->
         <div style="display:flex; flex-direction:column; gap:6px; background:rgba(249,115,22,0.08); border:1px solid rgba(249,115,22,0.3); border-radius:8px; padding:12px;">
-          <label style="font-size:0.84rem; font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;">
+          <label style="font-size:0.84rem; font-weight:700; color:var(--text-main); display:flex; align-items:center; gap:6px;">
             <span>✉️ Recipient Email (Real Delivery):</span>
           </label>
           <input type="email" id="alertRecipientEmail" class="form-control" placeholder="Enter your email: e.g. name@gmail.com" style="width:100%; font-size:0.9rem;">
-          <span style="font-size:0.75rem; color:#cbd5e1;">Enter your email to receive an official AlertNex emergency warning bulletin directly to your inbox.</span>
+          <span style="font-size:0.75rem; color:var(--text-secondary);">Enter your email to receive an official AlertNex emergency warning bulletin directly to your inbox.</span>
         </div>
 
         <!-- SMS Phone Number Input -->
         <div style="display:flex; flex-direction:column; gap:6px; background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.3); border-radius:8px; padding:12px;">
-          <label style="font-size:0.84rem; font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;">
+          <label style="font-size:0.84rem; font-weight:700; color:var(--text-main); display:flex; align-items:center; gap:6px;">
             <span>📱 Recipient Phone (SMS Alert):</span>
           </label>
           <input type="tel" id="alertRecipientPhone" class="form-control" placeholder="Enter phone: e.g. +919876543210" style="width:100%; font-size:0.9rem;">
-          <span style="font-size:0.75rem; color:#cbd5e1;">Enter phone number with country code to receive emergency SMS alert. Uses Twilio when configured, otherwise simulated for demo.</span>
+          <span style="font-size:0.75rem; color:var(--text-secondary);">Enter phone number with country code to receive emergency SMS alert. Uses Twilio when configured, otherwise simulated for demo.</span>
         </div>
 
         <div style="display:flex; flex-direction:column; gap:8px;">
-          <label style="font-size:0.84rem; font-weight:600; color:#cbd5e1;">Additional Dispatch Channels:</label>
-          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#cbd5e1;">
+          <label style="font-size:0.84rem; font-weight:600; color:var(--text-secondary);">Additional Dispatch Channels:</label>
+          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:var(--text-secondary);">
             <input type="checkbox" checked id="chanDashboard"> Command Center Dashboard Broadcast
           </label>
-          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#cbd5e1;">
+          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:var(--text-secondary);">
             <input type="checkbox" checked id="chanMobile"> Mobile App Push (FCM Gateway Simulation)
           </label>
-          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:#cbd5e1;">
+          <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; color:var(--text-secondary);">
             <input type="checkbox" checked id="chanSMS"> Citizen SMS Broadcast (CAP / C-DOT / Twilio Gateway)
           </label>
         </div>
 
-        <div style="background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.3); border-radius:6px; padding:10px; font-size:0.75rem; color:#fef08a;">
+        <div style="background:var(--risk-moderate-bg); border:1px solid var(--risk-moderate-border); border-radius:6px; padding:10px; font-size:0.75rem; color:var(--earth-badge-text);">
           <strong>Gateway Status:</strong> Real SMTP email is connected via FastAPI backend. SMS uses Twilio API when configured, otherwise presented as CAP protocol simulation for SIH demonstration.
         </div>
       `;

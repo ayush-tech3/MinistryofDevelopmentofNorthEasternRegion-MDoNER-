@@ -421,26 +421,26 @@ const AlertNexReporting = {
       const isPending = repStatus === "PENDING";
 
       return `
-      <div style="background:var(--navy-dark); border:1px solid var(--navy-border); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+      <div style="background:var(--bg-card-subtle); border:1px solid var(--border-main); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:8px;">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <div style="display:flex; align-items:center; gap:8px;">
             <span class="risk-tag ${rep.severity.toLowerCase()}">${rep.severity}</span>
-            <span style="font-size:0.75rem; font-weight:700; color:${statusColor}; background:rgba(255,255,255,0.06); padding:2px 8px; border-radius:4px;">
+            <span style="font-size:0.75rem; font-weight:700; color:${statusColor}; background:var(--bg-muted); padding:2px 8px; border-radius:4px;">
               ${repStatus}
             </span>
           </div>
-          <span style="font-size:0.75rem; color:#94a3b8;">${rep.timestamp}</span>
+          <span style="font-size:0.75rem; color:var(--text-muted);">${rep.timestamp}</span>
         </div>
-        <div style="font-weight:700; color:#fff; font-size:0.95rem;">${rep.incidentType}: ${rep.locationName}</div>
-        <p style="font-size:0.84rem; color:#cbd5e1; line-height:1.4;">${rep.description}</p>
+        <div style="font-weight:700; color:var(--text-main); font-size:0.95rem;">${rep.incidentType}: ${rep.locationName}</div>
+        <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.4;">${rep.description}</p>
         
-        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.75rem; color:#94a3b8; border-top:1px solid rgba(255,255,255,0.06); padding-top:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.75rem; color:var(--text-muted); border-top:1px solid var(--border-main); padding-top:8px;">
           <span>By: <strong>${rep.reporterName}</strong> (${rep.reporterType})</span>
           <span style="color:${rep.offlineStored ? '#f59e0b' : '#34d399'}; font-weight:600;">${rep.syncStatus}</span>
         </div>
 
         ${isPending ? `
-        <div style="display:flex; gap:8px; margin-top:4px; padding-top:4px; border-top:1px dashed rgba(255,255,255,0.06);">
+        <div style="display:flex; gap:8px; margin-top:4px; padding-top:4px; border-top:1px dashed var(--border-main);">
           <button class="btn btn-sm btn-primary" style="background:#10b981; border-color:#10b981; font-size:0.75rem; padding:4px 10px;" onclick="AlertNexReporting.reviewReport('${rep.id}', 'VERIFIED')">
             ✓ Verify Report (Influence Risk)
           </button>
