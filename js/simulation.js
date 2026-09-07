@@ -233,7 +233,7 @@ const AlertNexSimulation = {
             <h3 style="margin:0; font-size:1.15rem; color:#ffffff;">
               Judge &amp; Professor Demonstration Simulator
             </h3>
-            <span style="font-size:0.8rem; color:#94a3b8;">
+            <span style="font-size:0.8rem; color:var(--text-muted);">
               End-to-End Prototype Hazard Escalation &amp; Decision-Support Flow
             </span>
           </div>
@@ -271,7 +271,7 @@ const AlertNexSimulation = {
           <h4 style="margin:4px 0; font-size:1rem; color:#fff;" id="simStepTitle">
             ${this.currentStep === 0 ? 'Click "START DEMO SIMULATION" to observe live disaster response propagation' : this.steps[this.currentStep - 1].title}
           </h4>
-          <p style="margin:0; font-size:0.86rem; color:#cbd5e1; line-height:1.4;" id="simStepDesc">
+          <p style="margin:0; font-size:0.86rem; color:var(--text-secondary); line-height:1.4;" id="simStepDesc">
             ${this.currentStep === 0 ? 'Demonstrates environmental trigger escalation, AI risk recalculation, spatial map update, critical early warning alert, road disruption, village isolation, and prototype emergency detour suggestion.' : this.steps[this.currentStep - 1].desc}
           </p>
         </div>

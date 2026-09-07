@@ -209,11 +209,11 @@ const AlertNexMap = {
       <div class="score-display-box" style="border-left: 4px solid ${riskColor};">
         <div class="score-number" style="color:${riskColor};">${zone.riskScore}%</div>
         <div class="score-label">DYNAMIC AI RISK SCORE (PROTOTYPE)</div>
-        <div style="font-size:0.72rem; color:#94a3b8; margin-top:4px;">Updated ${zone.lastUpdated}</div>
+        <div style="font-size:0.72rem; color:var(--text-muted); margin-top:4px;">Updated ${zone.lastUpdated}</div>
       </div>
 
       <div>
-        <div style="font-size:0.8rem; font-weight:700; text-transform:uppercase; color:#94a3b8; margin-bottom:8px;">
+        <div style="font-size:0.8rem; font-weight:700; text-transform:uppercase; color:var(--text-secondary); margin-bottom:8px;">
           Contributing Environmental Factors
         </div>
         <div class="factors-list">

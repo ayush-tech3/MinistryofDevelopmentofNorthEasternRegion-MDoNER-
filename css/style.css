@@ -97,6 +97,14 @@
   --shadow-card: 0 1px 3px rgba(15, 46, 34, 0.05), 0 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-card-hover: 0 8px 20px -4px rgba(15, 46, 34, 0.12), 0 4px 8px -2px rgba(0, 0, 0, 0.04);
 
+  /* Warnings Only (Orange) */
+  --orange-primary: #c2410c;
+
+  /* Government Command Theme Compatibility Aliases */
+  --navy-dark: var(--forest-dark);
+  --navy-surface: var(--forest-surface);
+  --navy-border: var(--forest-border);
+
   /* Layout Constants */
   --topbar-height: 68px;
   --sidebar-width: 260px;
@@ -131,8 +139,10 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   background-color: var(--bg-main);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320' viewBox='0 0 320 320'%3E%3Cg fill='none' stroke='rgba(27,77,62,0.035)' stroke-width='1.2'%3E%3Cpath d='M0,60 C70,45 150,75 220,55 C270,42 290,68 320,60'/%3E%3Cpath d='M0,125 C65,110 160,140 230,120 C280,105 295,130 320,125'/%3E%3Cpath d='M0,190 C75,175 145,205 220,185 C275,170 295,195 320,190'/%3E%3Cpath d='M0,255 C65,240 165,270 235,250 C280,235 300,260 320,255'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url('../assets/topographic_pattern.svg');
   background-repeat: repeat;
+  background-size: 640px 640px;
+  background-attachment: fixed;
   color: var(--text-main);
 }
 
@@ -264,7 +274,12 @@ input, select, textarea {
   left: 0;
   right: 0;
   height: var(--topbar-height);
-  background: var(--forest-deep);
+  background-color: var(--forest-deep);
+  background-image: 
+    linear-gradient(90deg, rgba(10, 35, 25, 0.96) 0%, rgba(15, 46, 34, 0.94) 100%),
+    url('../assets/topographic_dark.svg');
+  background-repeat: repeat;
+  background-size: 480px 480px;
   border-bottom: 2px solid var(--forest-primary);
   display: flex;
   align-items: center;
@@ -453,7 +468,12 @@ input, select, textarea {
 /* Collapsible Left Sidebar (Deep Forest Green Theme) */
 .sidebar {
   width: var(--sidebar-width);
-  background: var(--forest-dark);
+  background-color: var(--forest-dark);
+  background-image: 
+    linear-gradient(180deg, rgba(10, 35, 25, 0.93) 0%, rgba(15, 46, 34, 0.97) 100%),
+    url('../assets/topographic_dark.svg');
+  background-repeat: repeat;
+  background-size: 480px 480px;
   border-right: 1px solid var(--forest-border);
   position: fixed;
   top: var(--topbar-height);
@@ -595,8 +615,10 @@ input, select, textarea {
   flex: 1;
   margin-left: var(--sidebar-width);
   background-color: var(--bg-main);
-  background-image: radial-gradient(#d1ded6 0.75px, transparent 0.75px);
-  background-size: 24px 24px;
+  background-image: url('../assets/topographic_pattern.svg');
+  background-repeat: repeat;
+  background-size: 640px 640px;
+  background-attachment: fixed;
   min-height: calc(100vh - var(--topbar-height));
   transition: margin-left 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 24px 32px 64px;
@@ -821,8 +843,9 @@ input, select, textarea {
   background-image: 
     radial-gradient(ellipse at 85% 20%, rgba(35, 93, 75, 0.45) 0%, transparent 65%),
     radial-gradient(circle at 15% 85%, rgba(74, 46, 27, 0.35) 0%, transparent 55%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360' viewBox='0 0 360 360'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.045)' stroke-width='1.2'%3E%3Cpath d='M0,70 C70,55 140,85 210,68 C270,55 310,80 360,70'/%3E%3Cpath d='M0,135 C65,120 150,150 220,132 C285,118 320,145 360,135'/%3E%3Cpath d='M0,200 C80,182 145,215 215,195 C280,178 325,210 360,200'/%3E%3Cpath d='M0,265 C70,248 160,280 230,260 C290,242 330,270 360,265'/%3E%3Cellipse cx='250' cy='160' rx='45' ry='26'/%3E%3Cellipse cx='250' cy='160' rx='80' ry='46'/%3E%3Cellipse cx='250' cy='160' rx='115' ry='66'/%3E%3C/g%3E%3C/svg%3E");
+    url('../assets/topographic_dark.svg');
   background-repeat: repeat;
+  background-size: 540px 540px;
   border: 1px solid var(--forest-border);
   border-radius: var(--radius-lg);
   box-shadow: 0 4px 16px rgba(10, 35, 25, 0.15);
@@ -970,7 +993,10 @@ input, select, textarea {
 /* How It Works Pipeline (Alternate Section with subtle Earth / Terrain tint) */
 .pipeline-section {
   padding: 36px 30px 48px;
-  background: var(--earth-subtle);
+  background-color: var(--earth-subtle);
+  background-image: url('../assets/topographic_pattern.svg');
+  background-repeat: repeat;
+  background-size: 640px 640px;
   border: 1px solid var(--earth-border);
   border-radius: var(--radius-lg);
   margin-top: 30px;

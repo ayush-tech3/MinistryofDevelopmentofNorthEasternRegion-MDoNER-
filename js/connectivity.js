@@ -66,7 +66,7 @@ const AlertNexConnectivity = {
           <td><strong style="color:#ffffff;">${road}</strong></td>
           <td><span class="risk-tag ${tagClass}">${roadStatus}</span></td>
           <td><span style="color:#f87171; font-weight:700;">Priority 1 (Clearance)</span></td>
-          <td><span style="font-size:0.8rem; color:#cbd5e1;">Heavy Earth Movers Stationed</span></td>
+          <td><span style="font-size:0.8rem; color:var(--text-secondary);">Heavy Earth Movers Stationed</span></td>
         </tr>
       `;
       }).join("");
@@ -82,7 +82,7 @@ const AlertNexConnectivity = {
           <tr>
             <td>
               <strong>Village ${village}</strong>
-              <div style="font-size:0.75rem; color:#94a3b8;">Est. Pop: ${1200 + (idx * 650)} residents</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">Est. Pop: ${1200 + (idx * 650)} residents</div>
             </td>
             <td><span class="risk-tag ${tagClass}">${isolationRisk} ISOLATION RISK</span></td>
             <td>Primary arterial road vulnerable to mudflow</td>
@@ -105,7 +105,7 @@ const AlertNexConnectivity = {
               PROTOTYPE DECISION-SUPPORT RECOMMENDATION
             </div>
             <h4 style="font-size:1.15rem; color:#ffffff; margin:4px 0;">Suggested Emergency Corridor: ${zone.emergencyRoute}</h4>
-            <p style="font-size:0.86rem; color:#cbd5e1; line-height:1.5;">
+            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.5;">
               By routing emergency logistics through this alternate corridor, transit safety is maintained with an estimated travel differential of <strong>+22 minutes</strong>. High-clearance ambulances and disaster response vehicles have confirmed clearance.
             </p>
           </div>
@@ -152,12 +152,12 @@ const AlertNexConnectivity = {
         <!-- Origin Node -->
         <circle cx="60" cy="120" r="14" fill="#0b192c" stroke="#38bdf8" stroke-width="3"/>
         <text x="60" y="124" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">HUB</text>
-        <text x="60" y="94" text-anchor="middle" fill="#cbd5e1" font-size="11" font-weight="600">District Center</text>
+        <text x="60" y="94" text-anchor="middle" fill="#475569" font-size="11" font-weight="600">District Center</text>
 
         <!-- Destination Node -->
         <circle cx="740" cy="120" r="14" fill="#0b192c" stroke="#10b981" stroke-width="3"/>
         <text x="740" y="124" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">CHC</text>
-        <text x="740" y="94" text-anchor="middle" fill="#cbd5e1" font-size="11" font-weight="600">Regional Hospital</text>
+        <text x="740" y="94" text-anchor="middle" fill="#475569" font-size="11" font-weight="600">Regional Hospital</text>
 
         <!-- Village 1 Node -->
         <circle cx="280" cy="85" r="9" fill="#818cf8" stroke="#fff" stroke-width="2"/>

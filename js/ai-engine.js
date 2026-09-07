@@ -168,14 +168,14 @@ const AlertNexAIEngine = {
           <div class="xai-header">
             <div>
               <span class="xai-name">${f.name}</span>
-              <div style="font-size:0.75rem; color:#94a3b8;">${f.raw} • ${f.weight}</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">${f.raw} • ${f.weight}</div>
             </div>
             <span class="xai-impact-tag ${impactClass}">${impactLabel}</span>
           </div>
           <div class="xai-progress-track">
             <div class="xai-progress-bar" style="width: ${Math.min(percentageContribution * 2.2, 100)}%;"></div>
           </div>
-          <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#cbd5e1;">
+          <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-muted);">
             <span>AI Model Factor Contribution</span>
             <span style="font-weight:700;">${percentageContribution}%</span>
           </div>
