@@ -12,36 +12,36 @@
   /* ========================================================================
      1. DEEP FOREST GREEN (Primary Government & Environmental Identity)
      ======================================================================== */
-  --forest-deep: #0a2319;
-  --forest-dark: #0f2e22;
-  --forest-surface: #143d2e;
-  --forest-primary: #1b4d3e;
-  --forest-hover: #133a2e;
-  --forest-accent: #2d6a4f;
-  --forest-light: #52b788;
-  --forest-subtle: #eaf2ed;
-  --forest-border: #235d4b;
-  --forest-border-subtle: #cde0d5;
+  --forest-deep: #0f3d2a;
+  --forest-dark: #144933;
+  --forest-surface: #1b5b41;
+  --forest-primary: #237352;
+  --forest-hover: #1c5e43;
+  --forest-accent: #2e8b63;
+  --forest-light: #52c48f;
+  --forest-subtle: #e8f5ee;
+  --forest-border: #2d825e;
+  --forest-border-subtle: #b8dcce;
 
   /* ========================================================================
      2. EARTH & TERRAIN BROWNS (Geological, Slope & Mountain Data)
      ======================================================================== */
-  --earth-dark: #4a2e1b;
-  --earth-primary: #7a4e2d;
-  --earth-secondary: #96643e;
-  --earth-accent: #c49265;
-  --earth-subtle: #f7f2eb;
-  --earth-border: #ddcfc2;
-  --earth-badge-bg: #efe6dc;
-  --earth-badge-text: #5c3a21;
+  --earth-dark: #5c381e;
+  --earth-primary: #8a5732;
+  --earth-secondary: #a86f44;
+  --earth-accent: #d49b6a;
+  --earth-subtle: #f6f0e8;
+  --earth-border: #dfcfbe;
+  --earth-badge-bg: #ece0d2;
+  --earth-badge-text: #50311a;
 
   /* ========================================================================
      3. LIGHT GRAY / OFF-WHITE (Main Content, Cards & Readability)
      ======================================================================== */
-  --bg-main: #f4f7f5;
+  --bg-main: #f0f5f2;
   --bg-card: #ffffff;
-  --bg-card-subtle: #f8faf9;
-  --bg-muted: #eef3f0;
+  --bg-card-subtle: #f7faf8;
+  --bg-muted: #e4eee7;
   --bg-input: #ffffff;
   
   --border-main: #e2e8f0;
@@ -276,17 +276,17 @@ input, select, textarea {
   height: var(--topbar-height);
   background-color: var(--forest-deep);
   background-image: 
-    linear-gradient(90deg, rgba(10, 35, 25, 0.96) 0%, rgba(15, 46, 34, 0.94) 100%),
+    linear-gradient(90deg, rgba(15, 61, 42, 0.94) 0%, rgba(20, 73, 51, 0.92) 100%),
     url('../assets/topographic_dark.svg');
   background-repeat: repeat;
   background-size: 480px 480px;
-  border-bottom: 2px solid var(--forest-primary);
+  border-bottom: 2px solid var(--forest-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 24px;
   z-index: 1000;
-  box-shadow: 0 2px 10px rgba(10, 35, 25, 0.25);
+  box-shadow: 0 2px 12px rgba(15, 61, 42, 0.25);
 }
 
 .brand-wrapper {
@@ -470,7 +470,7 @@ input, select, textarea {
   width: var(--sidebar-width);
   background-color: var(--forest-dark);
   background-image: 
-    linear-gradient(180deg, rgba(10, 35, 25, 0.93) 0%, rgba(15, 46, 34, 0.97) 100%),
+    linear-gradient(180deg, rgba(15, 61, 42, 0.92) 0%, rgba(20, 73, 51, 0.96) 100%),
     url('../assets/topographic_dark.svg');
   background-repeat: repeat;
   background-size: 480px 480px;
@@ -841,14 +841,14 @@ input, select, textarea {
   align-items: center;
   background-color: var(--forest-deep);
   background-image: 
-    radial-gradient(ellipse at 85% 20%, rgba(35, 93, 75, 0.45) 0%, transparent 65%),
-    radial-gradient(circle at 15% 85%, rgba(74, 46, 27, 0.35) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 20%, rgba(45, 130, 94, 0.45) 0%, transparent 65%),
+    radial-gradient(circle at 15% 85%, rgba(138, 87, 50, 0.35) 0%, transparent 55%),
     url('../assets/topographic_dark.svg');
   background-repeat: repeat;
   background-size: 540px 540px;
   border: 1px solid var(--forest-border);
   border-radius: var(--radius-lg);
-  box-shadow: 0 4px 16px rgba(10, 35, 25, 0.15);
+  box-shadow: 0 4px 16px rgba(15, 61, 42, 0.15);
   margin-bottom: 30px;
 }
 
