@@ -4,11 +4,24 @@
 > **Smart India Hackathon 2026 | Problem Statement ID: SIH26001**  
 > *Complete step-by-step system walkthrough demonstrating multimodal telemetry ingestion, Explainable AI (XAI) risk scoring, topological road connectivity disruption mapping, offline incident logging, and emergency alert dispatch.*
 
-🌐 **Live Production App (Netlify)**: [https://ministryofdevelopmentofnortheastern.netlify.app/](https://ministryofdevelopmentofnortheastern.netlify.app/)  
-📄 **GitHub Pages App**: [https://ayush-tech3.github.io/MinistryofDevelopmentofNorthEasternRegion-MDoNER-/](https://ayush-tech3.github.io/MinistryofDevelopmentofNorthEasternRegion-MDoNER-/)  
-📂 **GitHub Repository**: [https://github.com/ayush-tech3/MinistryofDevelopmentofNorthEasternRegion-MDoNER-](https://github.com/ayush-tech3/MinistryofDevelopmentofNorthEasternRegion-MDoNER-)  
-📡 **Interactive Swagger API Docs**: `http://localhost:8000/docs` (or hosted instance)  
-📊 **Official Presentation PPTX**: [SIH2026_AlertNex_Presentation.pptx](presentation/SIH2026_AlertNex_Presentation.pptx)  
+🌐 **Live Production App (Netlify)**: [https://minestryofdevlopmentofnortheastern.netlify.app/](https://minestryofdevlopmentofnortheastern.netlify.app/)  
+📂 **Source Repository**: [https://github.com/ayush-tech3/MinistryofDevelopmentofNorthEasternRegion-MDoNER-](https://github.com/ayush-tech3/MinistryofDevelopmentofNorthEasternRegion-MDoNER-)  
+🎯 **Problem Statement ID**: SIH26001 | Ministry of Development of North Eastern Region (MDoNER)
+
+---
+
+## 🧭 Live Demo Evaluation Flow
+
+```
++-----------------------------------------------------------------------------------+
+|                           AlertNex Decision Journey                               |
+|                                                                                   |
+|  [Step 1: Landing Portal] -> [Step 2: GIS Risk Map] -> [Step 3: AI Engine & XAI]  |
+|                                        |                                          |
+|                                        v                                          |
+|  [Step 6: Emergency Route] <- [Step 5: Incident Report] <- [Step 4: Alert Dispatch]|
++-----------------------------------------------------------------------------------+
+```
 
 ---
 

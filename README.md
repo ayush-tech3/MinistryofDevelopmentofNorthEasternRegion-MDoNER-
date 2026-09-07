@@ -7,7 +7,7 @@
 
 [![CI Pipeline](https://github.com/ayush-tech3/MinistryofDevelopmentofNorthEasternRegion-MDoNER-/actions/workflows/ci.yml/badge.svg)](https://github.com/ayush-tech3/MinistryofDevelopmentofNorthEasternRegion-MDoNER-/actions/workflows/ci.yml)
 [![GitHub Pages](https://github.com/ayush-tech3/MinistryofDevelopmentofNorthEasternRegion-MDoNER-/actions/workflows/deploy-pages.yml/badge.svg)](https://ayush-tech3.github.io/MinistryofDevelopmentofNorthEasternRegion-MDoNER-/)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/e8e6dfbc-501b-4171-8727-e4bb42013f98/deploy-status)](https://ministryofdevelopmentofnortheastern.netlify.app/)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/e8e6dfbc-501b-4171-8727-e4bb42013f98/deploy-status)](https://minestryofdevlopmentofnortheastern.netlify.app/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.12](https://img.shields.io/badge/Python-3.12%2B-blue.svg?logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110%2B-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
@@ -20,7 +20,7 @@
   <strong>An intelligent, Explainable AI (XAI) early-warning platform and topological connectivity graph solver built for disaster management commanders in the North Eastern Region of India.</strong>
 </p>
 
-[Explore Live Web App](https://ministryofdevelopmentofnortheastern.netlify.app/) • [Download Official PPTX](AlertNex_Official_Presentation.pptx) • [Idea Description PDF](AlertNex_Idea_Description.pdf) • [Demo Walkthrough](DEMO_WALKTHROUGH.md) • [Pitch Deck](PITCH_DECK.md) • [Deploy Now](#-1-click-instant-cloud-deployment)
+[Explore Live Web App](https://minestryofdevlopmentofnortheastern.netlify.app/) • [Download Official PPTX](AlertNex_Official_Presentation.pptx) • [Idea Description PDF](AlertNex_Idea_Description.pdf) • [Demo Walkthrough](DEMO_WALKTHROUGH.md) • [Pitch Deck](PITCH_DECK.md) • [Deploy Now](#-1-click-instant-cloud-deployment)
 
 </div>
 
@@ -30,7 +30,7 @@
 
 | Deliverable | Resource / Link | Description |
 | :--- | :--- | :--- |
-| **🌐 Production Live App** | [ministryofdevelopmentofnortheastern.netlify.app](https://ministryofdevelopmentofnortheastern.netlify.app/) | Live, continuously deployed production command center on Netlify |
+| **🌐 Production Live App** | [minestryofdevlopmentofnortheastern.netlify.app](https://minestryofdevlopmentofnortheastern.netlify.app/) | Live, continuously deployed production command center on Netlify |
 | **📑 Official Presentation PPTX** | [AlertNex_Official_Presentation.pptx](AlertNex_Official_Presentation.pptx) | Downloadable 6-slide official SIH presentation PowerPoint |
 | **📝 Official Idea Description PDF** | [AlertNex_Idea_Description.pdf](AlertNex_Idea_Description.pdf) | Official 4-page SIH idea description submission PDF |
 | **📄 Idea Description (Markdown)** | [IDEA_DESCRIPTION.md](IDEA_DESCRIPTION.md) | Complete 4-page idea description with team roster, workflow, and architecture |
@@ -442,7 +442,7 @@ MinistryofDevelopmentofNorthEasternRegion(MDoNER)/
 * **Theme:** Disaster Management
 * **Category:** Software
 * **Repository:** [https://github.com/ayush-tech3/MinistryofDevelopmentofNorthEasternRegion-MDoNER-](https://github.com/ayush-tech3/MinistryofDevelopmentofNorthEasternRegion-MDoNER-)
-* **Live Deployment:** [https://ministryofdevelopmentofnortheastern.netlify.app/](https://ministryofdevelopmentofnortheastern.netlify.app/)
+* **Live Deployment:** [https://minestryofdevlopmentofnortheastern.netlify.app/](https://minestryofdevlopmentofnortheastern.netlify.app/)
 
 ---
 

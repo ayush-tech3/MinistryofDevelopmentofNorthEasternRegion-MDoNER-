@@ -97,5 +97,5 @@ AlertNex transforms disaster monitoring from passive observation into **actionab
 * **Team Leader:** Ayush Kumar
 * **Event:** Smart India Hackathon 2026
 * **Problem Statement:** SIH26001 | MDoNER
-* **Live System:** [https://ministryofdevelopmentofnortheastern.netlify.app/](https://ministryofdevelopmentofnortheastern.netlify.app/)
+* **Live System:** [https://minestryofdevlopmentofnortheastern.netlify.app/](https://minestryofdevlopmentofnortheastern.netlify.app/)
 * **Repository:** [https://github.com/ayush-tech3/MinistryofDevelopmentofNorthEasternRegion-MDoNER-](https://github.com/ayush-tech3/MinistryofDevelopmentofNorthEasternRegion-MDoNER-)
