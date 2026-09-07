@@ -33,6 +33,8 @@
 | **🌐 Production Live App** | [minestryofdevlopmentofnortheastern.netlify.app](https://minestryofdevlopmentofnortheastern.netlify.app/) | Live, continuously deployed production command center on Netlify |
 | **📑 Official Presentation PPTX** | [AlertNex_Official_Presentation.pptx](AlertNex_Official_Presentation.pptx) | Downloadable 6-slide official SIH presentation PowerPoint |
 | **📝 Official Idea Description PDF** | [AlertNex_Idea_Description.pdf](AlertNex_Idea_Description.pdf) | Official 4-page SIH idea description submission PDF |
+| **🎓 Team Script & Viva Q&A PDF** | [AlertNex_SIH2026_Team_Presentation_Script_and_Viva_QA.pdf](AlertNex_SIH2026_Team_Presentation_Script_and_Viva_QA.pdf) | Member-wise speech scripts, tech stack ownership & Top 25 Jury Q&A PDF |
+| **🎙️ Team Script & Q&A (Markdown)** | [TEAM_PRESENTATION_SCRIPT_AND_QA.md](TEAM_PRESENTATION_SCRIPT_AND_QA.md) | Full 6-member presentation speeches & comprehensive viva preparation |
 | **📄 Idea Description (Markdown)** | [IDEA_DESCRIPTION.md](IDEA_DESCRIPTION.md) | Complete 4-page idea description with team roster, workflow, and architecture |
 | **📊 Presentation Deck (Markdown)** | [IDEA_PRESENTATION.md](IDEA_PRESENTATION.md) | Slide-by-slide 6-card representation of presentation deck |
 | **🎥 Demo Walkthrough** | [DEMO_WALKTHROUGH.md](DEMO_WALKTHROUGH.md) | Complete step-by-step product walkthrough & evaluation timestamps |
