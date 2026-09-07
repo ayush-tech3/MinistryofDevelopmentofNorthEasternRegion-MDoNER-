@@ -65,7 +65,9 @@ const AlertNexApp = {
 
     // Close mobile sidebar if open
     const sidebar = document.getElementById("mainSidebar");
+    const backdrop = document.getElementById("sidebarBackdrop");
     if (sidebar) sidebar.classList.remove("mobile-open");
+    if (backdrop) backdrop.classList.remove("active");
 
     // Handle view-specific resizes
     if (viewName === "map" && window.AlertNexMap && AlertNexMap.mapInstance) {
@@ -80,11 +82,13 @@ const AlertNexApp = {
   bindSidebarToggle() {
     const toggleBtn = document.getElementById("sidebarToggleBtn");
     const sidebar = document.getElementById("mainSidebar");
+    const backdrop = document.getElementById("sidebarBackdrop");
 
     if (toggleBtn && sidebar) {
       toggleBtn.addEventListener("click", () => {
         if (window.innerWidth <= 768) {
-          sidebar.classList.toggle("mobile-open");
+          const isOpen = sidebar.classList.toggle("mobile-open");
+          if (backdrop) backdrop.classList.toggle("active", isOpen);
         } else {
           this.sidebarCollapsed = !this.sidebarCollapsed;
           sidebar.classList.toggle("collapsed", this.sidebarCollapsed);
@@ -94,6 +98,13 @@ const AlertNexApp = {
         if (this.activeView === "map" && window.AlertNexMap && AlertNexMap.mapInstance) {
           setTimeout(() => AlertNexMap.mapInstance.invalidateSize(), 320);
         }
+      });
+    }
+
+    if (backdrop && sidebar) {
+      backdrop.addEventListener("click", () => {
+        sidebar.classList.remove("mobile-open");
+        backdrop.classList.remove("active");
       });
     }
   },

@@ -1,8 +1,12 @@
 /* ==========================================================================
-   AlertNex - Responsive Layout Stylesheet
-   Breakpoints: Mobile (< 768px), Tablet (768px - 1024px), Desktop (> 1024px)
+   AlertNex - Official Responsive Layout & Mobile Optimization Stylesheet
+   Smart India Hackathon 2026 | PS ID: SIH26001
+   Breakpoints: Desktop (> 1024px), Tablet (768px - 1024px), Mobile (< 768px), Small (< 480px)
    ========================================================================== */
 
+/* ==========================================================================
+   1. TABLET LAYOUT (max-width: 1024px)
+   ========================================================================== */
 @media (max-width: 1024px) {
   :root {
     --sidebar-width: 220px;
@@ -10,7 +14,8 @@
 
   .landing-hero {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 28px;
+    padding: 32px 24px;
   }
 
   .map-view-container {
@@ -20,88 +25,318 @@
 
   #gisMap {
     height: 480px;
+    border-radius: var(--radius-md);
   }
 
   .ai-analysis-layout,
-  .reporting-layout {
+  .reporting-layout,
+  .connectivity-layout {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   }
 }
 
+/* ==========================================================================
+   2. MOBILE & PHABLET LAYOUT (max-width: 768px)
+   ========================================================================== */
 @media (max-width: 768px) {
+  /* Top Navigation Bar */
   .topbar {
-    padding: 0 14px;
+    padding: 0 12px;
+    height: 60px;
   }
 
   .topbar-center,
   .gov-crest-pill {
+    display: none !important;
+  }
+
+  .brand-logo-group {
+    gap: 8px;
+  }
+
+  .brand-emblem {
+    width: 34px;
+    height: 34px;
+  }
+
+  .brand-name {
+    font-size: 1.1rem;
+  }
+
+  .brand-sub {
     display: none;
+  }
+
+  .topbar-right {
+    gap: 6px;
+  }
+
+  .topbar-right .btn span {
+    display: none;
+  }
+
+  .topbar-right .btn {
+    padding: 7px 10px;
+  }
+
+  #systemLiveClock {
+    display: none;
+  }
+
+  /* Slide-in Mobile Drawer Navigation */
+  .sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 35, 25, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 1050;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease-in-out;
+  }
+
+  .sidebar-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .sidebar {
     transform: translateX(-100%);
-    width: 260px;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+    width: 270px;
+    top: 0;
+    bottom: 0;
+    z-index: 1100;
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.45);
+    padding-top: 10px;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .sidebar.mobile-open {
     transform: translateX(0);
   }
 
+  /* Main Content Adjustments */
+  .app-container {
+    margin-top: 60px;
+  }
+
   .main-content {
     margin-left: 0 !important;
-    padding: 16px 14px 60px;
+    padding: 16px 12px 64px;
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
+  /* Landing Hero */
+  .landing-hero {
+    padding: 24px 16px;
+    gap: 20px;
+    margin-bottom: 20px;
   }
 
   .hero-heading {
-    font-size: 2.1rem;
+    font-size: 1.85rem;
+    line-height: 1.2;
   }
 
   .hero-subtitle {
-    font-size: 1rem;
+    font-size: 0.94rem;
+    line-height: 1.5;
   }
 
-  .kpi-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .hero-cta-group .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Features Grid */
+  .features-section {
+    padding: 24px 0;
+  }
+
+  .section-title-box {
+    margin-bottom: 24px;
+  }
+
+  .section-title-box h2 {
+    font-size: 1.5rem;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* Pipeline Section */
+  .pipeline-section {
+    padding: 24px 16px;
   }
 
   .pipeline-flow {
     flex-direction: column;
     align-items: stretch;
+    gap: 12px;
   }
 
   .pipeline-arrow {
     transform: rotate(90deg);
     text-align: center;
-    margin: -4px 0;
+    margin: -2px 0;
   }
 
+  /* KPI Cards */
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .kpi-card {
+    padding: 14px 16px;
+  }
+
+  .kpi-value {
+    font-size: 1.65rem;
+  }
+
+  /* View Header */
   .view-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 18px;
   }
 
   .view-header-title-group h1 {
-    font-size: 1.4rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .kpi-grid {
-    grid-template-columns: 1fr;
+    font-size: 1.35rem;
   }
 
+  .view-header-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .view-header-actions .btn {
+    flex: 1;
+    min-width: 130px;
+  }
+
+  /* Alert Ticker */
+  .live-alert-ticker {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .live-alert-ticker .btn {
+    width: 100%;
+  }
+
+  /* Quick Actions Bar */
   .quick-action-bar {
     flex-direction: column;
     align-items: stretch;
+    gap: 10px;
   }
 
   .quick-action-bar .btn {
     width: 100%;
   }
 
+  /* GIS Map Container */
+  #gisMap {
+    height: 380px;
+  }
+
+  .map-overlay-card {
+    position: static;
+    width: 100%;
+    margin-top: 12px;
+    max-width: 100%;
+  }
+
+  /* Tables & Responsive Containers */
+  .table-responsive,
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 520px;
+  }
+
+  /* Modals */
+  .modal-dialog {
+    max-width: calc(100vw - 24px);
+    max-height: 88vh;
+    overflow-y: auto;
+  }
+
+  .modal-body {
+    padding: 16px;
+  }
+}
+
+/* ==========================================================================
+   3. SMALL MOBILE PHONES (max-width: 480px)
+   ========================================================================== */
+@media (max-width: 480px) {
+  .topbar {
+    padding: 0 10px;
+  }
+
+  .brand-emblem {
+    width: 30px;
+    height: 30px;
+  }
+
+  .brand-emblem svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .brand-name {
+    font-size: 1rem;
+  }
+
+  .hero-heading {
+    font-size: 1.55rem;
+  }
+
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
   .emergency-route-callout {
     flex-direction: column;
     align-items: flex-start;
+    gap: 10px;
+  }
+
+  .emergency-route-callout .btn {
+    width: 100%;
+  }
+
+  #gisMap {
+    height: 320px;
+  }
+
+  .card {
+    padding: 16px;
   }
 }
