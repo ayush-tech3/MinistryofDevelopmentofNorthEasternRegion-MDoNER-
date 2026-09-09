@@ -1,26 +1,34 @@
 /**
  * AlertNex - REST API Client
- * Connects frontend to FastAPI Backend
+ * Connects frontend to FastAPI Backend (Local or Cloud Render)
  * Smart India Hackathon 2026 | PS ID: SIH26001
  * Team: AlertNex
- *
- * When running locally (localhost / 127.0.0.1), API calls target http://127.0.0.1:8000/api.
- * When deployed on Netlify (or any other host), the backend is not available —
- * all API methods gracefully fall back to local demo data in data.js.
  */
 
 const AlertNexAPI = {
   isLocal: (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"),
+  cloudBackendUrl: "https://alertnex-backend.onrender.com",
 
   get baseUrl() {
-    return this.isLocal ? "http://127.0.0.1:8000/api" : "/api";
+    const custom = localStorage.getItem("alertnex_api_url");
+    if (custom) return custom.endsWith("/api") ? custom : `${custom}/api`;
+    if (this.isLocal) return "http://127.0.0.1:8000/api";
+    return `${this.cloudBackendUrl}/api`;
+  },
+
+  get healthUrl() {
+    const custom = localStorage.getItem("alertnex_api_url");
+    if (custom) return custom.replace(/\/api$/, "") + "/health";
+    if (this.isLocal) return "http://127.0.0.1:8000/health";
+    return `${this.cloudBackendUrl}/health`;
   },
 
   async checkBackendHealth() {
-    // On production (Netlify), backend is not co-hosted — skip health check
-    if (!this.isLocal) return false;
     try {
-      const res = await fetch("http://127.0.0.1:8000/health", { method: "GET" });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 4000);
+      const res = await fetch(this.healthUrl, { method: "GET", signal: controller.signal });
+      clearTimeout(timeoutId);
       return res.ok;
     } catch (e) {
       return false;
@@ -114,7 +122,7 @@ const AlertNexAPI = {
     try {
       const res = await fetch(`${this.baseUrl}/reports`, {
         method: "POST",
-        body: formData // Form data with multipart file
+        body: formData
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return await res.json();
