@@ -17,6 +17,7 @@ const AlertNexCharts = {
 
     this.renderDashboardCharts();
     this.renderAnalyticsCharts();
+    this.bindAnalyticsFilters();
   },
 
   renderDashboardCharts() {
@@ -217,6 +218,81 @@ const AlertNexCharts = {
           }
         }
       });
+    }
+  },
+
+  bindAnalyticsFilters() {
+    const regionSelect = document.getElementById("analyticsFilterRegion");
+    const timeSelect = document.getElementById("analyticsFilterTime");
+    const riskSelect = document.getElementById("analyticsFilterRisk");
+
+    const onFilterChange = () => {
+      this.updateAnalyticsData();
+    };
+
+    if (regionSelect) regionSelect.addEventListener("change", onFilterChange);
+    if (timeSelect) timeSelect.addEventListener("change", onFilterChange);
+    if (riskSelect) riskSelect.addEventListener("change", onFilterChange);
+  },
+
+  updateAnalyticsData() {
+    const region = document.getElementById("analyticsFilterRegion")?.value || "all";
+    const time = document.getElementById("analyticsFilterTime")?.value || "monsoon";
+    const risk = document.getElementById("analyticsFilterRisk")?.value || "high";
+
+    // Dynamic dataset mapping based on selected filters
+    let riskScores = [18, 38, 64, 82, 94];
+    let probabilities = [12, 29, 58, 79, 91];
+    let categoryData = [32, 28, 18, 15, 8, 4];
+
+    if (region === "meghalaya") {
+      riskScores = [24, 48, 76, 91, 98];
+      probabilities = [18, 38, 72, 89, 96];
+      categoryData = [38, 22, 14, 28, 14, 2];
+    } else if (region === "sikkim") {
+      riskScores = [15, 34, 59, 78, 88];
+      probabilities = [10, 25, 52, 74, 85];
+      categoryData = [22, 36, 30, 10, 6, 4];
+    } else if (region === "arunachal") {
+      riskScores = [20, 44, 70, 86, 95];
+      probabilities = [14, 33, 64, 83, 93];
+      categoryData = [29, 29, 22, 18, 9, 3];
+    }
+
+    // Time horizon factor
+    if (time === "30d") {
+      riskScores = riskScores.map(v => Math.min(100, Math.round(v * 1.05)));
+      probabilities = probabilities.map(v => Math.min(100, Math.round(v * 1.08)));
+    } else if (time === "90d") {
+      riskScores = riskScores.map(v => Math.max(5, Math.round(v * 0.92)));
+      probabilities = probabilities.map(v => Math.max(5, Math.round(v * 0.88)));
+      categoryData = categoryData.map(v => Math.round(v * 1.4));
+    } else if (time === "5y") {
+      riskScores = [14, 30, 52, 74, 89];
+      probabilities = [9, 22, 48, 71, 84];
+      categoryData = [145, 120, 94, 78, 42, 18];
+    }
+
+    // Risk threshold factor
+    if (risk === "all") {
+      categoryData = categoryData.map(v => Math.round(v * 1.3));
+    }
+
+    // Update Chart 1: Rain vs Risk
+    if (this.charts.rainVsRisk) {
+      this.charts.rainVsRisk.data.datasets[0].data = riskScores;
+      this.charts.rainVsRisk.data.datasets[1].data = probabilities;
+      this.charts.rainVsRisk.update();
+    }
+
+    // Update Chart 2: Reports by Category
+    if (this.charts.reportsCat) {
+      this.charts.reportsCat.data.datasets[0].data = categoryData;
+      this.charts.reportsCat.update();
+    }
+
+    if (window.AlertNexApp) {
+      AlertNexApp.showToast(`📊 Analytics filtered: ${region.toUpperCase()} • ${time.toUpperCase()} • ${risk.toUpperCase()}`);
     }
   }
 };

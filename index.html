@@ -979,30 +979,30 @@
             <div style="font-size:0.8rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase;">ANALYTICS FILTERS:</div>
             
             <div style="display:flex; align-items:center; gap:6px;">
-              <span style="font-size:0.8rem; color:var(--text-secondary);">Region:</span>
-              <select class="form-control" style="padding:4px 10px; font-size:0.8rem;">
-                <option>All NER States (8)</option>
-                <option>Assam &amp; Meghalaya</option>
-                <option>Sikkim Himalayan Belt</option>
-                <option>Arunachal Border Axes</option>
+              <span style="font-size:0.8rem; color:var(--text-secondary); font-weight:600;">Region:</span>
+              <select id="analyticsFilterRegion" class="form-control" style="padding:4px 10px; font-size:0.8rem; background:var(--bg-card); color:var(--text-main); border:1px solid var(--border-main);">
+                <option value="all">All NER States (8)</option>
+                <option value="meghalaya">Assam &amp; Meghalaya</option>
+                <option value="sikkim">Sikkim Himalayan Belt</option>
+                <option value="arunachal">Arunachal Border Axes</option>
               </select>
             </div>
 
             <div style="display:flex; align-items:center; gap:6px;">
-              <span style="font-size:0.8rem; color:var(--text-secondary);">Time Horizon:</span>
-              <select class="form-control" style="padding:4px 10px; font-size:0.8rem;">
-                <option>Monsoon Season (Current)</option>
-                <option>Past 30 Days</option>
-                <option>Past 90 Days</option>
-                <option>Historical 5 Years</option>
+              <span style="font-size:0.8rem; color:var(--text-secondary); font-weight:600;">Time Horizon:</span>
+              <select id="analyticsFilterTime" class="form-control" style="padding:4px 10px; font-size:0.8rem; background:var(--bg-card); color:var(--text-main); border:1px solid var(--border-main);">
+                <option value="monsoon">Monsoon Season (Current)</option>
+                <option value="30d">Past 30 Days</option>
+                <option value="90d">Past 90 Days</option>
+                <option value="5y">Historical 5 Years</option>
               </select>
             </div>
 
             <div style="display:flex; align-items:center; gap:6px;">
-              <span style="font-size:0.8rem; color:var(--text-secondary);">Risk Threshold:</span>
-              <select class="form-control" style="padding:4px 10px; font-size:0.8rem;">
-                <option>High &amp; Critical (&gt;50%)</option>
-                <option>All Levels</option>
+              <span style="font-size:0.8rem; color:var(--text-secondary); font-weight:600;">Risk Threshold:</span>
+              <select id="analyticsFilterRisk" class="form-control" style="padding:4px 10px; font-size:0.8rem; background:var(--bg-card); color:var(--text-main); border:1px solid var(--border-main);">
+                <option value="high">High &amp; Critical (&gt;50%)</option>
+                <option value="all">All Risk Levels (0-100%)</option>
               </select>
             </div>
           </div>
