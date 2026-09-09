@@ -144,25 +144,39 @@ class EmailService:
             msg.attach(MIMEText(plain_text, "plain"))
             msg.attach(MIMEText(html_body, "html"))
 
-            logger.info(f"Connecting to SMTP server {cfg['host']}:{cfg['port']}...")
-            port = int(cfg.get("port", 465))
-            if port == 465:
-                server = smtplib.SMTP_SSL(cfg["host"], port, timeout=15)
-            else:
-                server = smtplib.SMTP(cfg["host"], port, timeout=15)
-                server.starttls()
+            logger.info(f"Connecting to SMTP server {cfg['host']}...")
+            server = None
+            connection_errors = []
 
-            server.login(cfg["username"], cfg["password"])
-            server.sendmail(cfg["from_email"], [recipient_email], msg.as_string())
-            server.quit()
+            # Try ports in order: 587 (STARTTLS) then 465 (SSL)
+            ports_to_try = [587, 465] if int(cfg.get("port", 587)) == 587 else [int(cfg.get("port", 465)), 587]
+            
+            for try_port in ports_to_try:
+                try:
+                    if try_port == 465:
+                        server = smtplib.SMTP_SSL(cfg["host"], try_port, timeout=12)
+                    else:
+                        server = smtplib.SMTP(cfg["host"], try_port, timeout=12)
+                        server.starttls()
+                    server.login(cfg["username"], cfg["password"])
+                    server.sendmail(cfg["from_email"], [recipient_email], msg.as_string())
+                    server.quit()
+                    logger.info(f"Emergency email successfully sent to {recipient_email} via port {try_port}")
+                    return {
+                        "success": True,
+                        "recipient": recipient_email,
+                        "subject": subject,
+                        "message": f"Emergency alert email successfully delivered to {recipient_email}!"
+                    }
+                except Exception as port_err:
+                    connection_errors.append(f"Port {try_port}: {str(port_err)}")
+                    if server:
+                        try:
+                            server.quit()
+                        except Exception:
+                            pass
 
-            logger.info(f"Emergency email successfully sent to {recipient_email}")
-            return {
-                "success": True,
-                "recipient": recipient_email,
-                "subject": subject,
-                "message": f"Emergency alert email successfully delivered to {recipient_email}!"
-            }
+            raise Exception("; ".join(connection_errors))
 
         except Exception as e:
             logger.error(f"SMTP error sending email to {recipient_email}: {e}")
