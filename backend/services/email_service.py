@@ -134,8 +134,43 @@ class EmailService:
         Team AlertNex
         """
 
-        # Method 1: Try Resend REST API (HTTPS port 443) if configured
-        if cfg["resend_api_key"]:
+        # Method 1: Try Brevo HTTPS REST API (Port 443 - Works on Render Cloud, Netlify, Mobile)
+        brevo_key = cfg.get("brevo_api_key") or os.getenv("BREVO_API_KEY")
+        if brevo_key:
+            try:
+                res = requests.post(
+                    "https://api.brevo.com/v3/smtp/email",
+                    headers={
+                        "api-key": brevo_key,
+                        "Content-Type": "application/json"
+                    },
+                    json={
+                        "sender": {
+                            "name": cfg["from_name"],
+                            "email": cfg["from_email"]
+                        },
+                        "to": [{"email": recipient_email}],
+                        "subject": subject,
+                        "htmlContent": html_body
+                    },
+                    timeout=10
+                )
+                if res.status_code in (200, 201):
+                    logger.info(f"Emergency email sent to {recipient_email} via Brevo HTTPS API")
+                    return {
+                        "success": True,
+                        "recipient": recipient_email,
+                        "subject": subject,
+                        "provider": "brevo",
+                        "message": f"Emergency alert email successfully delivered to {recipient_email}!"
+                    }
+                else:
+                    logger.warning(f"Brevo API returned status {res.status_code}: {res.text}")
+            except Exception as brevo_err:
+                logger.warning(f"Brevo API error: {brevo_err}")
+
+        # Method 2: Try Resend REST API if configured
+        if cfg.get("resend_api_key"):
             try:
                 res = requests.post(
                     "https://api.resend.com/emails",
@@ -160,7 +195,7 @@ class EmailService:
             except Exception as resend_err:
                 logger.warning(f"Resend API error: {resend_err}")
 
-        # Method 2: Try Direct SMTP (Gmail / Custom Host)
+        # Method 3: Try Direct SMTP (Gmail / Custom Host)
         if cfg["username"] and cfg["password"]:
             msg = MIMEMultipart("alternative")
             msg["Subject"] = subject

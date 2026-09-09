@@ -23,6 +23,8 @@ services:
         value: "true"
       - key: HOST
         value: "0.0.0.0"
+      - key: BREVO_API_KEY
+        sync: false
 
   # 2. AlertNex GIS Command Center Static Web App
   - type: web
