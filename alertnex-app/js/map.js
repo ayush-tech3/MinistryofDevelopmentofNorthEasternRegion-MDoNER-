@@ -27,12 +27,31 @@ const AlertNexMap = {
       zoomControl: true
     });
 
-    // Dark GIS Topographic / CartoDB tiles suitable for disaster command centers
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
-      attribution: '&copy; <a href="https://carto.com/">CARTO</a> | AlertNex GIS Prototype',
-      subdomains: 'abcd',
+    // High-resolution GIS Topographic Terrain tiles (Watermark-free Government Grade)
+    const topoLayer = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}", {
+      attribution: '&copy; Esri & USGS | AlertNex GIS Decision-Support Platform',
+      maxZoom: 18
+    });
+
+    const osmLayer = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; OpenStreetMap contributors | AlertNex SIH 2026',
       maxZoom: 19
-    }).addTo(this.mapInstance);
+    });
+
+    const satelliteLayer = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+      attribution: '&copy; Esri World Imagery | AlertNex Satellite Telemetry',
+      maxZoom: 18
+    });
+
+    // Add Topo map as default
+    topoLayer.addTo(this.mapInstance);
+
+    // Layer Control to let judges switch between Topo, Satellite, and Road maps
+    L.control.layers({
+      "🏔️ Topo Terrain (Default)": topoLayer,
+      "🛰️ Satellite Imagery": satelliteLayer,
+      "🗺️ Street & Road Map": osmLayer
+    }, null, { position: "topright" }).addTo(this.mapInstance);
 
     // Create Layer Groups
     this.markersLayer = L.layerGroup().addTo(this.mapInstance);
