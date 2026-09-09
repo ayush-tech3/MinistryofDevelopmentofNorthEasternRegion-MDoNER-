@@ -144,6 +144,11 @@ const AlertNexAIEngine = {
     if (this.trendChart) {
       this.updateTrendData(finalScore);
     }
+
+    // Sync with Connectivity Corridor Graph & Impact Intelligence
+    if (window.AlertNexConnectivity) {
+      AlertNexConnectivity.updateFromAI(finalScore, riskLevel);
+    }
   },
 
   updateExplainableAI(rainScore, moistureScore, slopeScore, historyScore, reportsScore, total) {
