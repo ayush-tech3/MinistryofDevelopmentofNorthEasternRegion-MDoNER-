@@ -46,12 +46,12 @@ const AlertNexMap = {
     // Add Topo map as default
     topoLayer.addTo(this.mapInstance);
 
-    // Layer Control to let judges switch between Topo, Satellite, and Road maps
+    // Layer Control to let judges switch between Topo, Satellite, and Road maps (positioned at bottomright to avoid filter bar overlap)
     L.control.layers({
       "🏔️ Topo Terrain (Default)": topoLayer,
       "🛰️ Satellite Imagery": satelliteLayer,
       "🗺️ Street & Road Map": osmLayer
-    }, null, { position: "topright" }).addTo(this.mapInstance);
+    }, null, { position: "bottomright" }).addTo(this.mapInstance);
 
     // Create Layer Groups
     this.markersLayer = L.layerGroup().addTo(this.mapInstance);
@@ -211,17 +211,20 @@ const AlertNexMap = {
     const detailsContainer = document.getElementById("zoneDetailsPanel");
     if (!detailsContainer) return;
 
+    // Reset scroll to top so drawer header is never cut off
+    detailsContainer.scrollTop = 0;
+
     const riskColor = this.getRiskColor(zone.riskLevel);
 
     detailsContainer.innerHTML = `
       <div class="drawer-header">
         <div class="drawer-title-box">
-          <div style="display:flex; align-items:center; gap:8px;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
             <span class="prototype-badge">${zone.code}</span>
             <span class="risk-tag ${zone.riskLevel.toLowerCase()}">${zone.riskLevel} RISK</span>
           </div>
-          <h3 style="margin-top:6px;">${zone.name}</h3>
-          <span>${zone.district}, ${zone.state}</span>
+          <h3 style="font-size:1.15rem; font-weight:700; color:var(--text-main); line-height:1.3; margin:0 0 4px 0;">${zone.name}</h3>
+          <span style="font-size:0.82rem; color:var(--text-secondary); font-weight:500;">📍 ${zone.district}, ${zone.state}</span>
         </div>
       </div>
 
@@ -263,21 +266,21 @@ const AlertNexMap = {
         </div>
       </div>
 
-      <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.25); border-radius:8px; padding:12px;">
-        <div style="font-size:0.78rem; font-weight:700; color:#f87171; text-transform:uppercase; margin-bottom:4px;">
+      <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.3); border-radius:8px; padding:12px;">
+        <div style="font-size:0.78rem; font-weight:700; color:#dc2626; text-transform:uppercase; margin-bottom:4px;">
           Potential Impact
         </div>
-        <p style="font-size:0.84rem; color:#fecaca; line-height:1.4;">${zone.potentialImpact}</p>
+        <p style="font-size:0.84rem; color:#991b1b; line-height:1.45; font-weight:500; margin:0;">${zone.potentialImpact}</p>
       </div>
 
-      <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.25); border-radius:8px; padding:12px;">
-        <div style="font-size:0.78rem; font-weight:700; color:#34d399; text-transform:uppercase; margin-bottom:4px;">
+      <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.3); border-radius:8px; padding:12px;">
+        <div style="font-size:0.78rem; font-weight:700; color:#059669; text-transform:uppercase; margin-bottom:4px;">
           Recommended Action
         </div>
-        <p style="font-size:0.84rem; color:#d1fae5; line-height:1.4;">${zone.suggestedAction}</p>
+        <p style="font-size:0.84rem; color:#065f46; line-height:1.45; font-weight:500; margin:0;">${zone.suggestedAction}</p>
       </div>
 
-      <div style="display:flex; gap:10px; margin-top:6px;">
+      <div style="display:flex; gap:10px; margin-top:4px;">
         <button class="btn btn-primary btn-sm" style="flex:1;" onclick="AlertNexApp.switchToAIEngine('${zone.id}')">
           Analyze in AI Engine
         </button>
