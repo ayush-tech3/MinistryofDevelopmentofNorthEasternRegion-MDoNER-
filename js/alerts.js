@@ -247,24 +247,6 @@ const AlertNexAlerts = {
         AlertNexApp.showToast(`Dispatching official emergency warning email to ${recipientEmail}...`);
       }
 
-      // Direct Client-Side EmailJS trigger (for mobile browsers without backend)
-      if (window.emailjs && typeof window.emailjs.send === "function") {
-        try {
-          const serviceId = localStorage.getItem("emailjs_service_id") || "service_alertnex";
-          const templateId = localStorage.getItem("emailjs_template_id") || "template_early_warning";
-          const publicKey = localStorage.getItem("emailjs_public_key") || "user_alertnex_sih";
-          window.emailjs.send(serviceId, templateId, {
-            to_email: recipientEmail,
-            alert_title: alert.title,
-            risk_level: alert.level,
-            risk_score: alert.riskScore || 87.0,
-            location: alert.location,
-            impact: alert.impact,
-            action: alert.action
-          }, publicKey).catch(() => {});
-        } catch (e) {}
-      }
-
       const emailPromise = AlertNexAPI.sendRealEmail({
         recipient_email: recipientEmail,
         alert_title: alert.title,
@@ -280,9 +262,6 @@ const AlertNexAlerts = {
         }
       }).catch(err => {
         console.warn("Real email delivery fallback:", err.message);
-        if (window.AlertNexApp) {
-          AlertNexApp.showToast(`📢 Emergency email logged & broadcasted to ${recipientEmail} (CAP Gateway)!`);
-        }
       });
 
       promises.push(emailPromise);
