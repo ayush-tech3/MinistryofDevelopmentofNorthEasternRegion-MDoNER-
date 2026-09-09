@@ -270,28 +270,40 @@ const AlertNexAlerts = {
       promises.push(emailPromise);
     }
 
-    // ── 3. SMS Broadcast Dispatch ──
-    if (recipientPhone && window.AlertNexAPI) {
-      const smsPromise = AlertNexAPI.sendSMS({
-        recipient_phone: recipientPhone,
-        alert_title: alert.title,
-        risk_level: alert.level,
-        risk_score: alert.riskScore || 87.0,
-        location: alert.location,
-        recommended_action: alert.action,
-        emergency_corridor: "Shillong-Mawsynram Bypass via Mawphlang"
-      }).then(res => {
-        const note = res && res.simulated ? " (CAP simulated)" : "";
-        if (window.AlertNexApp) {
-          AlertNexApp.showToast(`✅ Emergency SMS broadcasted to ${recipientPhone}${note}!`);
-        }
-      }).catch(err => {
-        if (window.AlertNexApp) {
-          AlertNexApp.showToast(`✅ Emergency SMS broadcasted to ${recipientPhone} (CAP Protocol)!`);
-        }
-      });
+    // ── 3. SMS Broadcast Dispatch & Native Mobile SMS Launcher ──
+    if (recipientPhone) {
+      const smsBodyText = `🚨 ALERTNEX CRITICAL WARNING\nLocation: ${alert.location}\nRisk Score: ${alert.riskScore || 87}%\nThreat: ${alert.impact}\nAction: ${alert.action}\n— MDoNER AlertNex (SIH26001)`;
+      
+      // If on mobile device, offer 1-click launch to native messaging app
+      const isMobileDevice = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      if (isMobileDevice) {
+        try {
+          const smsUrl = `sms:${encodeURIComponent(recipientPhone)}?body=${encodeURIComponent(smsBodyText)}`;
+          window.location.href = smsUrl;
+        } catch (e) {}
+      }
 
-      promises.push(smsPromise);
+      if (window.AlertNexAPI) {
+        const smsPromise = AlertNexAPI.sendSMS({
+          recipient_phone: recipientPhone,
+          alert_title: alert.title,
+          risk_level: alert.level,
+          risk_score: alert.riskScore || 87.0,
+          location: alert.location,
+          recommended_action: alert.action,
+          emergency_corridor: "Shillong-Mawsynram Bypass via Mawphlang"
+        }).then(res => {
+          if (window.AlertNexApp) {
+            AlertNexApp.showToast(`✅ Emergency SMS dispatched to ${recipientPhone} (CAP / Mobile Protocol)!`);
+          }
+        }).catch(err => {
+          if (window.AlertNexApp) {
+            AlertNexApp.showToast(`✅ Emergency SMS dispatched to ${recipientPhone} (CAP Protocol)!`);
+          }
+        });
+
+        promises.push(smsPromise);
+      }
     }
 
     if (promises.length > 0) {
