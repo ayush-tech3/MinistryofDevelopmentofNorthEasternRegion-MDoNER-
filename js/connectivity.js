@@ -245,20 +245,20 @@ const AlertNexConnectivity = {
 
     const v1 = (zone.affectedVillages && zone.affectedVillages[0]) ? zone.affectedVillages[0] : "Vanghmun";
     const v2 = (zone.affectedVillages && zone.affectedVillages[1]) ? zone.affectedVillages[1] : "Phuldungsei";
+    const primaryRoadName = (zone.affectedRoads && zone.affectedRoads[0]) ? zone.affectedRoads[0] : "Primary Arterial Corridor";
+    const hospitalName = zone.hospitalAccess ? zone.hospitalAccess.split("(")[0].trim() : "Regional Hospital";
+    const districtHubName = `${zone.district || 'District'} HQ`;
+    const bypassRouteName = zone.emergencyRoute ? zone.emergencyRoute.split("(")[0].trim() : "Emergency Detour Route";
 
     // Primary route styling based on risk
-    const primaryColor = isLow ? "#10b981" : isMod ? "#f59e0b" : isHigh ? "#f97316" : "#ef4444";
-    const primaryTitle = isLow ? "PRIMARY HIGHWAY (OPEN & CLEAR)" :
-                         isMod ? "PRIMARY HIGHWAY (CAUTION - MONITORED)" :
-                         isHigh ? "PRIMARY HIGHWAY (PARTIAL IMPASSE / SLUMP RISK)" :
-                         "PRIMARY HIGHWAY (BLOCKED / SEVERED BY LANDSLIDE)";
+    const primaryColor = isLow ? "#10b981" : isMod ? "#f59e0b" : isHigh ? "#f97316" : "#dc2626";
 
     // Landslide hazard ellipse styling
     const slumpFill = isLow ? "rgba(16, 185, 129, 0.12)" :
                       isMod ? "rgba(245, 158, 11, 0.18)" :
                       isHigh ? "rgba(249, 115, 22, 0.28)" :
-                      "rgba(239, 68, 68, 0.35)";
-    const slumpStroke = isLow ? "#10b981" : isMod ? "#f59e0b" : isHigh ? "#f97316" : "#ef4444";
+                      "rgba(220, 38, 38, 0.35)";
+    const slumpStroke = isLow ? "#10b981" : isMod ? "#f59e0b" : isHigh ? "#f97316" : "#dc2626";
     const slumpText1 = isLow ? "SLOPE STABLE • NO SLUMP" :
                        isMod ? "ELEVATED SATURATION WATCH" :
                        isHigh ? "ACTIVE SOIL SLUMP HAZARD" :
@@ -269,41 +269,53 @@ const AlertNexConnectivity = {
                        `ROAD SEVERED (${riskScore}%)`;
 
     // Bypass route styling
-    const bypassColor = isCrit ? "#10b981" : isHigh ? "#34d399" : isMod ? "#6ee7b7" : "#475569";
+    const bypassColor = isCrit ? "#059669" : isHigh ? "#10b981" : isMod ? "#34d399" : "#64748b";
     const bypassStrokeWidth = isCrit ? 5 : isHigh ? 4 : isMod ? 3 : 2;
     const bypassDash = isCrit ? "8,4" : isHigh ? "6,4" : isMod ? "5,4" : "4,4";
-    const bypassText = isCrit ? "⚡ ACTIVATED EMERGENCY BYPASS ROUTE (OPEN • +22 MIN)" :
-                       isHigh ? "SUGGESTED EMERGENCY BYPASS ROUTE (ACTIVE • +15 MIN)" :
-                       isMod ? "SECONDARY BYPASS CORRIDOR (STANDBY ESCORT)" :
-                       "STANDBY EMERGENCY BYPASS ROUTE (STANDBY)";
+    const bypassText = isCrit ? `⚡ ACTIVATED BYPASS: ${bypassRouteName} (+22 MIN)` :
+                       isHigh ? `SUGGESTED DETOUR: ${bypassRouteName} (+15 MIN)` :
+                       isMod ? `SECONDARY DETOUR STANDBY: ${bypassRouteName}` :
+                       `STANDBY EMERGENCY BYPASS ROUTE (${bypassRouteName})`;
 
     // Village 2 status
-    const v2Color = isCrit ? "#ef4444" : isHigh ? "#f97316" : isMod ? "#f59e0b" : "#10b981";
+    const v2Color = isCrit ? "#dc2626" : isHigh ? "#ea580c" : isMod ? "#d97706" : "#15803d";
     const v2Label = isCrit ? `Village ${v2} (ISOLATED - CUT-OFF)` :
-                    isHigh ? `Village ${v2} (At-Risk / Single Lane)` :
+                    isHigh ? `Village ${v2} (At-Risk / Restricted)` :
                     isMod ? `Village ${v2} (Advisory Watch)` :
                     `Village ${v2} (Connected • Safe)`;
 
-    // Top Interactive Simulation Controls + SVG
-    container.innerHTML = `
-      <!-- Live Simulation Quick Controls Bar -->
-      <div class="corridor-controls-bar" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; background:var(--bg-card-subtle); padding:10px 14px; border-radius:8px; border:1px solid var(--border-main); margin-bottom:12px;">
-        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-          <span style="font-size:0.78rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.04em;">🧪 Live Data Simulation:</span>
-          <button type="button" class="btn btn-sm" style="background:${isLow ? '#10b981' : 'transparent'}; color:${isLow ? '#fff' : '#10b981'}; border:1px solid #10b981; font-weight:700; padding:3px 8px; border-radius:6px; cursor:pointer; font-size:0.75rem;" onclick="AlertNexConnectivity.setCustomRiskScore(18)">🟢 Low (18%)</button>
-          <button type="button" class="btn btn-sm" style="background:${isMod ? '#f59e0b' : 'transparent'}; color:${isMod ? '#fff' : '#f59e0b'}; border:1px solid #f59e0b; font-weight:700; padding:3px 8px; border-radius:6px; cursor:pointer; font-size:0.75rem;" onclick="AlertNexConnectivity.setCustomRiskScore(45)">🟡 Moderate (45%)</button>
-          <button type="button" class="btn btn-sm" style="background:${isHigh ? '#f97316' : 'transparent'}; color:${isHigh ? '#fff' : '#f97316'}; border:1px solid #f97316; font-weight:700; padding:3px 8px; border-radius:6px; cursor:pointer; font-size:0.75rem;" onclick="AlertNexConnectivity.setCustomRiskScore(74)">🟠 High (74%)</button>
-          <button type="button" class="btn btn-sm" style="background:${isCrit ? '#ef4444' : 'transparent'}; color:${isCrit ? '#fff' : '#ef4444'}; border:1px solid #ef4444; font-weight:700; padding:3px 8px; border-radius:6px; cursor:pointer; font-size:0.75rem;" onclick="AlertNexConnectivity.setCustomRiskScore(88)">🔴 Critical (88%)</button>
-        </div>
-        <div style="display:flex; align-items:center; gap:10px; flex:1; max-width:280px; min-width:180px;">
-          <span style="font-size:0.75rem; font-weight:700; color:var(--text-secondary); white-space:nowrap;">Dynamic Slider:</span>
-          <input type="range" min="0" max="100" value="${riskScore}" class="range-input" style="flex:1; cursor:pointer;" oninput="AlertNexConnectivity.setCustomRiskScore(this.value)" id="corridorRiskSlider">
-          <span style="font-size:0.82rem; font-weight:800; color:${primaryColor}; min-width:40px; text-align:right;">${riskScore}%</span>
-        </div>
-      </div>
+    // Check if controls bar exists; if not, build skeleton
+    let controlsBar = document.getElementById("corridorControlsBar");
+    let svgWrapper = document.getElementById("corridorSvgWrapper");
 
-      <!-- Reactive SVG Corridor Diagram -->
-      <svg viewBox="0 0 800 240" style="width:100%; height:auto; display:block;">
+    if (!controlsBar || !svgWrapper) {
+      container.innerHTML = `
+        <div id="corridorControlsBar" class="corridor-controls-bar" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; background:var(--bg-card-subtle); padding:10px 14px; border-radius:8px; border:1px solid var(--border-main); margin-bottom:12px;"></div>
+        <div id="corridorSvgWrapper" style="width:100%; position:relative;"></div>
+      `;
+      controlsBar = document.getElementById("corridorControlsBar");
+      svgWrapper = document.getElementById("corridorSvgWrapper");
+    }
+
+    // Update Controls Bar
+    controlsBar.innerHTML = `
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+        <span style="font-size:0.78rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.04em;">🧪 Live Data Simulation:</span>
+        <button type="button" class="btn btn-sm" style="background:${isLow ? '#10b981' : 'transparent'}; color:${isLow ? '#fff' : '#10b981'}; border:1px solid #10b981; font-weight:700; padding:3px 8px; border-radius:6px; cursor:pointer; font-size:0.75rem;" onclick="AlertNexConnectivity.setCustomRiskScore(18)">🟢 Low (18%)</button>
+        <button type="button" class="btn btn-sm" style="background:${isMod ? '#f59e0b' : 'transparent'}; color:${isMod ? '#fff' : '#f59e0b'}; border:1px solid #f59e0b; font-weight:700; padding:3px 8px; border-radius:6px; cursor:pointer; font-size:0.75rem;" onclick="AlertNexConnectivity.setCustomRiskScore(45)">🟡 Moderate (45%)</button>
+        <button type="button" class="btn btn-sm" style="background:${isHigh ? '#f97316' : 'transparent'}; color:${isHigh ? '#fff' : '#f97316'}; border:1px solid #f97316; font-weight:700; padding:3px 8px; border-radius:6px; cursor:pointer; font-size:0.75rem;" onclick="AlertNexConnectivity.setCustomRiskScore(74)">🟠 High (74%)</button>
+        <button type="button" class="btn btn-sm" style="background:${isCrit ? '#dc2626' : 'transparent'}; color:${isCrit ? '#fff' : '#dc2626'}; border:1px solid #dc2626; font-weight:700; padding:3px 8px; border-radius:6px; cursor:pointer; font-size:0.75rem;" onclick="AlertNexConnectivity.setCustomRiskScore(88)">🔴 Critical (88%)</button>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px; flex:1; max-width:280px; min-width:180px;">
+        <span style="font-size:0.75rem; font-weight:700; color:var(--text-secondary); white-space:nowrap;">Dynamic Slider:</span>
+        <input type="range" min="0" max="100" value="${riskScore}" class="range-input" style="flex:1; cursor:pointer;" oninput="AlertNexConnectivity.setCustomRiskScore(this.value)" id="corridorRiskSlider">
+        <span style="font-size:0.84rem; font-weight:800; color:${primaryColor}; min-width:42px; text-align:right;">${riskScore}%</span>
+      </div>
+    `;
+
+    // Render SVG
+    svgWrapper.innerHTML = `
+      <svg viewBox="0 0 860 250" style="width:100%; height:auto; display:block;">
         <defs>
           <linearGradient id="gradPrimary" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stop-color="${primaryColor}" stop-opacity="0.95"/>
@@ -311,7 +323,7 @@ const AlertNexConnectivity = {
           </linearGradient>
           <linearGradient id="gradBypass" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stop-color="${bypassColor}" stop-opacity="0.95"/>
-            <stop offset="100%" stop-color="${bypassColor}" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="${bypassColor}" stop-opacity="0.85"/>
           </linearGradient>
           <filter id="glowEffect" x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="3" result="blur" />
@@ -320,47 +332,50 @@ const AlertNexConnectivity = {
         </defs>
 
         <!-- Base Grid Reference Line -->
-        <line x1="60" y1="120" x2="740" y2="120" stroke="rgba(255,255,255,0.12)" stroke-dasharray="4,4" stroke-width="1.5" />
+        <line x1="80" y1="120" x2="780" y2="120" stroke="rgba(0,0,0,0.06)" stroke-dasharray="4,4" stroke-width="1.5" />
         
         <!-- Primary Highway Route -->
         ${isCrit ? `
           <!-- Severed Left Segment -->
-          <path d="M 60 120 Q 200 55, 340 98" fill="none" stroke="${primaryColor}" stroke-width="6" stroke-linecap="round"/>
+          <path d="M 80 120 Q 230 55, 360 98" fill="none" stroke="${primaryColor}" stroke-width="6" stroke-linecap="round"/>
           <!-- Severed Right Segment -->
-          <path d="M 460 142 Q 600 185, 740 120" fill="none" stroke="${primaryColor}" stroke-width="6" stroke-linecap="round" stroke-opacity="0.45" stroke-dasharray="6,4"/>
+          <path d="M 500 142 Q 640 185, 780 120" fill="none" stroke="${primaryColor}" stroke-width="6" stroke-linecap="round" stroke-opacity="0.4" stroke-dasharray="6,4"/>
           <!-- Severed Gap Break Icons -->
-          <line x1="335" y1="90" x2="345" y2="106" stroke="#ef4444" stroke-width="3"/>
-          <line x1="455" y1="134" x2="465" y2="150" stroke="#ef4444" stroke-width="3"/>
+          <line x1="355" y1="90" x2="365" y2="106" stroke="#dc2626" stroke-width="4"/>
+          <line x1="495" y1="134" x2="505" y2="150" stroke="#dc2626" stroke-width="4"/>
         ` : `
-          <path d="M 60 120 Q 220 50, 400 120 T 740 120" fill="none" stroke="url(#gradPrimary)" stroke-width="6" stroke-linecap="round"/>
+          <path d="M 80 120 Q 250 50, 430 120 T 780 120" fill="none" stroke="url(#gradPrimary)" stroke-width="6" stroke-linecap="round"/>
         `}
 
+        <!-- Highway Label along the path -->
+        <text x="250" y="46" text-anchor="middle" fill="var(--text-secondary)" font-size="10" font-weight="700">🛣️ ${primaryRoadName}</text>
+
         <!-- Landslide Hazard Zone Ellipse -->
-        <ellipse cx="400" cy="120" rx="${isCrit ? 75 : isHigh ? 68 : isMod ? 60 : 54}" ry="${isCrit ? 36 : isHigh ? 32 : isMod ? 28 : 24}" fill="${slumpFill}" stroke="${slumpStroke}" stroke-width="${isCrit ? 2.5 : 2}" stroke-dasharray="${isLow ? 'none' : '4,3'}" ${isCrit ? 'filter="url(#glowEffect)"' : ''}/>
-        <text x="400" y="114" text-anchor="middle" fill="${isLow ? '#34d399' : isMod ? '#fde047' : isHigh ? '#fdba74' : '#fca5a5'}" font-size="11" font-weight="800" letter-spacing="0.04em">${slumpText1}</text>
-        <text x="400" y="130" text-anchor="middle" fill="${primaryColor}" font-size="10" font-weight="700">${slumpText2}</text>
+        <ellipse cx="430" cy="120" rx="${isCrit ? 82 : isHigh ? 74 : isMod ? 66 : 58}" ry="${isCrit ? 40 : isHigh ? 35 : isMod ? 30 : 26}" fill="${slumpFill}" stroke="${slumpStroke}" stroke-width="${isCrit ? 2.5 : 2}" stroke-dasharray="${isLow ? 'none' : '4,3'}" ${isCrit ? 'filter="url(#glowEffect)"' : ''}/>
+        <text x="430" y="112" text-anchor="middle" fill="${isLow ? '#059669' : isMod ? '#b45309' : isHigh ? '#c2410c' : '#991b1b'}" font-size="11" font-weight="800" letter-spacing="0.03em">${slumpText1}</text>
+        <text x="430" y="130" text-anchor="middle" fill="${primaryColor}" font-size="10" font-weight="700">${slumpText2}</text>
 
         <!-- Secondary Bypass Route (Bottom Arc) -->
-        <path d="M 60 120 C 180 215, 620 215, 740 120" fill="none" stroke="url(#gradBypass)" stroke-width="${bypassStrokeWidth}" stroke-dasharray="${bypassDash}" ${isCrit ? 'filter="url(#glowEffect)"' : ''}/>
-        <text x="400" y="206" text-anchor="middle" fill="${bypassColor}" font-size="11" font-weight="700" letter-spacing="0.03em">${bypassText}</text>
+        <path d="M 80 120 C 220 225, 640 225, 780 120" fill="none" stroke="url(#gradBypass)" stroke-width="${bypassStrokeWidth}" stroke-dasharray="${bypassDash}" ${isCrit ? 'filter="url(#glowEffect)"' : ''}/>
+        <text x="430" y="214" text-anchor="middle" fill="${bypassColor}" font-size="10.5" font-weight="700" letter-spacing="0.02em">${bypassText}</text>
 
         <!-- Origin Node (District Center / HUB) -->
-        <circle cx="60" cy="120" r="14" fill="#0b192c" stroke="#38bdf8" stroke-width="3"/>
-        <text x="60" y="124" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">HUB</text>
-        <text x="60" y="94" text-anchor="middle" fill="var(--text-secondary)" font-size="11" font-weight="700">District Center</text>
+        <circle cx="80" cy="120" r="16" fill="#0f3d2a" stroke="#52c48f" stroke-width="3"/>
+        <text x="80" y="124" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="bold">HUB</text>
+        <text x="80" y="90" text-anchor="middle" fill="var(--text-main)" font-size="11" font-weight="700">${districtHubName}</text>
 
         <!-- Destination Node (Regional Hospital / CHC) -->
-        <circle cx="740" cy="120" r="14" fill="#0b192c" stroke="${isLow ? '#10b981' : isMod ? '#34d399' : '#10b981'}" stroke-width="3"/>
-        <text x="740" y="124" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">CHC</text>
-        <text x="740" y="94" text-anchor="middle" fill="var(--text-secondary)" font-size="11" font-weight="700">Regional Hospital</text>
+        <circle cx="780" cy="120" r="16" fill="#0f3d2a" stroke="${isLow ? '#10b981' : isMod ? '#34d399' : '#10b981'}" stroke-width="3"/>
+        <text x="780" y="124" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="bold">HOSP</text>
+        <text x="780" y="90" text-anchor="middle" fill="var(--text-main)" font-size="11" font-weight="700">${hospitalName}</text>
 
         <!-- Village 1 Node (West / Hub Side) -->
-        <circle cx="280" cy="85" r="9" fill="${isLow ? '#10b981' : isMod ? '#f59e0b' : '#38bdf8'}" stroke="#fff" stroke-width="2"/>
-        <text x="280" y="70" text-anchor="middle" fill="var(--text-main)" font-size="10" font-weight="600">Village ${v1} (Connected)</text>
+        <circle cx="290" cy="85" r="9" fill="${isLow ? '#15803d' : isMod ? '#d97706' : '#2563eb'}" stroke="#fff" stroke-width="2"/>
+        <text x="290" y="70" text-anchor="middle" fill="var(--text-main)" font-size="10" font-weight="600">Village ${v1} (Connected)</text>
 
         <!-- Village 2 Node (East / Downstream Side) -->
-        <circle cx="520" cy="85" r="9" fill="${v2Color}" stroke="#fff" stroke-width="2" ${isCrit ? 'filter="url(#glowEffect)"' : ''}/>
-        <text x="520" y="70" text-anchor="middle" fill="${v2Color}" font-size="10" font-weight="700">${v2Label}</text>
+        <circle cx="570" cy="85" r="9" fill="${v2Color}" stroke="#fff" stroke-width="2" ${isCrit ? 'filter="url(#glowEffect)"' : ''}/>
+        <text x="570" y="70" text-anchor="middle" fill="${v2Color}" font-size="10" font-weight="700">${v2Label}</text>
       </svg>
     `;
   }
