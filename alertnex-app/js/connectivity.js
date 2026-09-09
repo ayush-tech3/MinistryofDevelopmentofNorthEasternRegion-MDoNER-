@@ -66,61 +66,91 @@ const AlertNexConnectivity = {
     const hospAccessEl = document.getElementById("impactHospitalAccess");
     const altRouteEl = document.getElementById("impactAltRouteStatus");
 
+    const primaryRoad = (zone.affectedRoads && zone.affectedRoads[0]) ? zone.affectedRoads[0] : "Primary Highway Lifeline";
+    const villageNamesStr = zone.affectedVillages ? zone.affectedVillages.join(", ") : "Regional Communities";
+    const hospitalName = zone.hospitalAccess ? zone.hospitalAccess.split("(")[0].trim() : "Regional Hospital";
+    const bypassName = zone.emergencyRoute ? zone.emergencyRoute.split("(")[0].trim() : "Emergency Detour Bypass";
+
     if (statusRoadEl) {
-      statusRoadEl.textContent = riskLevel === "CRITICAL" ? "CRITICAL DISRUPTION (BLOCKED)" :
-                                 riskLevel === "HIGH" ? "POTENTIAL DISRUPTION (RESTRICTED)" :
-                                 riskLevel === "MODERATE" ? "MONITORING (CAUTION)" : "OPERATIONAL (NORMAL CLEARANCE)";
-      statusRoadEl.style.color = riskLevel === "CRITICAL" ? "#ef4444" :
-                                 riskLevel === "HIGH" ? "#f97316" :
-                                 riskLevel === "MODERATE" ? "#f59e0b" : "#10b981";
+      const roadText = riskLevel === "CRITICAL" ? "CRITICAL DISRUPTION (BLOCKED)" :
+                       riskLevel === "HIGH" ? "POTENTIAL DISRUPTION (RESTRICTED)" :
+                       riskLevel === "MODERATE" ? "MONITORING (CAUTION)" : "OPERATIONAL (CLEAR)";
+      const roadColor = riskLevel === "CRITICAL" ? "#dc2626" :
+                        riskLevel === "HIGH" ? "#ea580c" :
+                        riskLevel === "MODERATE" ? "#d97706" : "#15803d";
+      statusRoadEl.innerHTML = `
+        <div style="font-size:1.15rem; font-weight:800; color:${roadColor}; line-height:1.2;">${roadText}</div>
+        <div style="font-size:0.8rem; font-weight:600; color:var(--text-main); margin-top:5px;">🛣️ ${primaryRoad}</div>
+      `;
     }
 
     if (affectedVillagesEl) {
+      let villageText = "";
+      let villageColor = "";
       if (riskLevel === "CRITICAL") {
-        affectedVillagesEl.textContent = `${zone.affectedVillages.length} Communities (ISOLATED)`;
-        affectedVillagesEl.style.color = "#ef4444";
+        villageText = `${zone.affectedVillages.length} Communities (ISOLATED)`;
+        villageColor = "#dc2626";
       } else if (riskLevel === "HIGH") {
-        affectedVillagesEl.textContent = `${zone.affectedVillages.length} Communities (Vulnerable)`;
-        affectedVillagesEl.style.color = "#f97316";
+        villageText = `${zone.affectedVillages.length} Communities (Vulnerable)`;
+        villageColor = "#ea580c";
       } else if (riskLevel === "MODERATE") {
-        affectedVillagesEl.textContent = `${zone.affectedVillages.length} Under Caution`;
-        affectedVillagesEl.style.color = "#f59e0b";
+        villageText = `${zone.affectedVillages.length} Under Caution`;
+        villageColor = "#d97706";
       } else {
-        affectedVillagesEl.textContent = `${zone.affectedVillages.length} Connected (Safe)`;
-        affectedVillagesEl.style.color = "#10b981";
+        villageText = `${zone.affectedVillages.length} Connected (Safe)`;
+        villageColor = "#15803d";
       }
+
+      affectedVillagesEl.innerHTML = `
+        <div style="font-size:1.15rem; font-weight:800; color:${villageColor}; line-height:1.2;">${villageText}</div>
+        <div style="font-size:0.8rem; font-weight:600; color:var(--text-main); margin-top:5px;" title="${villageNamesStr}">🏘️ ${villageNamesStr}</div>
+      `;
     }
 
     if (hospAccessEl) {
+      let hospText = "";
+      let hospColor = "";
       if (riskLevel === "CRITICAL") {
-        hospAccessEl.textContent = "Primary Corridor Severed (Detour Active)";
-        hospAccessEl.style.color = "#ef4444";
+        hospText = "Primary Corridor Severed";
+        hospColor = "#dc2626";
       } else if (riskLevel === "HIGH") {
-        hospAccessEl.textContent = "Corridor Vulnerable (Heavy Traffic Diverted)";
-        hospAccessEl.style.color = "#f97316";
+        hospText = "Corridor Vulnerable (+15m)";
+        hospColor = "#ea580c";
       } else if (riskLevel === "MODERATE") {
-        hospAccessEl.textContent = "Accessible with Caution Advisory";
-        hospAccessEl.style.color = "#f59e0b";
+        hospText = "Accessible with Caution";
+        hospColor = "#d97706";
       } else {
-        hospAccessEl.textContent = "Direct Highway Transit Open (0 min Delay)";
-        hospAccessEl.style.color = "#10b981";
+        hospText = "Transit Open (0m Delay)";
+        hospColor = "#15803d";
       }
+
+      hospAccessEl.innerHTML = `
+        <div style="font-size:1.15rem; font-weight:800; color:${hospColor}; line-height:1.2;">${hospText}</div>
+        <div style="font-size:0.8rem; font-weight:600; color:var(--text-main); margin-top:5px;">🏥 ${hospitalName}</div>
+      `;
     }
 
     if (altRouteEl) {
+      let altText = "";
+      let altColor = "";
       if (riskLevel === "CRITICAL") {
-        altRouteEl.textContent = "⚡ Emergency Bypass Active (+22 min)";
-        altRouteEl.style.color = "#10b981";
+        altText = "⚡ Emergency Bypass Active (+22m)";
+        altColor = "#059669";
       } else if (riskLevel === "HIGH") {
-        altRouteEl.textContent = "Recommended Detour Ready (+15 min)";
-        altRouteEl.style.color = "#34d399";
+        altText = "Recommended Detour Ready (+15m)";
+        altColor = "#10b981";
       } else if (riskLevel === "MODERATE") {
-        altRouteEl.textContent = "Secondary Route on Standby";
-        altRouteEl.style.color = "#a7f3d0";
+        altText = "Secondary Route on Standby";
+        altColor = "#34d399";
       } else {
-        altRouteEl.textContent = "Standard Standby (Primary Road Open)";
-        altRouteEl.style.color = "var(--text-secondary)";
+        altText = "Standard Standby (Road Open)";
+        altColor = "var(--text-secondary)";
       }
+
+      altRouteEl.innerHTML = `
+        <div style="font-size:1.15rem; font-weight:800; color:${altColor}; line-height:1.2;">${altText}</div>
+        <div style="font-size:0.8rem; font-weight:600; color:var(--text-main); margin-top:5px;" title="${bypassName}">🔀 ${bypassName}</div>
+      `;
     }
 
     // Road Impact Table
@@ -277,6 +307,13 @@ const AlertNexConnectivity = {
                        isMod ? `SECONDARY DETOUR STANDBY: ${bypassRouteName}` :
                        `STANDBY EMERGENCY BYPASS ROUTE (${bypassRouteName})`;
 
+    const v3 = (zone.affectedVillages && zone.affectedVillages[2]) ? zone.affectedVillages[2] : null;
+    const v3Color = isCrit ? "#dc2626" : isHigh ? "#ea580c" : isMod ? "#d97706" : "#15803d";
+    const v3Label = isCrit ? `Village ${v3} (CUT-OFF)` :
+                    isHigh ? `Village ${v3} (Vulnerable)` :
+                    isMod ? `Village ${v3} (Caution)` :
+                    `Village ${v3} (Safe)`;
+
     // Village 2 status
     const v2Color = isCrit ? "#dc2626" : isHigh ? "#ea580c" : isMod ? "#d97706" : "#15803d";
     const v2Label = isCrit ? `Village ${v2} (ISOLATED - CUT-OFF)` :
@@ -370,12 +407,19 @@ const AlertNexConnectivity = {
         <text x="780" y="90" text-anchor="middle" fill="var(--text-main)" font-size="11" font-weight="700">${hospitalName}</text>
 
         <!-- Village 1 Node (West / Hub Side) -->
-        <circle cx="290" cy="85" r="9" fill="${isLow ? '#15803d' : isMod ? '#d97706' : '#2563eb'}" stroke="#fff" stroke-width="2"/>
-        <text x="290" y="70" text-anchor="middle" fill="var(--text-main)" font-size="10" font-weight="600">Village ${v1} (Connected)</text>
+        <circle cx="280" cy="85" r="9" fill="${isLow ? '#15803d' : isMod ? '#d97706' : '#2563eb'}" stroke="#fff" stroke-width="2"/>
+        <text x="280" y="70" text-anchor="middle" fill="var(--text-main)" font-size="10" font-weight="600">Village ${v1} (Connected)</text>
 
         <!-- Village 2 Node (East / Downstream Side) -->
-        <circle cx="570" cy="85" r="9" fill="${v2Color}" stroke="#fff" stroke-width="2" ${isCrit ? 'filter="url(#glowEffect)"' : ''}/>
-        <text x="570" y="70" text-anchor="middle" fill="${v2Color}" font-size="10" font-weight="700">${v2Label}</text>
+        <circle cx="560" cy="85" r="9" fill="${v2Color}" stroke="#fff" stroke-width="2" ${isCrit ? 'filter="url(#glowEffect)"' : ''}/>
+        <text x="560" y="70" text-anchor="middle" fill="${v2Color}" font-size="10" font-weight="700">${v2Label}</text>
+
+        ${v3 ? `
+          <!-- Village 3 Node (East Spur) -->
+          <line x1="560" y1="85" x2="680" y2="60" stroke="${v3Color}" stroke-width="2" stroke-dasharray="3,3"/>
+          <circle cx="680" cy="60" r="8" fill="${v3Color}" stroke="#fff" stroke-width="2" ${isCrit ? 'filter="url(#glowEffect)"' : ''}/>
+          <text x="680" y="46" text-anchor="middle" fill="${v3Color}" font-size="9.5" font-weight="700">${v3Label}</text>
+        ` : ''}
       </svg>
     `;
   }
