@@ -321,20 +321,35 @@ input, select, textarea {
   width: 40px;
   height: 40px;
   border-radius: var(--radius-md);
-  background: var(--forest-primary);
-  border: 1px solid var(--forest-light);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   position: relative;
   overflow: hidden;
+  padding: 3px;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.brand-emblem:hover {
+  transform: scale(1.05);
+  border-color: var(--forest-accent);
+  box-shadow: 0 0 12px rgba(82, 196, 143, 0.35);
 }
 
 .brand-emblem svg {
   width: 22px;
   height: 22px;
   color: #ffffff;
+}
+
+.brand-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .brand-title-area {
