@@ -61,6 +61,14 @@
     <!-- Right Controls -->
     <div class="topbar-right">
       <div id="systemLiveClock" class="font-mono" style="font-size:0.8rem; color:var(--text-on-dark-sub); font-weight:600;">--:--:-- IST</div>
+      <button class="btn btn-secondary btn-sm" onclick="if(window.AlertNexAccessibility) AlertNexAccessibility.readCurrentPageSummary()" title="Listen to page info">
+        <span>🔊</span>
+        <span>सुनें (Listen)</span>
+      </button>
+      <button class="btn btn-danger btn-sm" onclick="if(window.AlertNexAccessibility) AlertNexAccessibility.openVisualSOSModal()" title="1-Click Emergency Visual SOS" style="background:#dc2626; border-color:#ef4444; color:#fff;">
+        <span>🚨</span>
+        <span>Visual SOS</span>
+      </button>
       <button class="btn btn-secondary btn-sm" data-view="dashboard">
         <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
         <span>Authority Access</span>
@@ -177,6 +185,9 @@
                 <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                 <span>VIEW LIVE DASHBOARD</span>
               </button>
+              <button class="btn btn-danger" onclick="if(window.AlertNexAccessibility) AlertNexAccessibility.openVisualSOSModal()" style="background:#dc2626; border-color:#ef4444; color:#fff;">
+                <span>🚨 1-CLICK VISUAL SOS</span>
+              </button>
               <button class="btn btn-secondary" data-view="reporting">
                 <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                 <span>REPORT AN INCIDENT</span>
@@ -186,10 +197,11 @@
               </button>
             </div>
 
-            <div style="margin-top:14px; display:flex; gap:16px; font-size:0.8rem; color:var(--text-muted);">
+            <div style="margin-top:14px; display:flex; flex-wrap:wrap; gap:16px; font-size:0.8rem; color:var(--text-muted);">
               <div>✔ 8 NER States Modeled</div>
+              <div>✔ Voice-to-Text &amp; Audio Readout</div>
+              <div>✔ 1-Click Visual Pictorial SOS</div>
               <div>✔ Offline Field Reporting</div>
-              <div>✔ Explainable AI (XAI) Decision Support</div>
             </div>
           </div>
 
@@ -216,6 +228,14 @@
           </div>
 
           <div class="features-grid">
+            <div class="feature-card" onclick="if(window.AlertNexAccessibility) AlertNexAccessibility.openVisualSOSModal()" style="cursor:pointer; border:1.5px solid #f87171; background:linear-gradient(180deg, rgba(239,68,68,0.06) 0%, rgba(239,68,68,0.02) 100%);">
+              <div class="feature-icon-box" style="background:#fee2e2; color:#dc2626;">
+                <span style="font-size:1.4rem;">🎙️</span>
+              </div>
+              <h3 style="color:#b91c1c;">Inclusive Voice &amp; Visual Access</h3>
+              <p>Designed for illiterate &amp; visually impaired citizens: 1-Click pictorial emergency SOS, voice speech reporting, and multilingual audio readouts.</p>
+            </div>
+
             <div class="feature-card" data-view="ai-engine" style="cursor:pointer;">
               <div class="feature-icon-box">
                 <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
@@ -834,6 +854,36 @@
               <span class="prototype-badge">CROWDSOURCED GROUND TRUTH</span>
             </div>
 
+            <!-- Inclusive Voice & Visual Accessibility Banner -->
+            <div style="background:linear-gradient(135deg, rgba(239,68,68,0.08) 0%, rgba(37,99,235,0.08) 100%); border:1.5px solid #cbd5e1; border-radius:10px; padding:12px 14px; margin-bottom:16px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                <div>
+                  <div style="font-weight:700; color:var(--text-main); font-size:0.9rem; display:flex; align-items:center; gap:6px;">
+                    <span>🎙️♿ Inclusive Reporting (बिना लिखे रिपोर्ट करें)</span>
+                  </div>
+                  <div style="font-size:0.78rem; color:var(--text-secondary); margin-top:2px;">
+                    बोलकर रिपोर्ट करें या सिर्फ 1-क्लिक में चित्र दबाकर आपातकालीन अलर्ट भेजें।
+                  </div>
+                </div>
+
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                  <button type="button" class="btn-voice-mic" onclick="if(window.AlertNexAccessibility) AlertNexAccessibility.toggleVoiceReporting()">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+                    <span>🎙️ बोलकर रिपोर्ट करें</span>
+                  </button>
+
+                  <button type="button" class="btn btn-danger btn-sm" onclick="if(window.AlertNexAccessibility) AlertNexAccessibility.openVisualSOSModal()" style="background:#dc2626; border-color:#ef4444; font-weight:700;">
+                    <span>🚨 सरल चित्र SOS</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Live Voice Transcription Output Box -->
+              <div id="liveVoiceTranscriptBox" style="display:none; margin-top:10px; padding:8px 12px; background:#eff6ff; border:1px solid #3b82f6; border-radius:6px; color:#1e40af; font-size:0.86rem; font-weight:600;">
+                🎙️ सुन रहे हैं...
+              </div>
+            </div>
+
             <form id="hazardReportForm">
               <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px;">
                 <div class="form-group">
@@ -897,7 +947,12 @@
               </div>
 
               <div class="form-group" style="margin-top:14px;">
-                <label for="reportDescription">Detailed Hazard Observations *</label>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                  <label for="reportDescription" style="margin-bottom:0;">Detailed Hazard Observations *</label>
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="if(window.AlertNexAccessibility) AlertNexAccessibility.toggleVoiceReporting()" style="padding:2px 8px; font-size:0.75rem; color:#15803d; border-color:#86efac; background:#f0fdf4;">
+                    🎙️ बोलकर टाइप करें (Mic)
+                  </button>
+                </div>
                 <textarea id="reportDescription" rows="3" class="form-control" placeholder="Describe soil characteristics, active water flow, crack dimensions, or structural distress..." required>Observed continuous transverse fissure measuring approx 18m length, width 4.5cm on the upper shoulder of the village road. Runoff water infiltrating actively.</textarea>
               </div>
 
@@ -1404,6 +1459,7 @@
   <script src="js/reporting.js?v=2026.5"></script>
   <script src="js/charts.js?v=2026.5"></script>
   <script src="js/simulation.js?v=2026.5"></script>
+  <script src="js/accessibility.js?v=2026.5"></script>
   <script src="js/app.js?v=2026.5"></script>
 
 </body>

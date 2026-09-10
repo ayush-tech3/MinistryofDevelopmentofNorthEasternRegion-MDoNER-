@@ -147,7 +147,7 @@ class EmailService:
                     json={
                         "sender": {
                             "name": cfg["from_name"],
-                            "email": cfg["from_email"]
+                            "email": os.getenv("BREVO_SENDER_EMAIL", "ayushkhg2020@gmail.com")
                         },
                         "to": [{"email": recipient_email}],
                         "subject": subject,
