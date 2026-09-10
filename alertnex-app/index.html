@@ -14,8 +14,8 @@
   <link rel="shortcut icon" href="assets/favicon.ico">
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/style.css?v=2026.5">
-  <link rel="stylesheet" href="css/responsive.css?v=2026.5">
+  <link rel="stylesheet" href="css/style.css?v=2026.8">
+  <link rel="stylesheet" href="css/responsive.css?v=2026.8">
 
   <!-- Leaflet GIS CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -127,7 +127,20 @@
           <span class="nav-badge danger">6</span>
         </a>
 
-        <div class="sidebar-section-title" style="margin-top:10px;">OPERATIONS & REPORTS</div>
+        <div class="sidebar-section-title" style="margin-top:10px;">ACCESSIBILITY &amp; VOICE</div>
+
+        <a href="javascript:void(0)" class="nav-link" onclick="if(window.AlertNexAccessibility) AlertNexAccessibility.openVisualSOSModal()" style="color:#ef4444;">
+          <svg class="nav-icon" fill="none" stroke="#ef4444" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+          <span class="nav-text" style="font-weight:700;">1-Click Visual SOS</span>
+          <span class="nav-badge danger">SOS</span>
+        </a>
+
+        <a href="javascript:void(0)" class="nav-link" onclick="if(window.AlertNexAccessibility) AlertNexAccessibility.readCurrentPageSummary()">
+          <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+          <span class="nav-text">Audio Page Reader</span>
+        </a>
+
+        <div class="sidebar-section-title" style="margin-top:10px;">OPERATIONS &amp; REPORTS</div>
 
         <a href="#reporting" class="nav-link" data-view="reporting">
           <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
@@ -1440,6 +1453,154 @@
     </div>
   </div>
 
+  <!-- =========================================================================
+       INCLUSIVE VOICE & VISUAL ACCESSIBILITY OVERLAYS
+       ========================================================================= -->
+
+  <!-- Floating Accessibility Assistant Widget -->
+  <div id="accessibilityFloatingWidget" class="accessibility-floating-widget">
+    <div class="access-pill" id="accessMainToggleBtn" title="Voice & Visual Accessibility (सहायता)">
+      <span class="access-icon-pulse">🔊</span>
+      <span class="access-pill-label">आवाज़ और सहायता (Voice/Audio)</span>
+    </div>
+
+    <div class="access-dropdown-panel" id="accessDropdownPanel">
+      <div class="access-header">
+        <div style="font-weight:700; color:var(--text-main); font-size:0.92rem; display:flex; align-items:center; gap:6px;">
+          <span>♿ Inclusive Voice &amp; Visual Access</span>
+        </div>
+        <button class="access-close-btn" id="accessCloseDropdown">✕</button>
+      </div>
+
+      <div class="access-body">
+        <div class="access-field-group">
+          <label style="font-size:0.75rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase;">सहायता भाषा / Voice Language</label>
+          <select id="accessLangSelector" class="form-control" style="font-size:0.85rem; padding:6px 10px; height:auto;">
+            <option value="hi-IN" selected>🇮🇳 हिन्दी (Hindi Voice)</option>
+            <option value="en-IN">🇬🇧 English (Indian Accent)</option>
+            <option value="bn-IN">🇮🇳 বাংলা / অসমীয়া (Regional)</option>
+          </select>
+        </div>
+
+        <div class="access-action-grid">
+          <button class="btn btn-primary btn-sm access-action-btn" id="btnAccessListenPage">
+            <span>🔊</span>
+            <span>पेज सुनकर समझें<br><small style="opacity:0.8;">Listen Page</small></span>
+          </button>
+
+          <button class="btn btn-danger btn-sm access-action-btn" id="btnAccessVisualSOS" style="background:#dc2626; border-color:#ef4444; color:#fff;">
+            <span>🖼️</span>
+            <span>सरल चित्र SOS<br><small style="opacity:0.8;">Visual 1-Click</small></span>
+          </button>
+
+          <button class="btn btn-secondary btn-sm access-action-btn" id="btnAccessVoiceReport">
+            <span>🎙️</span>
+            <span>बोलकर रिपोर्ट करें<br><small style="opacity:0.8;">Speak Hazard</small></span>
+          </button>
+
+          <button class="btn btn-secondary btn-sm access-action-btn" id="btnAccessIVR">
+            <span>📞</span>
+            <span>IVRS हेल्पलाइन<br><small style="opacity:0.8;">1800-ALERT Demo</small></span>
+          </button>
+        </div>
+
+        <div style="font-size:0.73rem; color:var(--text-muted); line-height:1.4; margin-top:6px; border-top:1px solid var(--border-main); padding-top:6px;">
+          💡 यह सुविधा उन नागरिकों के लिए है जो पढ़-लिख नहीं सकते या जिन्हें देखने/टाइप करने में परेशानी है।
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Voice Playing Wave Bar -->
+  <div id="globalVoicePlayingBar" class="voice-playing-bar">
+    <div class="voice-wave-anim">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="voice-playing-info">
+      <span style="font-size:0.75rem; font-weight:700; color:#10b981; text-transform:uppercase;">🔊 बोलकर सुनाया जा रहा है (Speaking)</span>
+      <div id="voicePlayingText" style="font-size:0.85rem; font-weight:600; color:var(--text-main); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">...</div>
+    </div>
+    <button class="btn btn-secondary btn-sm" id="btnStopGlobalVoice" style="padding:4px 10px; font-size:0.75rem;">
+      ⏹ रोकें (Stop)
+    </button>
+  </div>
+
+  <!-- 1-Click Visual Emergency SOS Modal -->
+  <div id="visualSOSModal" class="modal-backdrop">
+    <div class="modal-box" style="max-width:680px; border:2px solid #ef4444; box-shadow:0 20px 40px rgba(239,68,68,0.25);">
+      <div class="modal-header" style="background:rgba(239,68,68,0.1); border-bottom:1px solid rgba(239,68,68,0.2);">
+        <div>
+          <div class="modal-title" style="color:#ef4444; display:flex; align-items:center; gap:8px;">
+            <span style="font-size:1.4rem;">🚨</span>
+            <span>सरल चित्र आपातकालीन रिपोर्टिंग (1-Click Visual SOS)</span>
+          </div>
+          <p style="font-size:0.82rem; color:var(--text-secondary); margin:2px 0 0 0;">
+            बिना पढ़े या लिखे, सिर्फ नीचे दिए गए चित्र को दबाएं — आपका अलर्ट GPS सहित तुरंत दर्ज हो जाएगा।
+          </p>
+        </div>
+        <button class="modal-close" onclick="AlertNexAccessibility.closeVisualSOSModal()">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding:20px;">
+        <div class="visual-sos-grid">
+          <!-- Tile 1: Landslide -->
+          <div class="visual-sos-tile red" onclick="AlertNexAccessibility.triggerVisualSOS('Landslide', 'Critical', 'भारी भूस्खलन / पहाड़ खिसकना (Landslide)')">
+            <div class="sos-icon">⛰️💥</div>
+            <div class="sos-name">भूस्खलन (Landslide)</div>
+            <div class="sos-desc">पहाड़ या मिट्टी खिसकना</div>
+          </div>
+
+          <!-- Tile 2: Road Blockage -->
+          <div class="visual-sos-tile orange" onclick="AlertNexAccessibility.triggerVisualSOS('Road Blockage', 'High', 'रास्ता / सड़क अवरुद्ध (Road Blocked)')">
+            <div class="sos-icon">🚧🚗</div>
+            <div class="sos-name">रास्ता बंद (Road Block)</div>
+            <div class="sos-desc">मलबे से सड़क या पुल बंद</div>
+          </div>
+
+          <!-- Tile 3: Flood -->
+          <div class="visual-sos-tile blue" onclick="AlertNexAccessibility.triggerVisualSOS('Dangerous Slope', 'Critical', 'बाढ़ / भारी जलभराव (Flash Flood)')">
+            <div class="sos-icon">🌊⚠️</div>
+            <div class="sos-name">बाढ़ / पानी (Flood)</div>
+            <div class="sos-desc">तेज पानी का बहाव व कीचड़</div>
+          </div>
+
+          <!-- Tile 4: Ground Crack -->
+          <div class="visual-sos-tile yellow" onclick="AlertNexAccessibility.triggerVisualSOS('Ground Crack', 'High', 'जमीन में बड़ी दरार (Ground Fissure)')">
+            <div class="sos-icon">🏚️⚡</div>
+            <div class="sos-name">जमीन में दरार (Crack)</div>
+            <div class="sos-desc">मकान या सड़क में गहरी दरारें</div>
+          </div>
+
+          <!-- Tile 5: Rockfall -->
+          <div class="visual-sos-tile amber" onclick="AlertNexAccessibility.triggerVisualSOS('Rockfall', 'High', 'चट्टान गिरना (Rockfall)')">
+            <div class="sos-icon">🪨⚠️</div>
+            <div class="sos-name">चट्टान गिरना (Rockfall)</div>
+            <div class="sos-desc">ऊपर से बड़े पत्थर गिरना</div>
+          </div>
+
+          <!-- Tile 6: Urgent Medical -->
+          <div class="visual-sos-tile purple" onclick="AlertNexAccessibility.triggerVisualSOS('Other', 'Critical', 'आपातकालीन मेडिकल व जान का खतरा (Medical Emergency)')">
+            <div class="sos-icon">🚑🆘</div>
+            <div class="sos-name">मेडिकल मदद (Medical SOS)</div>
+            <div class="sos-desc">लोग फंसे हैं / तुरंत बचाव चाहिए</div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px; background:var(--bg-card-subtle); border:1px solid var(--border-main); border-radius:8px; padding:12px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+          <div style="font-size:0.8rem; color:var(--text-secondary);">
+            📍 <strong>GPS लोकेशन:</strong> स्वचालित रूप से ली जा रही है (25.2980° N, 91.5815° E)
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="AlertNexAccessibility.playIVRDemo()">
+            📞 टोल-फ्री 1800-ALERT डेमो सुनें
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" onclick="AlertNexAccessibility.closeVisualSOSModal()">बंद करें (Close)</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Container -->
   <div class="toast-container" id="toastContainer"></div>
 
@@ -1450,17 +1611,17 @@
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
   <!-- AlertNex Application Scripts -->
-  <script src="js/data.js?v=2026.5"></script>
-  <script src="js/api.js?v=2026.5"></script>
-  <script src="js/map.js?v=2026.5"></script>
-  <script src="js/ai-engine.js?v=2026.5"></script>
-  <script src="js/connectivity.js?v=2026.5"></script>
-  <script src="js/alerts.js?v=2026.5"></script>
-  <script src="js/reporting.js?v=2026.5"></script>
-  <script src="js/charts.js?v=2026.5"></script>
-  <script src="js/simulation.js?v=2026.5"></script>
-  <script src="js/accessibility.js?v=2026.5"></script>
-  <script src="js/app.js?v=2026.5"></script>
+  <script src="js/data.js?v=2026.8"></script>
+  <script src="js/api.js?v=2026.8"></script>
+  <script src="js/map.js?v=2026.8"></script>
+  <script src="js/ai-engine.js?v=2026.8"></script>
+  <script src="js/connectivity.js?v=2026.8"></script>
+  <script src="js/alerts.js?v=2026.8"></script>
+  <script src="js/reporting.js?v=2026.8"></script>
+  <script src="js/charts.js?v=2026.8"></script>
+  <script src="js/simulation.js?v=2026.8"></script>
+  <script src="js/accessibility.js?v=2026.8"></script>
+  <script src="js/app.js?v=2026.8"></script>
 
 </body>
 </html>
