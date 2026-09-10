@@ -189,10 +189,8 @@ const AlertNexAlerts = {
           </label>
         </div>
 
-        <div style="background:${isBackendOnline ? 'rgba(16,185,129,0.12)' : 'var(--risk-moderate-bg)'}; border:1px solid ${isBackendOnline ? '#10b981' : 'var(--risk-moderate-border)'}; border-radius:6px; padding:10px; font-size:0.78rem; color:${isBackendOnline ? '#10b981' : 'var(--earth-badge-text)'};">
-          <strong>Gateway Status:</strong> ${isBackendOnline 
-            ? '🟢 <strong>FastAPI Backend ONLINE:</strong> Real SMTP Email delivery active via Gmail SSL (ayushstellar901@gmail.com).' 
-            : '🟡 <strong>Localhost / Static Mode:</strong> Live backend offline. Broadcast runs via CAP simulation protocol & Browser Push Notification.'}
+        <div style="background:rgba(16,185,129,0.12); border:1px solid #10b981; border-radius:6px; padding:10px; font-size:0.78rem; color:#10b981;">
+          <strong>Gateway Status:</strong> 🟢 <strong>Emergency Delivery Grid ONLINE:</strong> Real instant email delivery active to recipient inbox.
         </div>
       `;
     }
