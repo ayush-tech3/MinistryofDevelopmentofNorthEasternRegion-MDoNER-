@@ -101,7 +101,10 @@ const AlertNexAlerts = {
             <div class="alert-channels">
               ${alert.channels.map(ch => `<span class="channel-pill">${ch}</span>`).join("")}
             </div>
-            <div class="alert-actions">
+            <div class="alert-actions" style="display:flex; flex-wrap:wrap; gap:6px;">
+              <button class="btn btn-secondary btn-sm btn-listen-alert" onclick="if(window.AlertNexAccessibility) AlertNexAccessibility.speakAlert('${alert.id}')" title="Listen alert in voice">
+                🔊 बोलकर सुनें (Listen)
+              </button>
               <button class="btn btn-secondary btn-sm" onclick="AlertNexAlerts.openNotificationModal('${alert.id}')">
                 📢 Dispatch Bulletin
               </button>

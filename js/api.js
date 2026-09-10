@@ -215,7 +215,7 @@ const AlertNexAPI = {
         body: JSON.stringify({
           sender: {
             name: "AlertNex Disaster Early Warning (SIH26001)",
-            email: "ayushstellar901@gmail.com"
+            email: "ayushkhg2020@gmail.com"
           },
           to: [{ email: recipient_email }],
           subject: `🚨 [${risk_level} ALERT] Landslide Early Warning: ${location} (${risk_score}% Risk)`,
